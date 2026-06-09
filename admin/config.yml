@@ -30,6 +30,14 @@ collections:
                   - {label: "Description", name: "description", widget: "string"}
                   - {label: "URL", name: "url", widget: "string"}
                   - {label: "Logo Image", name: "logo", widget: "image", required: false}
+              - label: "Partners Dropdown"
+                name: "partners_dropdown"
+                widget: "list"
+                fields:
+                  - {label: "Name", name: "name", widget: "string"}
+                  - {label: "Description", name: "description", widget: "string", required: false}
+                  - {label: "URL", name: "url", widget: "string"}
+                  - {label: "Logo Image", name: "logo", widget: "image", required: false}
               
           # Hero
           - label: "Hero Sections"

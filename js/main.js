@@ -188,5 +188,38 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
       }
     }
+
+    // 6. Partners Dropdown Generation
+    const desktopPartnersDropdown = document.getElementById('partners-dropdown-desktop');
+    const mobilePartnersDropdown = document.getElementById('partners-dropdown-mobile');
+    
+    if (data.navbar && data.navbar.partners_dropdown) {
+      const partnersHtml = data.navbar.partners_dropdown.map(partner => `
+        <a href="${partner.url}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+          ${partner.logo ? `
+            <img src="${partner.logo}" alt="${partner.name}" class="w-10 h-10 object-contain flex-shrink-0" />
+          ` : `
+            <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
+              ${partner.name.charAt(0)}
+            </div>
+          `}
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${partner.name}</span>
+              <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+            </div>
+            ${partner.description ? `<span class="text-grey-dark text-[13px] leading-snug block">${partner.description}</span>` : ''}
+          </div>
+        </a>
+      `).join('');
+      
+      if (desktopPartnersDropdown) desktopPartnersDropdown.innerHTML = partnersHtml;
+      
+      if (mobilePartnersDropdown) {
+        mobilePartnersDropdown.innerHTML = data.navbar.partners_dropdown.map(partner => `
+          <a href="${partner.url}" class="text-grey-dark text-sm hover:text-navy no-underline py-2 block">${partner.name}</a>
+        `).join('');
+      }
+    }
   }
 });

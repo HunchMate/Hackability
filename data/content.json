@@ -27,6 +27,26 @@
         "url": "#",
         "logo": ""
       }
+    ],
+    "partners_dropdown": [
+      {
+        "name": "Colleges",
+        "description": "Partner institutions.",
+        "url": "#",
+        "logo": ""
+      },
+      {
+        "name": "Organizations",
+        "description": "Corporate partners.",
+        "url": "#",
+        "logo": ""
+      },
+      {
+        "name": "Mentors",
+        "description": "Our expert mentors.",
+        "url": "#",
+        "logo": ""
+      }
     ]
   },
   "hero": {

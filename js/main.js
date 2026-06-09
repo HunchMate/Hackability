@@ -149,9 +149,44 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="stat-card rounded-2xl p-6 text-center bg-white" style="border:1px solid #E2E8F0; animation-delay: ${index * 100}ms">
           <i class="ph-bold ${stat.icon}" style="font-size:32px;color:#0D1B8E;margin-bottom:12px;display:block;"></i>
           <div class="stat-number font-data font-bold text-navy" style="font-size:42px;">${stat.number}${stat.suffix}</div>
-          <div class="font-body font-medium text-sm mt-2 text-grey-mid">${stat.label}</div>
+          <div class="text-xs font-semibold text-grey-mid uppercase tracking-wider">${stat.label}</div>
         </div>
       `).join('');
+    }
+
+    // 5. Products Dropdown Generation
+    const desktopDropdown = document.getElementById('products-dropdown-desktop');
+    const mobileDropdown = document.getElementById('products-dropdown-mobile');
+    
+    if (data.navbar && data.navbar.products_dropdown) {
+      const dropdownHtml = data.navbar.products_dropdown.map(product => `
+        <a href="${product.url}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+          <!-- Optional Logo (fallback to text if empty) -->
+          ${product.logo ? `
+            <img src="${product.logo}" alt="${product.name}" class="w-10 h-10 object-contain flex-shrink-0" />
+          ` : `
+            <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
+              ${product.name.charAt(0)}
+            </div>
+          `}
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${product.name}</span>
+              <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+            </div>
+            <span class="text-grey-dark text-[13px] leading-snug block">${product.description}</span>
+          </div>
+        </a>
+      `).join('');
+      
+      if (desktopDropdown) desktopDropdown.innerHTML = dropdownHtml;
+      
+      // For mobile, slightly simpler styling
+      if (mobileDropdown) {
+        mobileDropdown.innerHTML = data.navbar.products_dropdown.map(product => `
+          <a href="${product.url}" class="text-grey-dark text-sm hover:text-navy no-underline py-2 block">${product.name}</a>
+        `).join('');
+      }
     }
   }
 });

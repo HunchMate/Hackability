@@ -19,7 +19,33 @@
         "href": "#case-studies"
       }
     ],
-    "cta_button": "Contact Us"
+    "cta_button": "Contact Us",
+    "products_dropdown": [
+      {
+        "name": "Skill Wallet",
+        "description": "Verified skill passport to showcase competencies.",
+        "url": "#",
+        "logo": ""
+      },
+      {
+        "name": "Troven",
+        "description": "AI-assisted assessments and hiring with real project evaluation.",
+        "url": "#",
+        "logo": ""
+      },
+      {
+        "name": "SmartInternz",
+        "description": "Experiential learning and virtual internships platform.",
+        "url": "#",
+        "logo": ""
+      },
+      {
+        "name": "Impact369",
+        "description": "Program impact tracking and outcome analytics.",
+        "url": "#",
+        "logo": ""
+      }
+    ]
   },
   "hero": {
     "parent": {

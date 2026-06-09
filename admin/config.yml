@@ -22,6 +22,14 @@ collections:
             fields:
               - {label: "Brand Name", name: "brand_name", widget: "string"}
               - {label: "CTA Button Text", name: "cta_button", widget: "string"}
+              - label: "Products Dropdown"
+                name: "products_dropdown"
+                widget: "list"
+                fields:
+                  - {label: "Name", name: "name", widget: "string"}
+                  - {label: "Description", name: "description", widget: "string"}
+                  - {label: "URL", name: "url", widget: "string"}
+                  - {label: "Logo Image", name: "logo", widget: "image", required: false}
               
           # Hero
           - label: "Hero Sections"

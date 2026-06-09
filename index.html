@@ -61,7 +61,15 @@
       <ul id="nav-links-desktop" class="hidden md:flex items-center gap-8 list-none m-0 p-0">
         <li><a href="#about" class="nav-link text-grey-dark text-sm font-medium no-underline">About</a></li>
         <li><a href="#verticals" class="nav-link text-grey-dark text-sm font-medium no-underline">Verticals</a></li>
-        <li><a href="#products" class="nav-link text-grey-dark text-sm font-medium no-underline">Products</a></li>
+        <li id="nav-products-container" class="relative group">
+          <a href="#products" class="nav-link flex items-center gap-1 text-grey-dark text-sm font-medium no-underline py-4 cursor-pointer">
+            Products <i class="ph-bold ph-caret-down text-xs text-grey-mid"></i>
+          </a>
+          <!-- Dropdown Menu -->
+          <div id="products-dropdown-desktop" class="absolute top-full -left-4 w-[420px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-hk-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col p-2 transform origin-top-left scale-95 group-hover:scale-100">
+            <!-- Populated by JS -->
+          </div>
+        </li>
         <li><a href="#case-studies" class="nav-link text-grey-dark text-sm font-medium no-underline">Case Studies</a></li>
       </ul>
 
@@ -82,7 +90,15 @@
       <div id="nav-links-mobile" class="flex flex-col gap-4">
         <a href="#about" class="text-grey-dark text-base font-medium no-underline">About</a>
         <a href="#verticals" class="text-grey-dark text-base font-medium no-underline">Verticals</a>
-        <a href="#products" class="text-grey-dark text-base font-medium no-underline">Products</a>
+        
+        <div class="flex flex-col gap-2">
+          <a href="#products" class="text-grey-dark text-base font-medium no-underline flex items-center gap-1" onclick="document.getElementById('products-dropdown-mobile').classList.toggle('hidden')">
+            Products <i class="ph-bold ph-caret-down text-xs"></i>
+          </a>
+          <div id="products-dropdown-mobile" class="hidden flex-col gap-2 pl-4 border-l-2 border-navy-tint ml-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
         <a href="#case-studies" class="text-grey-dark text-base font-medium no-underline">Case Studies</a>
       </div>
       <a href="#contact" class="btn-navy mt-2 justify-center">

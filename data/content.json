@@ -21,13 +21,9 @@
       {
         "label": "Impact",
         "href": "#impact"
-      },
-      {
-        "label": "Contact",
-        "href": "#contact"
       }
     ],
-    "cta_button": "Partner With Us"
+    "cta_button": "Contact Us"
   },
   "hero": {
     "parent": {

@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "title": "Stanford University",
+      "category": "Colleges",
+      "description": "Leading research university partnering for innovation.",
+      "logo": "assets/logo-dark.png",
+      "url": "https://stanford.edu"
+    }
+  ]
+}

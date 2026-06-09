@@ -155,3 +155,21 @@ collections:
               - {label: "Description", name: "description", widget: "text"}
               - {label: "Contact Email", name: "contact_email", widget: "string"}
               - {label: "Copyright Text", name: "copyright", widget: "string"}
+
+  - name: "partners_data"
+    label: "Partner Directory"
+    files:
+      - label: "All Partners"
+        name: "partners_list"
+        file: "data/partners.json"
+        format: json
+        fields:
+          - label: "Partners"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Partner Name", name: "title", widget: "string"}
+              - {label: "Category", name: "category", widget: "select", options: ["Colleges", "Organizations", "Mentors"]}
+              - {label: "Description", name: "description", widget: "text", required: false}
+              - {label: "Logo Image", name: "logo", widget: "image"}
+              - {label: "Website URL", name: "url", widget: "string", required: false}

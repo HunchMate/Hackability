@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackability — Partner Directory</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Tailwind CDN (dev only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:        '#0D1B8E',
+            'navy-dark': '#0A1570',
+            'navy-mid':  '#1A2FA8',
+            'navy-tint': '#E8F0FF',
+            yellow:      '#F5C200',
+            'grey-light': '#F4F4F6',
+            'grey-mid':   '#9CA3AF',
+            'grey-dark':  '#374151',
+            'hk-border':  '#E2E8F0',
+          },
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+            data:    ['Space Grotesk', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="font-body bg-grey-light text-grey-dark pt-24">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-hk-border shadow-sm" style="height:72px;">
+    <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+      <a href="/" class="flex items-center">
+        <img src="assets/logo-dark.png" alt="Hackability" style="height:36px;" />
+      </a>
+      <a href="/" class="text-navy font-semibold flex items-center gap-2 hover:underline">
+        <i class="ph-bold ph-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===================== DIRECTORY HERO ===================== -->
+  <section class="bg-navy py-20 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <h1 id="directory-title" class="font-display font-bold text-white text-4xl md:text-5xl mb-4">Our Partners</h1>
+      <p id="directory-subtitle" class="text-white/80 text-lg">Discover the amazing institutions and organizations we work with.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FILTER ===================== -->
+  <section class="py-8 bg-white border-b border-hk-border sticky top-[72px] z-40">
+    <div class="max-w-7xl mx-auto px-6 flex justify-center gap-4">
+      <button class="filter-btn px-6 py-2 rounded-full font-semibold border-2 transition-colors active" data-category="All">All</button>
+      <button class="filter-btn px-6 py-2 rounded-full font-semibold border-2 border-hk-border text-grey-dark hover:border-navy hover:text-navy transition-colors" data-category="Colleges">Colleges</button>
+      <button class="filter-btn px-6 py-2 rounded-full font-semibold border-2 border-hk-border text-grey-dark hover:border-navy hover:text-navy transition-colors" data-category="Organizations">Organizations</button>
+      <button class="filter-btn px-6 py-2 rounded-full font-semibold border-2 border-hk-border text-grey-dark hover:border-navy hover:text-navy transition-colors" data-category="Mentors">Mentors</button>
+    </div>
+  </section>
+
+  <!-- ===================== GRID ===================== -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div id="partners-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <!-- JS injects here -->
+        <div class="col-span-full text-center py-12 text-grey-mid" id="loading-indicator">
+          Loading partners...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .filter-btn.active {
+      border-color: #0D1B8E;
+      background-color: #0D1B8E;
+      color: white;
+    }
+  </style>
+
+  <script src="js/partners.js"></script>
+</body>
+</html>

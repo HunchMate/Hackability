@@ -32,19 +32,19 @@
       {
         "name": "Colleges",
         "description": "Partner institutions.",
-        "url": "#",
+        "url": "partners.html?category=Colleges",
         "logo": ""
       },
       {
         "name": "Organizations",
         "description": "Corporate partners.",
-        "url": "#",
+        "url": "partners.html?category=Organizations",
         "logo": ""
       },
       {
         "name": "Mentors",
         "description": "Our expert mentors.",
-        "url": "#",
+        "url": "partners.html?category=Mentors",
         "logo": ""
       }
     ]

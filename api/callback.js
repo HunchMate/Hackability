@@ -27,7 +27,21 @@ export default async function handler(req, res) {
     const data = await response.json();
     
     if (data.error) {
-      return res.status(400).json({ error: data.error, error_description: data.error_description });
+      return res.status(400).send(`
+        <div style="font-family: system-ui; max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ffcdd2; border-radius: 8px; background: #ffebee;">
+          <h2 style="color: #c62828;">Authentication Failed</h2>
+          <p><strong>Error:</strong> <code>${data.error}</code></p>
+          <p><strong>Reason:</strong> ${data.error_description}</p>
+          <hr style="border-color: #ffcdd2; margin: 20px 0;">
+          <h3 style="color: #c62828;">How to fix this:</h3>
+          <ol style="line-height: 1.6;">
+            <li><strong>Did you refresh this popup?</strong> The login code can only be used once. Close this window and click the Login button again.</li>
+            <li><strong>Did you forget to Redeploy?</strong> After adding your Client ID and Client Secret in Vercel, you MUST go to the Deployments tab and click <strong>Redeploy</strong>. Environment variables don't apply until you do a fresh deployment.</li>
+            <li><strong>Is the Client Secret correct?</strong> Double-check that you copied the exact Client Secret from GitHub (not the Client ID twice) and that there are no extra spaces.</li>
+          </ol>
+          <p>Please close this popup and try again.</p>
+        </div>
+      `);
     }
 
     const token = data.access_token;

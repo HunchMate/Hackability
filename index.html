@@ -146,9 +146,9 @@
       </svg>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="max-w-7xl mx-auto px-6 py-24 flex flex-col items-center">
       <!-- Text column -->
-      <div id="hero-text">
+      <div id="hero-text" class="flex flex-col items-center text-center max-w-4xl mx-auto">
 
         <!-- Back button (hidden on parent) -->
         <button id="back-btn" aria-label="Go back to parent page">
@@ -157,25 +157,26 @@
         </button>
 
         <!-- Eyebrow -->
-        <div class="flex items-center gap-3 mb-6 reveal">
+        <div class="flex items-center justify-center gap-3 mb-6 reveal">
           <div style="width:32px;height:2px;background:#0D1B8E;"></div>
           <span id="hero-eyebrow" class="text-navy font-data font-medium text-xs uppercase tracking-widest">Innovation · Entrepreneurship · Technology</span>
+          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
         </div>
 
         <!-- H1 -->
         <h1 id="hero-title" class="font-display font-extrabold text-navy leading-tight mb-6 reveal reveal-delay-1"
-            style="font-size:clamp(36px,5vw,60px); letter-spacing:-0.5px;">
+            style="font-size:clamp(36px,5vw,64px); letter-spacing:-0.5px;">
           Building Innovation-Driven<br>
           <span style="color:#F5C200;">Talent at Scale</span>
         </h1>
 
         <!-- Subtext -->
-        <p id="hero-sub" class="text-lg mb-10 reveal reveal-delay-2 text-grey-dark" style="max-width:520px; line-height:1.7;">
+        <p id="hero-sub" class="text-lg md:text-xl mb-10 reveal reveal-delay-2 text-grey-dark" style="max-width:700px; line-height:1.7;">
           We help institutions develop future-ready talent through innovation, entrepreneurship, and emerging technologies — connecting academia, industry, and opportunity.
         </p>
 
         <!-- CTAs -->
-        <div class="flex flex-wrap gap-4 mb-16 reveal reveal-delay-3">
+        <div class="flex flex-wrap justify-center gap-4 mb-20 reveal reveal-delay-3">
           <a href="#verticals" id="hero-primary-btn" class="btn-navy">
             <i class="ph-bold ph-rocket-launch" style="font-size:18px;"></i>
             Explore Our Ecosystem
@@ -187,56 +188,40 @@
         </div>
 
         <!-- Redirect portal cards -->
-        <div id="portal-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal reveal-delay-4">
+        <div id="portal-cards" class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 reveal reveal-delay-4">
 
           <!-- College portal -->
           <button onclick="switchPage('college')"
-            class="portal-card text-left p-6 rounded-2xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-navy-tint hover:bg-white group">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-navy/10 flex items-center justify-center group-hover:bg-navy/15 transition-colors">
-                <i class="ph-bold ph-graduation-cap" style="font-size:20px;color:#0D1B8E;"></i>
+            class="portal-card text-left p-8 md:p-12 rounded-3xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-navy-tint hover:bg-white group shadow-sm hover:shadow-xl">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-navy/10 flex items-center justify-center group-hover:bg-navy/15 transition-colors">
+                <i class="ph-bold ph-graduation-cap" style="font-size:32px;color:#0D1B8E;"></i>
               </div>
-              <span class="text-grey-mid text-xs font-medium uppercase tracking-wider">For Colleges</span>
+              <span class="text-grey-mid text-sm font-semibold uppercase tracking-widest">For Colleges</span>
             </div>
-            <div class="text-navy font-display font-semibold text-lg mb-1">Hackability</div>
-            <div class="text-grey-dark text-sm">Innovation & talent development for higher education</div>
-            <div class="flex items-center gap-1 mt-4 text-navy text-sm font-semibold">
-              Explore <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i>
+            <div class="text-navy font-display font-bold text-3xl mb-3">Hackability</div>
+            <div class="text-grey-dark text-lg mb-8">Innovation & talent development for higher education</div>
+            <div class="flex items-center gap-2 text-navy text-lg font-bold group-hover:text-yellow transition-colors">
+              Explore <i class="ph-bold ph-arrow-right" style="font-size:18px;"></i>
             </div>
           </button>
 
           <!-- School portal -->
           <button onclick="switchPage('school')"
-            class="portal-card text-left p-6 rounded-2xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-navy-tint hover:bg-white group">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-yellow-tint flex items-center justify-center group-hover:bg-yellow/20 transition-colors">
-                <i class="ph-bold ph-backpack" style="font-size:20px;color:#D4A800;"></i>
+            class="portal-card text-left p-8 md:p-12 rounded-3xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-yellow-tint hover:bg-white group shadow-sm hover:shadow-xl">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-yellow/20 flex items-center justify-center group-hover:bg-yellow/30 transition-colors">
+                <i class="ph-bold ph-backpack" style="font-size:32px;color:#D4A800;"></i>
               </div>
-              <span class="text-grey-mid text-xs font-medium uppercase tracking-wider">For Schools</span>
+              <span class="text-grey-mid text-sm font-semibold uppercase tracking-widest">For Schools</span>
             </div>
-            <div class="text-navy font-display font-semibold text-lg mb-1">Hatch</div>
-            <div class="text-grey-dark text-sm">Entrepreneurial learning for Grades 3–12</div>
-            <div class="flex items-center gap-1 mt-4 text-navy text-sm font-semibold">
-              Explore <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i>
+            <div class="text-navy font-display font-bold text-3xl mb-3">Hatch</div>
+            <div class="text-grey-dark text-lg mb-8">Entrepreneurial learning for Grades 3–12</div>
+            <div class="flex items-center gap-2 text-navy text-lg font-bold group-hover:text-yellow transition-colors">
+              Explore <i class="ph-bold ph-arrow-right" style="font-size:18px;"></i>
             </div>
           </button>
 
-        </div>
-      </div>
-
-      <!-- Right visual column — decorative graphic -->
-      <div class="hidden lg:flex items-center justify-center relative">
-        <svg width="420" height="420" viewBox="0 0 420 420" aria-hidden="true" class="hero-triangle" style="animation-delay:1s;">
-          <polygon points="210,30 390,370 30,370" fill="none" stroke="#0D1B8E" stroke-width="2" opacity="0.12"/>
-          <polygon points="210,80 340,330 80,330" fill="none" stroke="#0D1B8E" stroke-width="1.5" opacity="0.08"/>
-          <polygon points="210,130 290,290 130,290" fill="#0D1B8E" opacity="0.05"/>
-        </svg>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="text-center">
-            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-              <polygon points="40,8 72,68 8,68" fill="#F5C200" opacity="0.9"/>
-            </svg>
-          </div>
         </div>
       </div>
     </div>

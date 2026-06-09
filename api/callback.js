@@ -6,6 +6,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    const host = req.headers.host;
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const redirect_uri = `${protocol}://${host}/api/callback`;
+
     const response = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
@@ -15,7 +19,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
-        code
+        code,
+        redirect_uri
       })
     });
 

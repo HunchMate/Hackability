@@ -1,10 +1,7 @@
 # local_backend: true
 backend:
-  name: github
-  repo: HunchMate/Hackability
+  name: git-gateway
   branch: main
-  base_url: /api # This points to our Vercel serverless function directory
-  auth_endpoint: auth # So it calls /api/auth
 
 media_folder: "assets"
 public_folder: "assets"

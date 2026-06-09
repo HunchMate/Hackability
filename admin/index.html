@@ -6,16 +6,13 @@
     <title>Content Manager</title>
     <!-- Explicitly tell CMS where to find the config file -->
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     
-    <!-- Script to handle implicit OAuth callback from Vercel Serverless Function -->
-    <script>
-      // Netlify CMS / Decap CMS expects the auth provider to send a postMessage back to the window
-      // The Vercel function will handle this, but we also include the standard netlify-identity-widget just in case for local testing
-    </script>
+    <!-- Netlify CMS requires identity widget on the page to handle auth tokens -->
     
     <!-- Custom Iframe Preview for Live Editing -->
     <script>

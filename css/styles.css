@@ -1,0 +1,280 @@
+:root {
+  --hk-navy:        #0D1B8E;
+  --hk-navy-dark:   #0A1570;
+  --hk-navy-mid:    #1A2FA8;
+  --hk-navy-tint:   #E8F0FF;
+  --hk-yellow:      #F5C200;
+  --hk-yellow-dark: #D4A800;
+  --hk-yellow-tint: #FFF8D6;
+  --hk-white:       #FFFFFF;
+  --hk-grey-light:  #F4F4F6;
+  --hk-grey-mid:    #9CA3AF;
+  --hk-grey-dark:   #374151;
+  --hk-border:      #E2E8F0;
+  --hk-body-dark:   rgba(255,255,255,0.82);
+
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+}
+
+/* Font application */
+h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+body, p, a, li, input, button { font-family: 'DM Sans', sans-serif; }
+.font-data { font-family: 'Space Grotesk', sans-serif; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Selection color */
+::selection { background: var(--hk-yellow); color: var(--hk-navy); }
+
+/* Scroll reveal base state */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger helpers */
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+.reveal-delay-5 { transition-delay: 400ms; }
+
+/* Logo carousel */
+.carousel-track {
+  display: flex;
+  gap: 48px;
+  animation: carousel 40s linear infinite;
+  width: max-content;
+}
+.carousel-track:hover { animation-play-state: paused; }
+@keyframes carousel {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Counter animation */
+.stat-number[data-count] {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+}
+
+/* Triangle float animation (hero decoration) */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-triangle {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50%       { transform: translateY(-14px) rotate(2deg); }
+  }
+  .reveal { transition: opacity 0.4s ease, transform 0.4s ease; }
+}
+
+/* Nav underline hover */
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--hk-navy);
+  transition: width var(--transition-normal);
+}
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+
+/* Page transition (parent ↔ college ↔ school) */
+.page-section {
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.page-section.exiting {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===========================
+   BUTTON CLASSES
+   =========================== */
+
+/* Primary — yellow fill */
+.btn-yellow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--hk-yellow);
+  color: var(--hk-navy);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.btn-yellow:hover {
+  background: var(--hk-yellow-dark);
+  transform: translateY(-1px);
+}
+
+/* Secondary — navy fill (on light sections) */
+.btn-navy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--hk-navy);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.btn-navy:hover {
+  background: var(--hk-navy-dark);
+  transform: translateY(-1px);
+}
+
+/* Ghost — outline on dark bg */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 13px 27px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(255,255,255,0.45);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.btn-ghost:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Text arrow link */
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--hk-navy);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: gap var(--transition-fast);
+}
+.btn-link:hover { gap: 8px; }
+.btn-link.on-dark { color: var(--hk-yellow); }
+
+/* Hero text transitions */
+#hero-text {
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+.footer-link {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+}
+.footer-link:hover {
+  color: #fff;
+}
+
+/* ===========================
+   CASE STUDY CARDS
+   =========================== */
+.case-study-card {
+  background: #fff;
+  border: 1px solid var(--hk-border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+.case-study-card:hover {
+  border-color: var(--hk-navy);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(13, 27, 142, 0.08);
+}
+
+/* ===========================
+   CUSTOM SCROLLBAR (subtle)
+   =========================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--hk-grey-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hk-grey-mid);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hk-navy);
+}
+
+/* Back button styling */
+#back-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--hk-navy-tint);
+  color: var(--hk-navy);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--hk-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  margin-bottom: 20px;
+}
+#back-btn:hover {
+  background: var(--hk-navy);
+  color: #fff;
+  border-color: var(--hk-navy);
+}
+
+/* Portal card hover glow */
+.portal-card {
+  transition: all 300ms ease;
+}
+.portal-card:hover {
+  box-shadow: 0 0 30px rgba(245, 194, 0, 0.1);
+}

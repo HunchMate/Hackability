@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Manager</title>
+    <!-- Explicitly tell CMS where to find the config file -->
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <!-- Include the script that builds the page and powers Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
+    <!-- Script to handle implicit OAuth callback from Vercel Serverless Function -->
+    <script>
+      // Netlify CMS / Decap CMS expects the auth provider to send a postMessage back to the window
+      // The Vercel function will handle this, but we also include the standard netlify-identity-widget just in case for local testing
+    </script>
+    
+    <!-- Custom Iframe Preview for Live Editing -->
+    <script>
+      var IframePreview = createClass({
+        getInitialState: function() {
+          return { iframeLoaded: false };
+        },
+        handleLoad: function() {
+          this.setState({ iframeLoaded: true });
+          this.sendData();
+        },
+        sendData: function() {
+          var iframe = document.getElementById('preview-iframe');
+          if (iframe && iframe.contentWindow && this.state.iframeLoaded) {
+            var data = this.props.entry.get('data').toJS();
+            iframe.contentWindow.postMessage({ type: 'cms-preview-update', payload: data }, '*');
+          }
+        },
+        componentDidUpdate: function() {
+          this.sendData();
+        },
+        render: function() {
+          return h('iframe', {
+            id: 'preview-iframe',
+            src: '/',
+            onLoad: this.handleLoad,
+            style: { width: '100%', height: '100vh', border: 'none', margin: '0', padding: '0' }
+          });
+        }
+      });
+
+      // Register the preview template for the 'homepage' file within the collection
+      CMS.registerPreviewTemplate("homepage", IframePreview);
+
+      // Automatically refresh the preview iframe when the user clicks publish/save
+      CMS.registerEventListener({
+        name: 'postSave',
+        handler: function() {
+          var iframe = document.getElementById('preview-iframe');
+          if (iframe) {
+            // Force reload the iframe, bypassing cache
+            iframe.src = '/?refresh=' + new Date().getTime();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

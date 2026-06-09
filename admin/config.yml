@@ -1,0 +1,144 @@
+# local_backend: true
+backend:
+  name: github
+  repo: HunchMate/Hackability
+  branch: main
+  base_url: /api # This points to our Vercel serverless function directory
+  auth_endpoint: auth # So it calls /api/auth
+
+media_folder: "assets"
+public_folder: "assets"
+
+collections:
+  - name: "site_content"
+    label: "Website Content"
+    files:
+      - label: "Homepage Sections"
+        name: "homepage"
+        file: "data/content.json"
+        format: json
+        fields:
+          # Navbar
+          - label: "Navbar"
+            name: "navbar"
+            widget: "object"
+            fields:
+              - {label: "Brand Name", name: "brand_name", widget: "string"}
+              - {label: "CTA Button Text", name: "cta_button", widget: "string"}
+              
+          # Hero
+          - label: "Hero Sections"
+            name: "hero"
+            widget: "object"
+            fields:
+              - label: "Parent View"
+                name: "parent"
+                widget: "object"
+                fields:
+                  - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+                  - {label: "Title (HTML allowed)", name: "title", widget: "string"}
+                  - {label: "Subtitle", name: "subtitle", widget: "text"}
+                  - {label: "Primary Button", name: "primary_btn", widget: "string"}
+                  - {label: "Secondary Button", name: "secondary_btn", widget: "string"}
+                  - {label: "Nav Brand", name: "navBrand", widget: "string"}
+              - label: "College View"
+                name: "college"
+                widget: "object"
+                fields:
+                  - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+                  - {label: "Title (HTML allowed)", name: "title", widget: "string"}
+                  - {label: "Subtitle", name: "subtitle", widget: "text"}
+                  - {label: "Primary Button", name: "primary_btn", widget: "string"}
+                  - {label: "Secondary Button", name: "secondary_btn", widget: "string"}
+                  - {label: "Nav Brand", name: "navBrand", widget: "string"}
+                  - {label: "Back Button Label", name: "backLabel", widget: "string"}
+              - label: "School View"
+                name: "school"
+                widget: "object"
+                fields:
+                  - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+                  - {label: "Title (HTML allowed)", name: "title", widget: "string"}
+                  - {label: "Subtitle", name: "subtitle", widget: "text"}
+                  - {label: "Primary Button", name: "primary_btn", widget: "string"}
+                  - {label: "Secondary Button", name: "secondary_btn", widget: "string"}
+                  - {label: "Nav Brand", name: "navBrand", widget: "string"}
+                  - {label: "Back Button Label", name: "backLabel", widget: "string"}
+
+          # About
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "CTA Text", name: "cta_text", widget: "string"}
+
+          # Verticals
+          - label: "Verticals"
+            name: "verticals"
+            widget: "object"
+            fields:
+              - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - label: "Cards"
+                name: "cards"
+                widget: "list"
+                fields:
+                  - {label: "Icon Class", name: "icon", widget: "string"}
+                  - {label: "Title", name: "title", widget: "string"}
+                  - {label: "Description", name: "description", widget: "text"}
+                  - {label: "Tags", name: "tags", widget: "list", field: {name: tag, widget: string}}
+
+          # Products
+          - label: "Products Section"
+            name: "products"
+            widget: "object"
+            fields:
+              - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Badge", name: "badge", widget: "string"}
+              - {label: "Product Name", name: "product_name", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - label: "Features"
+                name: "features"
+                widget: "list"
+                fields:
+                  - {label: "Icon Class", name: "icon", widget: "string"}
+                  - {label: "Text", name: "text", widget: "string"}
+              - {label: "CTA Text", name: "cta_text", widget: "string"}
+
+          # Impact
+          - label: "Impact Stats"
+            name: "impact"
+            widget: "object"
+            fields:
+              - {label: "Eyebrow", name: "eyebrow", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - label: "Stats"
+                name: "stats"
+                widget: "list"
+                fields:
+                  - {label: "Icon Class", name: "icon", widget: "string"}
+                  - {label: "Number", name: "number", widget: "number"}
+                  - {label: "Suffix", name: "suffix", widget: "string"}
+                  - {label: "Label", name: "label", widget: "string"}
+
+          # CTA
+          - label: "CTA Section"
+            name: "cta"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Subtitle", name: "subtitle", widget: "text"}
+              - {label: "Primary Button", name: "primary_btn", widget: "string"}
+              - {label: "Secondary Button", name: "secondary_btn", widget: "string"}
+
+          # Footer
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Contact Email", name: "contact_email", widget: "string"}
+              - {label: "Copyright Text", name: "copyright", widget: "string"}

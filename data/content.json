@@ -1,0 +1,168 @@
+{
+  "navbar": {
+    "brand_name": "Hack",
+    "links": [
+      {
+        "label": "About",
+        "href": "#about"
+      },
+      {
+        "label": "Verticals",
+        "href": "#verticals"
+      },
+      {
+        "label": "Products",
+        "href": "#products"
+      },
+      {
+        "label": "Case Studies",
+        "href": "#case-studies"
+      },
+      {
+        "label": "Impact",
+        "href": "#impact"
+      },
+      {
+        "label": "Contact",
+        "href": "#contact"
+      }
+    ],
+    "cta_button": "Partner With Us"
+  },
+  "hero": {
+    "parent": {
+      "eyebrow": "Innovation · Entrepreneurship · Technology",
+      "title": "Building Innovation-Driven<br><span style=\"color:#F5C200;\">Talent at Scale</span>",
+      "subtitle": "we do hackathons\n",
+      "primary_btn": "Explore Our Ecosystem",
+      "secondary_btn": "Partner With Us",
+      "navBrand": "Hackability"
+    },
+    "college": {
+      "eyebrow": "For Colleges & Universities & institutions",
+      "title": "Building Innovation Ecosystems in<br><span style=\"color:#F5C200;\">Higher Education</span>",
+      "subtitle": "We partner with colleges and universities to strengthen innovation culture, industry engagement, and student talent development through structured programs and ecosystems.",
+      "primary_btn": "View College Programs",
+      "secondary_btn": "Book a Consultation",
+      "navBrand": "Hackability · For Colleges",
+      "backLabel": "← Back to Hackability"
+    },
+    "school": {
+      "eyebrow": "For Schools · Grades 3–12",
+      "title": "Entrepreneurial Learning for<br><span style=\"color:#F5C200;\">Every School</span>",
+      "subtitle": "Hatch by Hackability partners with schools to give students in Grades 3–12 the entrepreneurial mindset, innovation skills, and future-ready capabilities they need.",
+      "primary_btn": "Explore Hatch Programs",
+      "secondary_btn": "Bring Hatch to Your School",
+      "navBrand": "Hatch · by Hackability",
+      "backLabel": "← Back to Hackability"
+    }
+  },
+  "about": {
+    "eyebrow": "About Us",
+    "title": "Bridging the Gap Between Education and the Future of Work",
+    "description": "The world is changing faster than ever, and traditional education models struggle to keep pace. Hackability exists to close this gap by infusing innovation, technology, and entrepreneurial thinking directly into schools and universities.",
+    "cta_text": "Read Our Full Story"
+  },
+  "verticals": {
+    "eyebrow": "Our Core Verticals",
+    "title": "A Holistic Approach to Innovation",
+    "cards": [
+      {
+        "icon": "ph-rocket-launch",
+        "title": "Hatch",
+        "description": "Entrepreneurial learning and innovation programs specifically designed for school students (Grades 3–12) to build early foundations.",
+        "tags": [
+          "Schools",
+          "Foundational"
+        ]
+      },
+      {
+        "icon": "ph-graduation-cap",
+        "title": "Hackability Campus",
+        "description": "Comprehensive innovation ecosystems, incubators, and project-based learning centers built within higher-education institutions.",
+        "tags": [
+          "Universities",
+          "Ecosystem"
+        ]
+      },
+      {
+        "icon": "ph-briefcase",
+        "title": "Industry Connect",
+        "description": "Bridging the gap between academic talent and corporate needs through hackathons, internships, and sponsored challenges.",
+        "tags": [
+          "Corporate",
+          "Career"
+        ]
+      }
+    ]
+  },
+  "products": {
+    "eyebrow": "Products",
+    "title": "Digital Infrastructure for Innovation Ecosystems",
+    "badge": "Campus Innovation Platform",
+    "product_name": "inCamp",
+    "description": "An internal innovation management platform designed for campuses. inCamp helps institutions implement, manage, and scale innovation, entrepreneurship, project-based learning, industry engagement, and talent development through a centralized digital system.",
+    "features": [
+      {
+        "icon": "ph-sliders",
+        "text": "Manage and track innovation programs end-to-end"
+      },
+      {
+        "icon": "ph-trend-up",
+        "text": "Scale initiatives across departments and campuses"
+      },
+      {
+        "icon": "ph-circles-three-plus",
+        "text": "Centralize industry engagement and student talent pipelines"
+      }
+    ],
+    "cta_text": "Explore inCamp"
+  },
+  "impact": {
+    "eyebrow": "Our Impact",
+    "title": "Creating Meaningful Outcomes",
+    "stats": [
+      {
+        "icon": "ph-student",
+        "number": 500,
+        "suffix": "+",
+        "label": "Students Impacted"
+      },
+      {
+        "icon": "ph-bank",
+        "number": 30,
+        "suffix": "+",
+        "label": "Institutions Engaged"
+      },
+      {
+        "icon": "ph-briefcase",
+        "number": 20,
+        "suffix": "+",
+        "label": "Industry Partners"
+      },
+      {
+        "icon": "ph-clipboard-text",
+        "number": 50,
+        "suffix": "+",
+        "label": "Programs Delivered"
+      },
+      {
+        "icon": "ph-door-open",
+        "number": 100,
+        "suffix": "+",
+        "label": "Opportunities Enabled"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Transform Your Campus?",
+    "subtitle": "Join leading institutions in building the next generation of innovators.",
+    "primary_btn": "Partner With Us",
+    "secondary_btn": "Schedule a Demo"
+  },
+  "footer": {
+    "description": "Building innovation-driven talent at scale through strategic partnerships and ecosystem-driven initiatives.",
+    "contact_email": "hello@hackability.in",
+    "copyright": "© 2024 Hackability. All rights reserved."
+  }
+}

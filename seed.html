@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seed Firestore Data</title>
+</head>
+<body style="font-family: monospace; padding: 40px; background: #1a1a2e; color: #e0e0e0;">
+  <h1 style="color: #F5C200;">🌱 Firestore Data Seeder</h1>
+  <p>This page pushes your current content.json and partners.json data into Firebase Firestore.</p>
+  <button id="seed-btn" style="padding: 12px 24px; background: #0D1B8E; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 16px;">
+    Seed All Data to Firestore
+  </button>
+  <pre id="log" style="margin-top: 24px; padding: 16px; background: #111; border-radius: 8px; white-space: pre-wrap; min-height: 200px;"></pre>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4Yi7dHSOvmjb2victqbUI_H6Y86YMeIQ",
+      authDomain: "hackability-a6980.firebaseapp.com",
+      projectId: "hackability-a6980",
+      storageBucket: "hackability-a6980.firebasestorage.app",
+      messagingSenderId: "361281138633",
+      appId: "1:361281138633:web:740138b0c8ef277a760218"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const logEl = document.getElementById('log');
+    function log(msg) {
+      logEl.textContent += msg + '\n';
+    }
+
+    document.getElementById('seed-btn').addEventListener('click', async () => {
+      document.getElementById('seed-btn').disabled = true;
+      document.getElementById('seed-btn').textContent = 'Seeding...';
+      log('Starting seed process...\n');
+
+      // 1. Seed content.json → site_content/homepage
+      try {
+        log('📄 Fetching data/content.json...');
+        const contentRes = await fetch('data/content.json');
+        const contentData = await contentRes.json();
+        
+        log('🔥 Writing to Firestore: site_content/homepage ...');
+        await db.collection('site_content').doc('homepage').set(contentData);
+        log('✅ Homepage content seeded successfully!\n');
+      } catch (err) {
+        log('❌ Error seeding content: ' + err.message + '\n');
+      }
+
+      // 2. Seed partners.json → partners collection
+      try {
+        log('📄 Fetching data/partners.json...');
+        const partnersRes = await fetch('data/partners.json');
+        const partnersData = await partnersRes.json();
+        const items = partnersData.items || [];
+
+        log(`🔥 Writing ${items.length} partner(s) to Firestore: partners/...`);
+        for (const partner of items) {
+          const docRef = await db.collection('partners').add(partner);
+          log(`   ✅ Added: ${partner.title} (ID: ${docRef.id})`);
+        }
+        log('\n✅ All partners seeded successfully!\n');
+      } catch (err) {
+        log('❌ Error seeding partners: ' + err.message + '\n');
+      }
+
+      log('🎉 DONE! You can now close this page.');
+      log('Your website will now load content from Firestore instead of JSON files.');
+      document.getElementById('seed-btn').textContent = '✅ Seeding Complete!';
+      document.getElementById('seed-btn').style.background = '#22c55e';
+    });
+  </script>
+</body>
+</html>

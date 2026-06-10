@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partners — Hackability Admin</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230D1B8E'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='%23F5C200' font-size='18' font-weight='bold'>H</text></svg>" />
+</head>
+<body>
+
+  <!-- Mobile sidebar toggle -->
+  <button class="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+  <div class="sidebar-overlay"></div>
+
+  <div class="admin-layout">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">H</div>
+        <h2>Hack<span>ability</span></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Content</div>
+        <a href="dashboard.html">
+          <span class="nav-icon">📄</span> Dashboard
+        </a>
+        <a href="partners.html" class="active">
+          <span class="nav-icon">🤝</span> Partners
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="logout-btn" class="btn btn-ghost btn-block btn-logout">
+          ⎋ Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN AREA ========== -->
+    <div class="main-area">
+      <!-- Header -->
+      <header class="header">
+        <span class="header-title">Partners Manager</span>
+        <div class="header-user">
+          <span id="user-email"></span>
+          <div class="avatar" id="user-avatar">A</div>
+        </div>
+      </header>
+
+      <!-- Page Loader -->
+      <div id="page-loader" class="page-loader">
+        <div class="spinner"></div>
+        <p>Loading partners…</p>
+      </div>
+
+      <!-- Main Content -->
+      <div id="main-content" class="content-wide" style="display:none">
+        <h1 class="page-title">Partners</h1>
+        <p class="page-subtitle">Manage colleges, organizations, and mentors.</p>
+
+        <!-- Toolbar -->
+        <div class="partners-toolbar">
+          <span id="partners-count" class="partners-count">0 partners</span>
+          <button class="btn btn-yellow" onclick="openModal()">+ Add Partner</button>
+        </div>
+
+        <!-- Partners Grid -->
+        <div id="partners-grid" class="partners-grid">
+          <div class="empty-state" style="grid-column:1/-1">
+            <div class="empty-icon">🤝</div>
+            <h4>No partners yet</h4>
+            <p>Click "Add Partner" to add your first partner.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PARTNER MODAL ========== -->
+  <div id="partner-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Partner</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="partner-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="partner-name">Partner Name *</label>
+            <input type="text" id="partner-name" placeholder="e.g. MIT, Google, etc." required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="partner-category">Category</label>
+              <select id="partner-category">
+                <option value="Colleges">Colleges</option>
+                <option value="Organizations">Organizations</option>
+                <option value="Mentors">Mentors</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="partner-url">Website URL</label>
+              <input type="url" id="partner-url" placeholder="https://…" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="partner-description">Description</label>
+            <textarea id="partner-description" placeholder="Brief description of this partner…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Logo</label>
+            <div class="upload-area">
+              <input type="file" accept="image/*" onchange="handleLogoUpload(this)" />
+              <div class="upload-icon">📁</div>
+              <div class="upload-text">Drop an image or <span>browse</span></div>
+            </div>
+            <div class="upload-preview" id="logo-preview"></div>
+            <div class="upload-progress" id="upload-progress">
+              <div class="progress-bar">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+              </div>
+              <div class="progress-text" id="progress-text">Uploading…</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-yellow" id="save-partner-btn" onclick="savePartner()">💾 Save Partner</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+  <script src="partners-admin.js"></script>
+
+</body>
+</html>

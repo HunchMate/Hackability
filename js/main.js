@@ -68,28 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===========================
-  // CMS Content Hydration
+  // CMS Content Hydration (from Firebase Firestore)
   // ===========================
-  fetch(`data/content.json?v=${new Date().getTime()}`)
-    .then(response => response.json())
-    .then(data => {
-      hydrateCMSData(data);
-      if (window.initPageSwitcher) {
-        window.initPageSwitcher(data);
+  db.collection('site_content').doc('homepage').get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        hydrateCMSData(data);
+        if (window.initPageSwitcher) {
+          window.initPageSwitcher(data);
+        }
+      } else {
+        console.warn('No homepage content found in Firestore. Using defaults from HTML.');
       }
     })
-    .catch(error => console.error('Error loading CMS content:', error));
-
-  // Listen for Live Preview updates from Decap CMS Iframe
-  window.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'cms-preview-update') {
-      const data = event.data.payload;
-      hydrateCMSData(data);
-      if (window.initPageSwitcher) {
-        window.initPageSwitcher(data);
-      }
-    }
-  });
+    .catch(error => console.error('Error loading content from Firestore:', error));
 
   function hydrateCMSData(data) {
     // 1. Simple Text & Attribute Mapping

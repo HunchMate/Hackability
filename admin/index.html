@@ -1,63 +1,45 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager</title>
-    <!-- Explicitly tell CMS where to find the config file -->
-    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    
-    <!-- Netlify CMS requires identity widget on the page to handle auth tokens -->
-    
-    <!-- Custom Iframe Preview for Live Editing -->
-    <script>
-      var IframePreview = createClass({
-        getInitialState: function() {
-          return { iframeLoaded: false };
-        },
-        handleLoad: function() {
-          this.setState({ iframeLoaded: true });
-          this.sendData();
-        },
-        sendData: function() {
-          var iframe = document.getElementById('preview-iframe');
-          if (iframe && iframe.contentWindow && this.state.iframeLoaded) {
-            var data = this.props.entry.get('data').toJS();
-            iframe.contentWindow.postMessage({ type: 'cms-preview-update', payload: data }, '*');
-          }
-        },
-        componentDidUpdate: function() {
-          this.sendData();
-        },
-        render: function() {
-          return h('iframe', {
-            id: 'preview-iframe',
-            src: '/',
-            onLoad: this.handleLoad,
-            style: { width: '100%', height: '100vh', border: 'none', margin: '0', padding: '0' }
-          });
-        }
-      });
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Hackability Admin</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230D1B8E'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='%23F5C200' font-size='18' font-weight='bold'>H</text></svg>" />
+</head>
+<body>
 
-      // Register the preview template for the 'homepage' file within the collection
-      CMS.registerPreviewTemplate("homepage", IframePreview);
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand">
+        <h1>Hack<span>ability</span></h1>
+        <p>Admin Dashboard — Sign in to continue</p>
+      </div>
 
-      // Automatically refresh the preview iframe when the user clicks publish/save
-      CMS.registerEventListener({
-        name: 'postSave',
-        handler: function() {
-          var iframe = document.getElementById('preview-iframe');
-          if (iframe) {
-            // Force reload the iframe, bypassing cache
-            iframe.src = '/?refresh=' + new Date().getTime();
-          }
-        }
-      });
-    </script>
-  </body>
+      <div id="login-error" class="login-error"></div>
+
+      <div class="form-group">
+        <label for="login-email">Email Address</label>
+        <input type="email" id="login-email" placeholder="admin@hackability.com" autocomplete="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+
+      <button id="login-btn" class="btn btn-yellow btn-block" style="margin-top:.5rem;padding:.75rem">
+        Sign In
+      </button>
+    </div>
+  </div>
+
+  <!-- Firebase Compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+  <script src="admin.js"></script>
+
+</body>
 </html>

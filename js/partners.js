@@ -5,17 +5,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   let partners = [];
 
-  // 1. Fetch data
+  // 1. Fetch data from Firebase Firestore
   try {
-    const res = await fetch(`data/partners.json?v=${new Date().getTime()}`);
-    if (res.ok) {
-      const data = await res.json();
-      partners = data.items || [];
-    } else {
-      console.warn('Could not load partners.json');
-    }
+    const snapshot = await db.collection('partners').get();
+    partners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (err) {
-    console.error('Error fetching partners:', err);
+    console.error('Error fetching partners from Firestore:', err);
   }
 
   // Remove loading

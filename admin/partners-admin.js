@@ -1,21 +1,6 @@
 /* ============================================================
-   Hackability Admin — Partners Management JavaScript
+   Hackability Admin — Partners Management JavaScript (Supabase)
    ============================================================ */
-
-// ---------- Firebase Config ----------
-const firebaseConfig = {
-  apiKey: "AIzaSyC4Yi7dHSOvmjb2victqbUI_H6Y86YMeIQ",
-  authDomain: "hackability-a6980.firebaseapp.com",
-  projectId: "hackability-a6980",
-  storageBucket: "hackability-a6980.firebasestorage.app",
-  messagingSenderId: "361281138633",
-  appId: "1:361281138633:web:740138b0c8ef277a760218"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
-const storage = firebase.storage();
 
 // ---------- State ----------
 let editingPartnerId = null;
@@ -67,35 +52,32 @@ function populateUserInfo(user) {
   if (avatarEl) avatarEl.textContent = user.email ? user.email.charAt(0).toUpperCase() : 'A';
 }
 
-function logoutUser() {
-  auth.signOut().then(() => {
-    window.location.href = 'index.html';
-  });
+async function logoutUser() {
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
 }
 
-// ---------- Load Partners (realtime) ----------
-function loadPartners() {
+// ---------- Load Partners ----------
+async function loadPartners() {
   const grid = document.getElementById('partners-grid');
   const loader = document.getElementById('page-loader');
   const mainContent = document.getElementById('main-content');
 
-  db.collection('partners').orderBy('title').onSnapshot(snapshot => {
+  try {
+    const { data, error } = await sb.from('partners').select('*').order('title');
+    if (error) throw error;
+
     if (loader) loader.style.display = 'none';
     if (mainContent) mainContent.style.display = 'block';
 
-    const partners = [];
-    snapshot.forEach(doc => {
-      partners.push({ id: doc.id, ...doc.data() });
-    });
-
-    renderPartners(partners);
-    updateCount(partners.length);
-  }, err => {
+    renderPartners(data || []);
+    updateCount((data || []).length);
+  } catch (err) {
     console.error('Error loading partners:', err);
     showToast('Failed to load partners: ' + err.message, 'error');
     if (loader) loader.style.display = 'none';
     if (mainContent) mainContent.style.display = 'block';
-  });
+  }
 }
 
 function renderPartners(partners) {
@@ -163,12 +145,12 @@ function clearPreview() {
 // ---------- Edit Partner ----------
 async function editPartner(id) {
   try {
-    const doc = await db.collection('partners').doc(id).get();
-    if (!doc.exists) {
+    const { data, error } = await sb.from('partners').select('*').eq('id', id).single();
+    if (error || !data) {
       showToast('Partner not found.', 'error');
       return;
     }
-    const data = doc.data();
+    
     editingPartnerId = id;
     uploadedLogoURL = data.logo || null;
 
@@ -196,8 +178,10 @@ async function editPartner(id) {
 async function deletePartner(id, name) {
   if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
   try {
-    await db.collection('partners').doc(id).delete();
+    const { error } = await sb.from('partners').delete().eq('id', id);
+    if (error) throw error;
     showToast(`"${name}" deleted successfully.`, 'success');
+    loadPartners();
   } catch (err) {
     console.error('Delete error:', err);
     showToast('Delete failed: ' + err.message, 'error');
@@ -205,11 +189,10 @@ async function deletePartner(id, name) {
 }
 
 // ---------- Image Upload ----------
-function handleLogoUpload(inputEl) {
-  const file = inputEl.files[0];
+async function handleLogoUpload(inputEl) {
+  let file = inputEl.files[0];
   if (!file) return;
 
-  // Validate
   if (!file.type.startsWith('image/')) {
     showToast('Please select an image file.', 'error');
     return;
@@ -224,38 +207,53 @@ function handleLogoUpload(inputEl) {
   const progressFill = document.getElementById('progress-fill');
   const progressText = document.getElementById('progress-text');
 
-  // Show preview
+  progress.style.display = 'block';
+  progressFill.style.width = '10%';
+  progressText.textContent = 'Removing background AI...';
+
+  // 1. Remove background using imgly
+  if (typeof imglyRemoveBackground !== 'undefined') {
+    try {
+      const transparentBlob = await imglyRemoveBackground(file);
+      file = new File([transparentBlob], `transparent_${file.name.split('.')[0]}.png`, { type: 'image/png' });
+    } catch (bgErr) {
+      console.warn("Background removal failed, proceeding with original.", bgErr);
+    }
+  }
+
+  progressFill.style.width = '40%';
+  progressText.textContent = 'Uploading to storage...';
+
+  // Show preview of the transparent image
   const reader = new FileReader();
   reader.onload = e => {
-    preview.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
+    preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="background:#f1f3fb;" />`;
   };
   reader.readAsDataURL(file);
 
-  // Upload to Firebase Storage
-  const storageRef = storage.ref(`partners/logos/${Date.now()}_${file.name}`);
-  const uploadTask = storageRef.put(file);
+  // 2. Upload to Supabase Storage
+  try {
+    const fileName = `partners/logos/${Date.now()}_${file.name}`;
+    const { data, error } = await sb.storage.from('uploads').upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
 
-  progress.style.display = 'block';
+    if (error) throw error;
 
-  uploadTask.on('state_changed',
-    snapshot => {
-      const pct = (snapshot.bytesTransferred / snapshot.totalBytes * 100).toFixed(0);
-      progressFill.style.width = pct + '%';
-      progressText.textContent = `Uploading… ${pct}%`;
-    },
-    err => {
-      console.error('Upload error:', err);
-      showToast('Upload failed: ' + err.message, 'error');
-      progress.style.display = 'none';
-    },
-    async () => {
-      uploadedLogoURL = await uploadTask.snapshot.ref.getDownloadURL();
-      progressText.textContent = 'Upload complete!';
-      progressFill.style.width = '100%';
-      showToast('Logo uploaded!', 'success');
-      setTimeout(() => { progress.style.display = 'none'; }, 1500);
-    }
-  );
+    const { data: urlData } = sb.storage.from('uploads').getPublicUrl(data.path);
+    uploadedLogoURL = urlData.publicUrl;
+
+    progressFill.style.width = '100%';
+    progressText.textContent = 'Upload complete!';
+    showToast('Logo uploaded with transparent background!', 'success');
+    
+    setTimeout(() => { progress.style.display = 'none'; }, 2000);
+  } catch (err) {
+    console.error('Upload error:', err);
+    showToast('Upload failed: ' + err.message, 'error');
+    progress.style.display = 'none';
+  }
 }
 
 // ---------- Save Partner ----------
@@ -284,13 +282,16 @@ async function savePartner() {
 
   try {
     if (editingPartnerId) {
-      await db.collection('partners').doc(editingPartnerId).update(partnerData);
+      const { error } = await sb.from('partners').update(partnerData).eq('id', editingPartnerId);
+      if (error) throw error;
       showToast(`"${name}" updated successfully!`, 'success');
     } else {
-      await db.collection('partners').add(partnerData);
+      const { error } = await sb.from('partners').insert([partnerData]);
+      if (error) throw error;
       showToast(`"${name}" added successfully!`, 'success');
     }
     closeModal();
+    loadPartners();
   } catch (err) {
     console.error('Save error:', err);
     showToast('Save failed: ' + err.message, 'error');
@@ -310,15 +311,20 @@ function escapeHtml(str) {
 }
 
 // ---------- Init ----------
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   initSidebar();
 
-  auth.onAuthStateChanged(user => {
-    if (!user) {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = 'index.html';
+  } else {
+    populateUserInfo(session.user);
+    loadPartners();
+  }
+
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
       window.location.href = 'index.html';
-    } else {
-      populateUserInfo(user);
-      loadPartners();
     }
   });
 

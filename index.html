@@ -10,13 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/logoloop.css" />
 
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Tailwind CDN (dev only) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -47,538 +48,705 @@
     }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/design-system.css?v=2" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="css/card-nav.css" />
 </head>
 <body class="font-body bg-white text-grey-dark" data-page="parent">
 
   <!-- ===================== NAVBAR ===================== -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-hk-border" style="height:72px;">
-    <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 pt-6">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
+      
       <!-- Logo -->
-      <a href="/" class="flex items-center" id="logo-link">
-        <img src="assets/logo-dark.png" alt="Hackability" style="height:36px;" />
-      </a>
-
-      <!-- Desktop nav -->
-      <ul id="nav-links-desktop" class="hidden md:flex items-center gap-8 list-none m-0 p-0">
-        <li><a href="#about" class="nav-link text-grey-dark text-sm font-medium no-underline">About</a></li>
-        <li><a href="#verticals" class="nav-link text-grey-dark text-sm font-medium no-underline">Verticals</a></li>
-        <li id="nav-products-container" class="relative group">
-          <a href="#products" class="nav-link flex items-center gap-1 text-grey-dark text-sm font-medium no-underline py-4 cursor-pointer">
-            Products <i class="ph-bold ph-caret-down text-xs text-grey-mid"></i>
-          </a>
-          <!-- Dropdown Menu -->
-          <div id="products-dropdown-desktop" class="absolute top-full -left-4 w-[420px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-hk-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col p-2 transform origin-top-left scale-95 group-hover:scale-100">
-            <!-- Populated by JS -->
-          </div>
-        </li>
-        <li id="nav-partners-container" class="relative group">
-          <a href="#partners" class="nav-link flex items-center gap-1 text-grey-dark text-sm font-medium no-underline py-4 cursor-pointer">
-            Partners <i class="ph-bold ph-caret-down text-xs text-grey-mid"></i>
-          </a>
-          <!-- Dropdown Menu -->
-          <div id="partners-dropdown-desktop" class="absolute top-full -left-4 w-[420px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-hk-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col p-2 transform origin-top-left scale-95 group-hover:scale-100">
-            <!-- Populated by JS -->
-          </div>
-        </li>
-        <li><a href="#case-studies" class="nav-link text-grey-dark text-sm font-medium no-underline">Case Studies</a></li>
-      </ul>
-
-      <!-- CTA -->
-      <a href="#contact" class="hidden md:flex items-center gap-2 btn-yellow">
-        <i class="ph-bold ph-handshake" style="font-size:18px;"></i>
-        <span data-cms-id="navbar.cta_button">Contact Us</span>
-      </a>
-
-      <!-- Mobile hamburger -->
-      <button id="menu-toggle" class="md:hidden text-navy p-2" aria-label="Open menu">
-        <i class="ph-bold ph-list" style="font-size:24px;"></i>
-      </button>
-    </div>
-
-    <!-- Mobile drawer -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white px-6 py-4 flex flex-col gap-4 border-t border-hk-border">
-      <div id="nav-links-mobile" class="flex flex-col gap-4">
-        <a href="#about" class="text-grey-dark text-base font-medium no-underline">About</a>
-        <a href="#verticals" class="text-grey-dark text-base font-medium no-underline">Verticals</a>
-        
-        <div class="flex flex-col gap-2">
-          <a href="#products" class="text-grey-dark text-base font-medium no-underline flex items-center gap-1" onclick="document.getElementById('products-dropdown-mobile').classList.toggle('hidden')">
-            Products <i class="ph-bold ph-caret-down text-xs"></i>
-          </a>
-          <div id="products-dropdown-mobile" class="hidden flex-col gap-2 pl-4 border-l-2 border-navy-tint ml-2">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <a href="#partners" class="text-grey-dark text-base font-medium no-underline flex items-center gap-1" onclick="document.getElementById('partners-dropdown-mobile').classList.toggle('hidden')">
-            Partners <i class="ph-bold ph-caret-down text-xs"></i>
-          </a>
-          <div id="partners-dropdown-mobile" class="hidden flex-col gap-2 pl-4 border-l-2 border-navy-tint ml-2">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-        <a href="#case-studies" class="text-grey-dark text-base font-medium no-underline">Case Studies</a>
+      <div class="flex-1 flex justify-start">
+        <a href="/" class="flex items-center" id="logo-link">
+          <img src="assets/logo-dark.png" alt="Hackability" style="height:36px; filter: brightness(0) invert(1);" />
+        </a>
       </div>
-      <a href="#contact" class="btn-navy mt-2 justify-center">
-        <i class="ph-bold ph-handshake" style="font-size:18px;"></i>
-        <span data-cms-id="navbar.cta_button">Contact Us</span>
-      </a>
+
+      <!-- Desktop Nav (Mega Menu) -->
+      <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2">
+        <ul class="flex items-center gap-6 list-none m-0 px-8 py-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
+          <li class="flex items-center">
+            <a href="about.html" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+        </li>
+        
+        <!-- Our Ecosystem Dropdown -->
+        <li class="mega-menu-item flex items-center">
+          <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            Our Ecosystem <i class="ph-bold ph-caret-down text-xs"></i>
+          </button>
+          
+          <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <div class="grid grid-cols-2 gap-4">
+              <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
+                  <span class="text-xs text-grey-dark block">Innovation programs for schools and young minds.</span>
+                </div>
+              </a>
+              <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
+                  <span class="text-xs text-grey-dark block">Ecosystem and programs for Higher Education.</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Products Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Products <i class="ph-bold ph-caret-down text-xs"></i>
+            </button>
+          
+          <div class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+              <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
+              <div>
+                <span class="text-sm font-bold text-navy block">inCamp</span>
+                <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
+              </div>
+            </a>
+          </div>
+        </li>
+
+
+          <li class="flex items-center">
+            <a href="#" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Mobile hamburger (Right aligned) -->
+      <!-- Mobile hamburger (CardNav style) -->
+      <div class="flex-1 flex justify-end lg:hidden items-center z-50">
+        <div class="hamburger-menu text-white" aria-label="Open menu" tabindex="0">
+          <div class="hamburger-line bg-current"></div>
+          <div class="hamburger-line bg-current"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- CardNav Mobile Dropdown Content -->
+    <div class="card-nav-content lg:hidden">
+      <!-- Card 1: Our Ecosystem -->
+      <div class="nav-card" style="background-color: #0D1B8E; color: white;">
+        <div class="nav-card-label font-display">Our Ecosystem</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="hatch.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hatch (K-12)
+          </a>
+          <a class="nav-card-link" href="hackability.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hackability (Higher Ed)
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Products -->
+      <div class="nav-card" style="background-color: #6D28D9; color: white;">
+        <div class="nav-card-label font-display">Products</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="index.html#products">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            inCamp Platform
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Company -->
+      <div class="nav-card" style="background-color: #F5C200; color: #0D1B8E;">
+        <div class="nav-card-label font-display">Company</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link text-navy" href="about.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            About Us
+          </a>
+          <a class="nav-card-link text-navy" href="#">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Blog
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 
-
   <!-- ===================== HERO ===================== -->
-  <section id="hero" class="bg-white min-h-screen flex flex-col justify-center relative overflow-hidden" style="padding-top:72px;">
+  <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden">
 
-    <!-- Decorative triangles -->
-    <div class="hero-triangle absolute right-16 top-1/4 pointer-events-none" style="opacity:0.07;" aria-hidden="true">
-      <svg width="320" height="320" viewBox="0 0 320 320">
-        <polygon points="160,20 300,280 20,280" fill="#0D1B8E" />
-      </svg>
+    <!-- Background Carousel -->
+    <div id="hero-carousel-bg" class="absolute inset-0 z-[0] pointer-events-none">
+      <div class="slide slide-1 active absolute inset-0 opacity-100 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hero-bg-1.png');"></div>
+      <div class="slide slide-2 absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hero-bg-2.png');"></div>
+      <div class="slide slide-3 absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hero-bg-3.png');"></div>
     </div>
-    <div class="hero-triangle absolute right-32 top-1/3 pointer-events-none" style="animation-delay:2s;opacity:0.04;" aria-hidden="true">
-      <svg width="180" height="180" viewBox="0 0 180 180">
-        <polygon points="90,10 170,160 10,160" fill="#0D1B8E" />
-      </svg>
-    </div>
-    <div class="hero-triangle absolute left-10 bottom-1/4 pointer-events-none" style="animation-delay:4s;opacity:0.03;" aria-hidden="true">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <polygon points="60,8 112,105 8,105" fill="#F5C200" />
-      </svg>
-    </div>
+    
+    <!-- Dark Overlay for Readability -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-[1] pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-6 py-24 flex flex-col items-center">
+    <div class="w-full px-4 lg:px-6 pt-32 md:pt-48 pb-20 md:pb-32 flex flex-col items-start relative z-[10]">
       <!-- Text column -->
-      <div id="hero-text" class="flex flex-col items-center text-center max-w-4xl mx-auto">
-
-        <!-- Back button (hidden on parent) -->
-        <button id="back-btn" aria-label="Go back to parent page">
-          <i class="ph-bold ph-arrow-left" style="font-size:14px;"></i>
-          ← Back to Hackability
-        </button>
-
-        <!-- Eyebrow -->
-        <div class="flex items-center justify-center gap-3 mb-6 reveal">
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-          <span id="hero-eyebrow" class="text-navy font-data font-medium text-xs uppercase tracking-widest">Innovation · Entrepreneurship · Technology</span>
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-        </div>
-
+      <div id="hero-text" class="flex flex-col items-start text-left max-w-4xl">
+        
         <!-- H1 -->
-        <h1 id="hero-title" class="font-display font-extrabold text-navy leading-tight mb-6 reveal reveal-delay-1"
-            style="font-size:clamp(36px,5vw,64px); letter-spacing:-0.5px;">
+        <h1 id="hero-title" class="font-display font-extrabold text-white leading-tight mb-6 reveal reveal-delay-2 drop-shadow-2xl"
+            style="font-size:clamp(36px,8vw,64px); letter-spacing:-1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6);">
           Building Innovation-Driven<br>
-          <span style="color:#F5C200;">Talent at Scale</span>
+          <span style="color:#F5C200;">Talent Ecosystems</span>
         </h1>
 
         <!-- Subtext -->
-        <p id="hero-sub" class="text-lg md:text-xl mb-10 reveal reveal-delay-2 text-grey-dark" style="max-width:700px; line-height:1.7;">
-          We help institutions develop future-ready talent through innovation, entrepreneurship, and emerging technologies — connecting academia, industry, and opportunity.
+        <p id="hero-sub" class="text-lg md:text-xl mb-4 reveal reveal-delay-3 text-white/90 drop-shadow-xl" style="max-width:700px; line-height:1.7; font-weight: 500; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+          Enabling institutions to build talent that can innovate, build, and thrive in a changing world.
         </p>
 
-        <!-- CTAs -->
-        <div class="flex flex-wrap justify-center gap-4 mb-20 reveal reveal-delay-3">
-          <a href="#verticals" id="hero-primary-btn" class="btn-navy">
-            <i class="ph-bold ph-rocket-launch" style="font-size:18px;"></i>
-            Explore Our Ecosystem
-          </a>
-          <a href="#contact" id="hero-secondary-btn" class="btn-yellow">
-            <i class="ph-bold ph-handshake" style="font-size:18px;"></i>
-            Partner With Us
-          </a>
-        </div>
-
-        <!-- Redirect portal cards -->
-        <div id="portal-cards" class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 reveal reveal-delay-4">
-
-          <!-- College portal -->
-          <button onclick="switchPage('college')"
-            class="portal-card text-left p-8 md:p-12 rounded-3xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-navy-tint hover:bg-white group shadow-sm hover:shadow-xl">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-2xl bg-navy/10 flex items-center justify-center group-hover:bg-navy/15 transition-colors">
-                <i class="ph-bold ph-graduation-cap" style="font-size:32px;color:#0D1B8E;"></i>
-              </div>
-              <span class="text-grey-mid text-sm font-semibold uppercase tracking-widest">For Colleges</span>
-            </div>
-            <div class="text-navy font-display font-bold text-3xl mb-3">Hackability</div>
-            <div class="text-grey-dark text-lg mb-8">Innovation & talent development for higher education</div>
-            <div class="flex items-center gap-2 text-navy text-lg font-bold group-hover:text-yellow transition-colors">
-              Explore <i class="ph-bold ph-arrow-right" style="font-size:18px;"></i>
-            </div>
-          </button>
-
-          <!-- School portal -->
-          <button onclick="switchPage('school')"
-            class="portal-card text-left p-8 md:p-12 rounded-3xl border border-hk-border hover:border-navy transition-all duration-300 cursor-pointer bg-yellow-tint hover:bg-white group shadow-sm hover:shadow-xl">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-2xl bg-yellow/20 flex items-center justify-center group-hover:bg-yellow/30 transition-colors">
-                <i class="ph-bold ph-backpack" style="font-size:32px;color:#D4A800;"></i>
-              </div>
-              <span class="text-grey-mid text-sm font-semibold uppercase tracking-widest">For Schools</span>
-            </div>
-            <div class="text-navy font-display font-bold text-3xl mb-3">Hatch</div>
-            <div class="text-grey-dark text-lg mb-8">Entrepreneurial learning for Grades 3–12</div>
-            <div class="flex items-center gap-2 text-navy text-lg font-bold group-hover:text-yellow transition-colors">
-              Explore <i class="ph-bold ph-arrow-right" style="font-size:18px;"></i>
-            </div>
-          </button>
-
-        </div>
       </div>
     </div>
   </section>
 
-
-  <!-- ===================== TRUST STRIP ===================== -->
-  <section class="bg-navy-tint py-12 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 mb-8 text-center">
-      <p class="text-navy font-medium text-sm uppercase tracking-widest">Trusted by Institutions, Industry & Ecosystem Partners</p>
+  <!-- ===================== 2. TRUST & COLLABORATIONS ===================== -->
+  <section id="trust" class="bg-white py-12 overflow-hidden border-b border-hk-border relative">
+    <!-- Dynamic background accent -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orb-yellow rounded-full blur-[80px] animate-blob pointer-events-none opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-6 mb-8 text-left">
+      <h3 class="text-navy-dark font-display font-bold text-xl md:text-2xl">Trusted by Institutions, Industry & Ecosystem Partners</h3>
     </div>
-    <div class="overflow-hidden">
-      <div class="carousel-track">
-        <!-- Logo slots — duplicated for seamless loop -->
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">IIT Madras</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">NASSCOM</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">AICTE</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">TiE Global</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">AWS</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Google</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Microsoft</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Infosys</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Wipro</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">CBSE</span>
-        </div>
-        <!-- Duplicate set for seamless loop -->
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">IIT Madras</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">NASSCOM</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">AICTE</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">TiE Global</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">AWS</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Google</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Microsoft</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Infosys</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">Wipro</span>
-        </div>
-        <div class="logo-slot flex-shrink-0 h-12 w-36 bg-white rounded-lg flex items-center justify-center border border-hk-border px-4">
-          <span class="text-navy font-display font-bold text-sm">CBSE</span>
-        </div>
+    <div class="marquee-container overflow-hidden w-full relative">
+      <div id="marquee-track" class="marquee-track flex gap-8 items-center w-max">
+        <!-- Logos injected by JS -->
       </div>
     </div>
   </section>
 
-
-  <!-- ===================== ABOUT ===================== -->
-  <section id="about" class="py-24 bg-white relative">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <!-- Text -->
-        <div class="reveal">
-          <div class="flex items-center gap-3 mb-4">
-            <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-            <span data-cms-id="about.eyebrow" class="font-data font-medium text-xs uppercase tracking-widest text-navy">About Us</span>
-          </div>
-          <h2 data-cms-id="about.title" class="font-display font-bold text-navy mb-6" style="font-size:clamp(32px, 4vw, 40px); line-height:1.2;">
-            Bridging the Gap Between Education and the Future of Work
-          </h2>
-          <p data-cms-id="about.description" class="text-lg text-grey-dark mb-8" style="line-height:1.7;">
-            The world is changing faster than ever, and traditional education models struggle to keep pace. Hackability exists to close this gap by infusing innovation, technology, and entrepreneurial thinking directly into schools and universities.
-          </p>
-          <a href="#contact" class="inline-flex items-center gap-2 text-navy font-semibold hover:text-navy-mid transition-colors">
-            <span data-cms-id="about.cta_text">Read Our Full Story</span> <i class="ph-bold ph-arrow-right" style="font-size:16px;"></i>
-          </a>
-        </div>
-
-      <!-- Right: Decorative -->
-      <div class="flex items-center justify-center reveal reveal-delay-2">
-        <svg width="320" height="320" viewBox="0 0 320 320" aria-hidden="true">
-          <polygon points="160,20 300,280 20,280" fill="#0D1B8E" opacity="0.08" />
-          <polygon points="160,50 270,260 50,260" fill="#F5C200" opacity="0.18" />
-          <polygon points="160,90 240,240 80,240" fill="#0D1B8E" opacity="0.12" />
-        </svg>
+  <!-- ===================== 3. OUR ECOSYSTEM ===================== -->
+  <section id="ecosystem" class="bg-grey-light py-16 lg:py-20 relative z-[10] border-b border-hk-border overflow-hidden">
+    <!-- Dynamic background accents -->
+    <div class="absolute inset-0 bg-pattern-plus opacity-100 z-0 pointer-events-none"></div>
+    <div class="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-orb-cyan rounded-full blur-[100px] animate-blob-reverse pointer-events-none opacity-30 z-0"></div>
+    <div class="absolute bottom-1/4 right-[-10%] w-[600px] h-[600px] bg-orb-violet rounded-full blur-[120px] animate-blob pointer-events-none opacity-20 z-0"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-10 reveal flex flex-col items-center">
+        <h2 class="font-display font-bold text-blue-500 text-4xl md:text-5xl lg:text-6xl mb-3">Our Ecosystem</h2>
+        <p class="font-display font-medium text-navy text-xl md:text-2xl">Purpose-Built for Every Learning Stage</p>
       </div>
+      <div id="portal-cards" class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 reveal reveal-delay-2">
+        <!-- College portal (Hackability) -->
+        <a href="hackability.html" class="group relative flex flex-col h-full overflow-hidden rounded-2xl border border-hk-border bg-white/60 backdrop-blur-md transition-all duration-300 hover:border-navy/50 hover:shadow-2xl hover:shadow-navy/10 no-underline">
+          <!-- Image Section -->
+          <div class="relative aspect-[2/1] overflow-hidden bg-grey-light">
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80" alt="Hackability" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-navy/90 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"></div>
+            
+            <!-- Tags / Eyebrow -->
+            <div class="absolute bottom-4 left-4 flex gap-2">
+              <span class="inline-flex items-center rounded-full border border-white/20 bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white/30 shadow-sm">
+                For Colleges & Universities
+              </span>
+            </div>
 
-    </div>
-  </section>
-
-
-  <!-- ===================== VERTICALS ===================== -->
-  <section id="verticals" class="py-24 bg-grey-light relative">
-    <div class="max-w-7xl mx-auto px-6">
-      <!-- Section Header -->
-      <div class="text-center mb-16 reveal">
-        <div class="flex items-center justify-center gap-3 mb-4">
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-          <span data-cms-id="verticals.eyebrow" class="font-data font-medium text-xs uppercase tracking-widest text-navy">Our Core Verticals</span>
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-        </div>
-        <h2 data-cms-id="verticals.title" class="font-display font-bold text-navy" style="font-size:40px;">A Holistic Approach to Innovation</h2>
-      </div>
-
-      <!-- Verticals Grid -->
-      <div id="verticals-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- JS will populate this from content.json -->
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ===================== PRODUCTS (inCamp) ===================== -->
-  <section id="products" class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16 reveal">
-        <div class="flex items-center justify-center gap-3 mb-4">
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-          <span data-cms-id="products.eyebrow" class="font-data font-medium text-xs uppercase tracking-widest text-navy">Products</span>
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-        </div>
-        <h2 data-cms-id="products.title" class="font-display font-bold text-navy" style="font-size:40px;">Digital Infrastructure for Innovation Ecosystems</h2>
-      </div>
-
-      <!-- inCamp card — navy card on white section -->
-      <div class="rounded-2xl p-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal bg-navy">
-        <div>
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded mb-6" style="background:#F5C200;">
-            <i class="ph-bold ph-desktop-tower" style="font-size:14px;color:#0D1B8E;"></i>
-            <span data-cms-id="products.badge" class="font-data font-medium text-xs uppercase tracking-widest text-navy">Campus Innovation Platform</span>
+            <!-- Hover Overlay Action -->
+            <div class="absolute inset-0 flex items-center justify-center bg-navy/30 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="flex items-center gap-2 rounded-full bg-navy px-6 py-2.5 text-sm font-medium text-white shadow-xl shadow-navy/25 transition-transform hover:scale-105 active:scale-95">
+                <i class="ph-bold ph-book-open"></i>
+                Explore Hackability
+              </button>
+            </div>
           </div>
 
-          <h3 data-cms-id="products.product_name" class="font-display font-bold text-white text-3xl mb-4">inCamp</h3>
-          <p data-cms-id="products.description" class="mb-8" style="color:rgba(255,255,255,0.75); line-height:1.7; font-size:16px;">
-            An internal innovation management platform designed for campuses. inCamp helps institutions implement, manage, and scale innovation, entrepreneurship, project-based learning, industry engagement, and talent development through a centralized digital system.
-          </p>
+          <!-- Content Section -->
+          <div class="flex flex-col gap-3 p-5 md:p-6 flex-grow">
+            <div class="space-y-3">
+              <h3 class="text-3xl font-bold leading-tight tracking-tight text-navy transition-colors group-hover:text-yellow font-display">
+                Hackability
+              </h3>
+              <p class="text-sm text-grey-dark" style="line-height:1.7;">
+                Hackability helps higher education institutions strengthen innovation, entrepreneurship, industry engagement, and student development through structured initiatives, partnerships, and ecosystem-driven programs designed to create meaningful learning and career outcomes.
+              </p>
+            </div>
 
-          <!-- Feature list -->
-          <ul id="products-features-list" class="flex flex-col gap-3 mb-8 list-none p-0 m-0">
-            <!-- JS will populate this -->
-          </ul>
-
-          <a href="#contact" class="btn-yellow">
-            <i class="ph-bold ph-arrow-square-out" style="font-size:18px;"></i>
-            <span data-cms-id="products.cta_text">Explore inCamp</span>
-          </a>
-        </div>
-
-        <!-- Right visual -->
-        <div class="rounded-xl flex items-center justify-center" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);min-height:280px;">
-          <div class="text-center p-8">
-            <!-- Stylized dashboard mockup -->
-            <div class="mx-auto" style="max-width:320px;">
-              <div class="rounded-lg p-4 mb-3" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
-                <div class="flex items-center gap-2 mb-3">
-                  <div class="w-2 h-2 rounded-full" style="background:#F5C200;"></div>
-                  <div class="h-2 rounded-full" style="background:rgba(255,255,255,0.15);width:60%;"></div>
+            <!-- Footer area matching glass blog card -->
+            <div class="mt-auto flex items-center justify-between border-t border-hk-border pt-4">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full border border-hk-border bg-grey-light text-navy">
+                  <i class="ph-bold ph-graduation-cap text-lg"></i>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
-                  <div class="h-12 rounded" style="background:rgba(245,194,0,0.15);"></div>
-                  <div class="h-12 rounded" style="background:rgba(245,194,0,0.1);"></div>
-                  <div class="h-12 rounded" style="background:rgba(245,194,0,0.08);"></div>
-                </div>
-              </div>
-              <div class="rounded-lg p-4" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-2 h-2 rounded-full" style="background:#F5C200;"></div>
-                  <div class="h-2 rounded-full" style="background:rgba(255,255,255,0.15);width:40%;"></div>
-                </div>
-                <div class="space-y-2">
-                  <div class="h-3 rounded-full" style="background:rgba(255,255,255,0.08);width:100%;"></div>
-                  <div class="h-3 rounded-full" style="background:rgba(255,255,255,0.06);width:75%;"></div>
-                  <div class="h-3 rounded-full" style="background:rgba(255,255,255,0.04);width:50%;"></div>
+                <div class="flex flex-col text-xs">
+                  <span class="font-bold text-navy">Higher Education</span>
+                  <span class="text-grey-mid">Ecosystem Programs</span>
                 </div>
               </div>
             </div>
-            <p class="mt-6 text-sm" style="color:rgba(255,255,255,0.3);">inCamp Dashboard Preview</p>
           </div>
-        </div>
+        </a>
+
+        <!-- School portal (Hatch) -->
+        <a href="hatch.html" class="group relative flex flex-col h-full overflow-hidden rounded-2xl border border-hk-border bg-white/60 backdrop-blur-md transition-all duration-300 hover:border-yellow/50 hover:shadow-2xl hover:shadow-yellow/10 no-underline">
+          <!-- Image Section -->
+          <div class="relative aspect-[2/1] overflow-hidden bg-grey-light">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" alt="Hatch" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#8a6d00] to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"></div>
+            
+            <!-- Tags / Eyebrow -->
+            <div class="absolute bottom-4 left-4 flex gap-2">
+              <span class="inline-flex items-center rounded-full border border-white/20 bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white/30 shadow-sm">
+                For Schools
+              </span>
+            </div>
+
+            <!-- Hover Overlay Action -->
+            <div class="absolute inset-0 flex items-center justify-center bg-yellow/30 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="flex items-center gap-2 rounded-full bg-yellow px-6 py-2.5 text-sm font-bold text-navy shadow-xl shadow-yellow/25 transition-transform hover:scale-105 active:scale-95">
+                <i class="ph-bold ph-book-open"></i>
+                Explore Hatch
+              </button>
+            </div>
+          </div>
+
+          <!-- Content Section -->
+          <div class="flex flex-col gap-3 p-5 md:p-6 flex-grow">
+            <div class="space-y-3">
+              <h3 class="text-3xl font-bold leading-tight tracking-tight text-navy transition-colors group-hover:text-yellow font-display">
+                Hatch
+              </h3>
+              <p class="text-sm text-grey-dark" style="line-height:1.7;">
+                HATCH provides entrepreneurship and innovation learning programs for school students of Grades 3–12, helping them develop creativity, problem-solving abilities, and entrepreneurial thinking through practical learning experiences.
+              </p>
+            </div>
+
+            <!-- Footer area matching glass blog card -->
+            <div class="mt-auto flex items-center justify-between border-t border-hk-border pt-4">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full border border-hk-border bg-grey-light text-yellow">
+                  <i class="ph-bold ph-backpack text-lg"></i>
+                </div>
+                <div class="flex flex-col text-xs">
+                  <span class="font-bold text-navy">K-12 Education</span>
+                  <span class="text-grey-mid">Learning Programs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-
-  <!-- ===================== CASE STUDIES ===================== -->
-  <section id="case-studies" class="py-24 bg-grey-light">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16 reveal">
-        <div class="flex items-center justify-center gap-3 mb-4">
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-          <span class="text-navy font-data font-medium text-xs uppercase tracking-widest">Case Studies</span>
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-        </div>
-        <h2 class="font-display font-bold text-navy" style="font-size:40px;">Real Impact, Real Stories</h2>
-        <p class="text-grey-dark text-lg mt-4 max-w-2xl mx-auto" style="line-height:1.7;">
-          See how institutions have transformed their innovation ecosystems with Hackability
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        <!-- Case Study 1 -->
-        <div class="case-study-card reveal">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#E8F0FF;">
-              <i class="ph-bold ph-graduation-cap" style="font-size:20px;color:#0D1B8E;"></i>
-            </div>
-            <span class="font-data text-xs font-medium uppercase tracking-wider text-grey-mid">College Program</span>
-          </div>
-          <h3 class="font-display font-semibold text-navy text-xl mb-3">Innovation Bootcamp at Leading Engineering College</h3>
-          <p class="text-grey-dark text-sm mb-6" style="line-height:1.7;">
-            A 3-day intensive bootcamp that helped 200+ students ideate, prototype, and pitch solutions to real industry challenges.
-          </p>
-          <div class="flex items-center gap-4 pt-4" style="border-top:1px solid #E2E8F0;">
-            <div>
-              <div class="font-data font-bold text-navy text-xl">200+</div>
-              <div class="text-grey-mid text-xs">Students</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">40+</div>
-              <div class="text-grey-mid text-xs">Projects</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">5</div>
-              <div class="text-grey-mid text-xs">Industry Partners</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Case Study 2 -->
-        <div class="case-study-card reveal reveal-delay-1">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#FFF8D6;">
-              <i class="ph-bold ph-chalkboard-teacher" style="font-size:20px;color:#D4A800;"></i>
-            </div>
-            <span class="font-data text-xs font-medium uppercase tracking-wider text-grey-mid">School Program</span>
-          </div>
-          <h3 class="font-display font-semibold text-navy text-xl mb-3">Young Entrepreneurs Program across 10 Schools</h3>
-          <p class="text-grey-dark text-sm mb-6" style="line-height:1.7;">
-            A semester-long Hatch program enabling students in Grades 6–10 to build entrepreneurial mindsets through real-world projects.
-          </p>
-          <div class="flex items-center gap-4 pt-4" style="border-top:1px solid #E2E8F0;">
-            <div>
-              <div class="font-data font-bold text-navy text-xl">500+</div>
-              <div class="text-grey-mid text-xs">Students</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">10</div>
-              <div class="text-grey-mid text-xs">Schools</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">60+</div>
-              <div class="text-grey-mid text-xs">Ventures</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Case Study 3 -->
-        <div class="case-study-card reveal reveal-delay-2">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#E8F0FF;">
-              <i class="ph-bold ph-factory" style="font-size:20px;color:#0D1B8E;"></i>
-            </div>
-            <span class="font-data text-xs font-medium uppercase tracking-wider text-grey-mid">Industry Connect</span>
-          </div>
-          <h3 class="font-display font-semibold text-navy text-xl mb-3">Industry-Academia Hackathon Series</h3>
-          <p class="text-grey-dark text-sm mb-6" style="line-height:1.7;">
-            Multi-campus hackathon series connecting students with industry mentors to solve real business challenges with technology solutions.
-          </p>
-          <div class="flex items-center gap-4 pt-4" style="border-top:1px solid #E2E8F0;">
-            <div>
-              <div class="font-data font-bold text-navy text-xl">1,000+</div>
-              <div class="text-grey-mid text-xs">Participants</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">15</div>
-              <div class="text-grey-mid text-xs">Campuses</div>
-            </div>
-            <div>
-              <div class="font-data font-bold text-navy text-xl">8</div>
-              <div class="text-grey-mid text-xs">Sponsors</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ===================== IMPACT STATS ===================== -->
-  <section id="impact" class="py-24 bg-navy-tint">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16 reveal">
-        <div class="flex items-center justify-center gap-3 mb-4">
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-          <span data-cms-id="impact.eyebrow" class="font-data font-medium text-xs uppercase tracking-widest text-navy">Our Impact</span>
-          <div style="width:32px;height:2px;background:#0D1B8E;"></div>
-        </div>
-        <h2 data-cms-id="impact.title" class="font-display font-bold text-navy" style="font-size:40px;">Creating Meaningful Outcomes</h2>
-      </div>
-
-      <div id="impact-stats-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <!-- JS will populate stats here -->
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ===================== CTA SECTION ===================== -->
-  <section id="contact" class="py-24 bg-navy relative overflow-hidden">
-    <!-- Decors omitted for brevity -->
+  <!-- ===================== 4. OUR PRODUCTS ===================== -->
+  <section id="products" class="py-16 lg:py-20 bg-black relative overflow-hidden">
+    <!-- Grid overlay -->
+    <div class="cyber-dark-grid opacity-100"></div>
+    <!-- Stable yellow gradient from bottom reaching higher -->
+    <div class="absolute inset-0 bg-gradient-to-t from-yellow/40 via-yellow/10 to-transparent pointer-events-none z-0"></div>
     
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
-      <h2 data-cms-id="cta.title" class="font-display font-bold text-white mb-6" style="font-size:clamp(32px, 5vw, 48px); letter-spacing:-0.5px;">
-        Ready to Transform Your Campus?
-      </h2>
-      <p data-cms-id="cta.subtitle" class="text-xl mb-10" style="color:rgba(255,255,255,0.8); line-height:1.6;">
-        Join leading institutions in building the next generation of innovators.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <button class="btn-yellow">
-          <span data-cms-id="cta.primary_btn">Partner With Us</span>
-        </button>
-        <button class="btn-ghost">
-          <span data-cms-id="cta.secondary_btn">Schedule a Demo</span>
-        </button>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-10 reveal flex flex-col items-center">
+        <h2 class="font-display font-bold text-yellow text-4xl md:text-5xl lg:text-6xl mb-3">Products</h2>
+        <p class="font-display font-medium text-blue-400 text-xl md:text-2xl max-w-3xl">Digital Innovation Infrastructure for Educational Institutions</p>
+      </div>
+
+      <div class="rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center reveal bg-white text-navy shadow-[0_20px_50px_rgba(245,194,0,0.15)] relative overflow-hidden">
+        <!-- Background accent -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-navy-tint rounded-full blur-[150px] opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="relative z-10">
+          <div class="inline-flex flex-col md:flex-row items-start md:items-center gap-2 px-3 py-2 md:px-4 rounded-xl md:rounded-full mb-4" style="background:rgba(13,27,142,0.05); border: 1px solid rgba(13,27,142,0.1);">
+            <i class="ph-bold ph-desktop-tower" style="font-size:16px;color:#0D1B8E;"></i>
+            <span class="font-data font-semibold text-[10px] md:text-xs uppercase tracking-widest leading-snug" style="color:#0D1B8E;">Campus Innovation Management Platform</span>
+          </div>
+
+          <h3 class="font-display font-bold text-3xl md:text-4xl mb-4 text-navy">inCamp</h3>
+          <p class="mb-8 text-lg text-grey-dark" style="line-height:1.8;">
+            inCamp is an internal innovation management platform designed for educational institutions. It enables campuses to manage in-house innovation, entrepreneurship, project-based learning initiatives through a centralized digital platform, end-to-end.
+          </p>
+
+          <a href="#contact" class="btn-flow btn-flow-navy mt-2">
+            <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
+            <span class="flow-text">Explore inCamp</span>
+            <span class="flow-circle"></span>
+            <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="relative z-10 w-full rounded-2xl overflow-hidden shadow-xl border border-hk-border">
+          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard Preview" class="w-full h-auto object-cover" />
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ===================== 5. RECOGNITION & MEDIA COVERAGE ===================== -->
+  <section id="media" class="py-16 md:py-24 bg-grey-light border-b border-hk-border relative overflow-hidden">
+    <!-- Dynamic background accent -->
+    <div class="absolute top-1/2 left-[10%] w-[500px] h-[500px] bg-orb-cyan rounded-full blur-[100px] animate-blob-reverse pointer-events-none opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <h2 class="font-display font-bold text-navy mb-4" style="font-size:40px;">Recognition & Media Coverage</h2>
+        <p class="text-grey-dark text-lg max-w-2xl mx-auto" style="line-height:1.7;">
+          Showcasing milestones, achievements, and stories from our journey.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        <!-- Card 1 -->
+        <div class="glass-panel bg-white/60 rounded-2xl overflow-hidden transition-all duration-300 reveal border border-white/40 group cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(13,27,142,0.1)]">
+          <div class="h-48 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=600" alt="Tech Media" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="text-yellow-dark font-data font-bold text-xs uppercase tracking-widest mb-2">TechCrunch</div>
+            <h4 class="font-display font-bold text-navy text-xl mb-3">Hackability scales student entrepreneurship across 50 campuses</h4>
+            <p class="text-grey-dark text-sm mb-6 line-clamp-3" style="line-height:1.6;">How this innovative platform is helping universities build strong internal ecosystems for their students to launch startups directly from their dorm rooms.</p>
+            <div class="text-navy font-bold text-sm group-hover:text-yellow transition-colors flex items-center gap-1">Read More <i class="ph-bold ph-arrow-right"></i></div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="glass-panel bg-white/60 rounded-2xl overflow-hidden transition-all duration-300 reveal reveal-delay-1 border border-white/40 group cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(13,27,142,0.1)]">
+          <div class="h-48 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600" alt="Education Summit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="text-yellow-dark font-data font-bold text-xs uppercase tracking-widest mb-2">EdTech Asia</div>
+            <h4 class="font-display font-bold text-navy text-xl mb-3">Awarded 'Best Campus Innovation Platform 2025'</h4>
+            <p class="text-grey-dark text-sm mb-6 line-clamp-3" style="line-height:1.6;">Recognized for transforming traditional learning models into action-oriented ecosystems that bridge the gap between academia and industry.</p>
+            <div class="text-navy font-bold text-sm group-hover:text-yellow transition-colors flex items-center gap-1">Read More <i class="ph-bold ph-arrow-right"></i></div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="glass-panel bg-white/60 rounded-2xl overflow-hidden transition-all duration-300 reveal reveal-delay-2 border border-white/40 group cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(13,27,142,0.1)]">
+          <div class="h-48 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600" alt="Student Pitch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="text-yellow-dark font-data font-bold text-xs uppercase tracking-widest mb-2">Forbes</div>
+            <h4 class="font-display font-bold text-navy text-xl mb-3">The Future of Work Starts in Middle School</h4>
+            <p class="text-grey-dark text-sm mb-6 line-clamp-3" style="line-height:1.6;">A deep dive into how Hatch's experiential curriculum is empowering young minds to think like entrepreneurs long before they graduate.</p>
+    <div class="text-navy font-bold text-sm group-hover:text-yellow transition-colors flex items-center gap-1">Read More <i class="ph-bold ph-arrow-right"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 6. TESTIMONIALS ===================== -->
+  <section id="testimonials" class="py-16 md:py-24 bg-mesh-dark relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="flex flex-col items-start justify-start max-w-[540px] mx-auto text-white reveal">
+        <div class="flex justify-start mb-6">
+          <div class="border border-white/20 py-1 px-4 rounded-full text-sm font-semibold tracking-wide uppercase text-yellow">Testimonials</div>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight mb-5 text-left">
+          Trusted by Innovative Leaders
+        </h2>
+        <p class="text-left text-white/75 text-lg">
+          See what our customers have to say about us.
+        </p>
+      </div>
+
+      <!-- 3-Column Vertical Marquee -->
+      <div class="flex justify-center gap-6 mt-16 mask-y-fade max-h-[740px] overflow-hidden reveal reveal-delay-2">
+        <!-- Column 1 -->
+        <div class="flex-1 max-w-sm">
+          <div class="flex flex-col gap-6 animate-marquee-vertical" style="animation-duration: 15s;">
+            <!-- Render 1 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"This ERP revolutionized our operations, streamlining finance and inventory. The cloud-based platform keeps us productive, even remotely."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Briana Patton" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Briana Patton</div>
+                  <div class="text-sm text-yellow">Operations Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Implementing this ERP was smooth and quick. The customizable, user-friendly interface made team training effortless."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Bilal Ahmed" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Bilal Ahmed</div>
+                  <div class="text-sm text-yellow">IT Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"The support team is exceptional, guiding us through setup and providing ongoing assistance, ensuring our satisfaction."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Saman Malik" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Saman Malik</div>
+                  <div class="text-sm text-yellow">Customer Support Lead</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicated 1 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"This ERP revolutionized our operations, streamlining finance and inventory. The cloud-based platform keeps us productive, even remotely."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Briana Patton" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Briana Patton</div>
+                  <div class="text-sm text-yellow">Operations Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Implementing this ERP was smooth and quick. The customizable, user-friendly interface made team training effortless."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Bilal Ahmed" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Bilal Ahmed</div>
+                  <div class="text-sm text-yellow">IT Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"The support team is exceptional, guiding us through setup and providing ongoing assistance, ensuring our satisfaction."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Saman Malik" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Saman Malik</div>
+                  <div class="text-sm text-yellow">Customer Support Lead</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 (Hidden on Mobile) -->
+        <div class="flex-1 max-w-sm hidden md:block">
+          <div class="flex flex-col gap-6 animate-marquee-vertical" style="animation-duration: 19s;">
+            <!-- Render 2 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"This ERP's seamless integration enhanced our business operations and efficiency. Highly recommend for its intuitive interface."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Omar Raza" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Omar Raza</div>
+                  <div class="text-sm text-yellow">CEO</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Its robust features and quick support have transformed our workflow, making us significantly more efficient."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Zainab Hussain" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Zainab Hussain</div>
+                  <div class="text-sm text-yellow">Project Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"The smooth implementation exceeded expectations. It streamlined processes, improving overall business performance."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Aliza Khan" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Aliza Khan</div>
+                  <div class="text-sm text-yellow">Business Analyst</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicated 2 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"This ERP's seamless integration enhanced our business operations and efficiency. Highly recommend for its intuitive interface."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Omar Raza" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Omar Raza</div>
+                  <div class="text-sm text-yellow">CEO</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Its robust features and quick support have transformed our workflow, making us significantly more efficient."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Zainab Hussain" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Zainab Hussain</div>
+                  <div class="text-sm text-yellow">Project Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"The smooth implementation exceeded expectations. It streamlined processes, improving overall business performance."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Aliza Khan" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Aliza Khan</div>
+                  <div class="text-sm text-yellow">Business Analyst</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 (Hidden on Mobile/Tablet) -->
+        <div class="flex-1 max-w-sm hidden lg:block">
+          <div class="flex flex-col gap-6 animate-marquee-vertical" style="animation-duration: 17s;">
+            <!-- Render 3 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Our business functions improved with a user-friendly design and positive customer feedback."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Farhan Siddiqui" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Farhan Siddiqui</div>
+                  <div class="text-sm text-yellow">Marketing Director</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"They delivered a solution that exceeded expectations, understanding our needs and enhancing our operations."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Sana Sheikh" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Sana Sheikh</div>
+                  <div class="text-sm text-yellow">Sales Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Using this ERP, our online presence and conversions significantly improved, boosting business performance."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Hassan Ali" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Hassan Ali</div>
+                  <div class="text-sm text-yellow">E-commerce Manager</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicated 3 -->
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Our business functions improved with a user-friendly design and positive customer feedback."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Farhan Siddiqui" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Farhan Siddiqui</div>
+                  <div class="text-sm text-yellow">Marketing Director</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"They delivered a solution that exceeded expectations, understanding our needs and enhancing our operations."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Sana Sheikh" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Sana Sheikh</div>
+                  <div class="text-sm text-yellow">Sales Manager</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md text-white shadow-lg">
+              <div class="mb-5 text-white/90 leading-relaxed">"Using this ERP, our online presence and conversions significantly improved, boosting business performance."</div>
+              <div class="flex items-center gap-4">
+                <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Hassan Ali" class="h-12 w-12 rounded-full object-cover border-2 border-white/20" />
+                <div class="flex flex-col">
+                  <div class="font-bold tracking-tight text-white">Hassan Ali</div>
+                  <div class="text-sm text-yellow">E-commerce Manager</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 7. FINAL CTA ===================== -->
+  <section id="contact" class="py-16 md:py-24 bg-white border-t border-hk-border">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        
+        <!-- Left: Text -->
+        <div class="reveal">
+          <h2 class="font-display font-bold text-navy mb-6" style="font-size:clamp(40px, 5vw, 48px); line-height:1.1;">
+            Let's Build Future-Ready Talent Together
+          </h2>
+          <p class="text-lg text-grey-dark mb-10" style="line-height:1.7;">
+            Partner with us to create meaningful learning experiences, stronger industry engagement, and impactful talent development outcomes.
+          </p>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy">
+                <i class="ph-bold ph-envelope-simple" style="font-size:20px;"></i>
+              </div>
+              <div>
+                <div class="text-sm text-grey-mid font-medium">Email Us</div>
+                <div class="font-bold text-navy">hello@hackability.in</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy">
+                <i class="ph-bold ph-phone" style="font-size:20px;"></i>
+              </div>
+              <div>
+                <div class="text-sm text-grey-mid font-medium">Call Us</div>
+                <div class="font-bold text-navy">+91 98765 43210</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="bg-grey-light p-8 md:p-10 rounded-3xl border border-hk-border reveal reveal-delay-2">
+          <form id="contact-form" class="flex flex-col gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Full Name</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="John Doe" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Organization</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="Your University/Company" required />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Designation</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="Director of Innovation" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Email Address</label>
+                <input type="email" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="john@example.com" required />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-navy mb-2">Phone Number</label>
+              <input type="tel" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-navy mb-2">Message</label>
+              <textarea class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" rows="4" placeholder="How can we help you?" required></textarea>
+            </div>
+            <div class="flex gap-4 mt-2">
+              <button type="submit" class="btn-flow btn-flow-navy w-full">
+                <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
+                <span class="flow-text">Get in Touch</span>
+                <span class="flow-circle"></span>
+                <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
+              </button>
+              <button type="button" class="btn-flow btn-flow-dark w-full">
+                <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
+                <span class="flow-text">Schedule a Discussion</span>
+                <span class="flow-circle"></span>
+                <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="bg-navy border-t border-white/10 pt-16 pb-8">
@@ -602,24 +770,26 @@
           </div>
         </div>
 
-        <!-- Links column 1 -->
+        <!-- Links column 1: Navigation -->
         <div>
-          <h4 class="font-display font-semibold text-white mb-6">Explore</h4>
+          <h4 class="font-display font-semibold text-white mb-6">Navigation</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="#about" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About Us</a></li>
-            <li><a href="#verticals" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Our Verticals</a></li>
-            <li><a href="#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Products</a></li>
-            <li><a href="#case-studies" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Case Studies</a></li>
+            <li><a href="about.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
+            <li><a href="#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
+            <li><a href="#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
+            <li><a href="#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
+            <li><a href="#media" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Media</a></li>
+            <li><a href="#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
           </ul>
         </div>
 
-        <!-- Links column 2 -->
+        <!-- Links column 2: Focus Domains -->
         <div>
-          <h4 class="font-display font-semibold text-white mb-6">Solutions</h4>
+          <h4 class="font-display font-semibold text-white mb-6">Focus Domains</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="#" onclick="switchPage('parent')" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Overview</a></li>
-            <li><a href="#" onclick="switchPage('college')" class="text-sm text-white/60 hover:text-white no-underline transition-colors">For Colleges</a></li>
-            <li><a href="#" onclick="switchPage('school')" class="text-sm text-white/60 hover:text-white no-underline transition-colors">For Schools</a></li>
+            <li><span class="text-sm text-white/60">Innovation</span></li>
+            <li><span class="text-sm text-white/60">Entrepreneurship</span></li>
+            <li><span class="text-sm text-white/60">Emerging Technologies</span></li>
           </ul>
         </div>
 
@@ -627,19 +797,19 @@
         <div>
           <h4 class="font-display font-semibold text-white mb-6">Contact</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="#" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
-              <i class="ph-bold ph-envelope-simple"></i> <span data-cms-id="footer.contact_email">hello@hackability.in</span>
+            <li><a href="mailto:hello@hackability.in" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+              <i class="ph-bold ph-envelope-simple"></i> hello@hackability.in
             </a></li>
-            <li><a href="#" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
-              <i class="ph-bold ph-map-pin"></i> India
+            <li><a href="tel:+919876543210" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+              <i class="ph-bold ph-phone"></i> +91 98765 43210
             </a></li>
           </ul>
         </div>
       </div>
 
       <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p data-cms-id="footer.copyright" class="text-xs text-white/40 m-0">
-          © 2024 Hackability. All rights reserved.
+        <p class="text-xs text-white/40 m-0">
+          © Hackability. All Rights Reserved.
         </p>
         <div class="flex items-center gap-6">
           <a href="/admin/" class="text-xs text-yellow/80 hover:text-yellow no-underline transition-colors flex items-center gap-1 font-medium">
@@ -654,13 +824,15 @@
   </footer>
 
 
-  <!-- Firebase Config -->
-  <script src="js/firebase-config.js"></script>
+  <!-- Supabase Config -->
+  <script src="js/supabase-config.js"></script>
 
   <!-- Scripts -->
   <script src="js/page-switcher.js?v=3"></script>
   <script src="js/animations.js?v=3"></script>
-  <script src="js/main.js?v=3"></script>
-  <script src="js/analytics.js"></script>
+  <script src="js/logoloop.js"></script>
+  <script src="js/main.js?v=6"></script>
+  <script src="js/analytics.js?v=2"></script>
+  <script src="js/card-nav.js" defer></script>
 </body>
 </html>

@@ -1,14 +1,12 @@
-// Hackability Custom Analytics Tracker
+// Hackability Custom Analytics Tracker (Supabase)
 (async function() {
-  // Ensure Firebase is loaded
-  if (typeof firebase === 'undefined' || !firebase.firestore) {
-    console.warn('Analytics: Firebase SDK not loaded.');
+  // Ensure Supabase is loaded
+  if (typeof sb === 'undefined') {
+    console.warn('Analytics: Supabase client not loaded.');
     return;
   }
 
   try {
-    const db = firebase.firestore();
-    
     // Determine the page path
     let path = window.location.pathname;
     if (path === '/' || path === '' || path === '/index.html') {
@@ -27,15 +25,14 @@
       }
     }
 
-    // Replace invalid characters for Firestore document IDs
+    // Replace invalid characters for database keys
     path = path.replace(/[\/\.]/g, '_');
 
-    // Increment the view count for this page
-    const docRef = db.collection('analytics').doc(path);
-    await docRef.set({
-      views: firebase.firestore.FieldValue.increment(1),
-      lastVisit: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+    // Increment the view count using Supabase RPC
+    const { error } = await sb.rpc('increment_page_view', { page_path: path });
+    if (error) {
+      console.error('Analytics RPC error:', error);
+    }
 
   } catch (err) {
     console.error('Analytics tracking failed:', err);

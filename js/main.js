@@ -32,15 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
   updateActiveNav();
 
   // ===========================
-  // Navbar scroll shadow
+  // Navbar scroll shadow & visibility
   // ===========================
   const navbar = document.getElementById('navbar');
   if (navbar) {
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 10) {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > 10) {
         navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)';
       } else {
         navbar.style.boxShadow = 'none';
+      }
+
+      // Hide navbar when scrolled down, only show when at the top
+      if (scrollTop > 80) {
+        navbar.style.transform = 'translateY(-150%)'; // Ensure it's fully hidden including padding
+      } else {
+        navbar.style.transform = 'translateY(0)';
       }
     }, { passive: true });
   }
@@ -68,21 +77,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===========================
-  // CMS Content Hydration (from Firebase Firestore)
+  // CMS Content Hydration (from Supabase)
   // ===========================
-  db.collection('site_content').doc('homepage').get()
-    .then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        hydrateCMSData(data);
-        if (window.initPageSwitcher) {
-          window.initPageSwitcher(data);
+  if (typeof sb !== 'undefined') {
+    sb.from('site_content').select('*')
+      .then(({ data, error }) => {
+        if (error) {
+          console.error('Error loading content from Supabase:', error);
+          return;
         }
-      } else {
-        console.warn('No homepage content found in Firestore. Using defaults from HTML.');
-      }
-    })
-    .catch(error => console.error('Error loading content from Firestore:', error));
+        if (data && data.length > 0) {
+          // Reconstruct the nested object from rows
+          const homepageData = {};
+          data.forEach(row => {
+            if (row.section_key.startsWith('hero_')) {
+              if (!homepageData.hero) homepageData.hero = {};
+              const subKey = row.section_key.replace('hero_', '');
+              homepageData.hero[subKey] = row.data;
+            } else {
+              homepageData[row.section_key] = row.data;
+            }
+          });
+          hydrateCMSData(homepageData);
+          if (window.initPageSwitcher) {
+            window.initPageSwitcher(homepageData);
+          }
+        } else {
+          console.warn('No homepage content found in Supabase. Using defaults from HTML.');
+        }
+      });
+  }
 
   function hydrateCMSData(data) {
     // 1. Simple Text & Attribute Mapping
@@ -214,5 +238,101 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
       }
     }
+
+    // 7. Hero Carousel Generation
+    const carouselBg = document.getElementById('hero-carousel-bg');
+    if (carouselBg && data.hero && data.hero.parent && data.hero.parent.carousel_slides && data.hero.parent.carousel_slides.length > 0) {
+      const slides = data.hero.parent.carousel_slides;
+      carouselBg.innerHTML = slides.map((slide, i) => `
+        <div class="hero-slide ${i === 0 ? 'active' : ''}" style="background-image: url('${slide.image}')"></div>
+      `).join('');
+
+      if (slides.length > 1) {
+        let currentSlide = 0;
+        const slideEls = carouselBg.querySelectorAll('.hero-slide');
+        setInterval(() => {
+          slideEls[currentSlide].classList.remove('active');
+          currentSlide = (currentSlide + 1) % slides.length;
+          slideEls[currentSlide].classList.add('active');
+        }, 5000);
+      }
+    }
+
+    // 8. Marquee Partners Generation (Using LogoLoop)
+    const marqueeContainer = document.querySelector('.marquee-container');
+    if (marqueeContainer && data.marquee && data.marquee.length > 0) {
+      const logos = data.marquee.map(p => {
+        if (p.logo) {
+          return { src: p.logo, alt: p.name, href: p.url || '#', title: p.name };
+        } else {
+          return { 
+            node: `<div style="height: 100%; min-width: 150px; background: white; border-radius: 0.5rem; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; padding: 0 1.5rem; font-weight: bold; color: #0D1B8E;">${p.name}</div>`, 
+            href: p.url || '#', 
+            title: p.name 
+          };
+        }
+      });
+      
+      if (window._marqueeLoop) window._marqueeLoop.destroy();
+
+      window._marqueeLoop = new LogoLoop('.marquee-container', {
+        logos: logos,
+        speed: 120,
+        direction: 'left',
+        logoHeight: 64,
+        gap: 32,
+        hoverSpeed: 20,
+        fadeOut: true,
+        fadeOutColor: '#F2F5FF',
+        scaleOnHover: true
+      });
+    }
   }
+
+  // Initialize Animated Gradient Background for Impact Section
+  initAnimatedGradient();
 });
+
+// ==========================================
+// Vanilla JS Port of AnimatedGradientBackground
+// ==========================================
+function initAnimatedGradient() {
+  const container = document.getElementById('impact-animated-bg');
+  if (!container) return;
+
+  // Configuration from original React component
+  const startingGap = 125;
+  const breathingRange = 5;
+  const animationSpeed = 0.02;
+  const topOffset = 0;
+  const gradientColors = ["#0A0A0A", "#2979FF", "#FF80AB", "#FF6D00", "#FFD600", "#00E676", "#3D5AFE"];
+  const gradientStops = [35, 50, 60, 70, 80, 90, 100];
+
+  let width = startingGap;
+  let directionWidth = 1;
+  let animationFrame;
+
+  // Trigger entrance animation (replacing Framer Motion)
+  setTimeout(() => {
+    container.style.opacity = '1';
+    container.style.transform = 'scale(1)';
+  }, 100);
+
+  function animateGradient() {
+    if (width >= startingGap + breathingRange) directionWidth = -1;
+    if (width <= startingGap - breathingRange) directionWidth = 1;
+
+    width += directionWidth * animationSpeed;
+
+    const gradientStopsString = gradientStops
+      .map((stop, index) => `${gradientColors[index]} ${stop}%`)
+      .join(", ");
+
+    const gradient = `radial-gradient(${width}% ${width + topOffset}% at 50% 20%, ${gradientStopsString})`;
+    container.style.background = gradient;
+
+    animationFrame = requestAnimationFrame(animateGradient);
+  }
+
+  animationFrame = requestAnimationFrame(animateGradient);
+}

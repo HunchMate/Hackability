@@ -1,21 +1,12 @@
 /* ============================================================
-   Hackability Admin — Main JavaScript
+   Hackability Admin — Main JavaScript (Supabase)
    ============================================================ */
 
-// ---------- Firebase Config ----------
-const firebaseConfig = {
-  apiKey: "AIzaSyC4Yi7dHSOvmjb2victqbUI_H6Y86YMeIQ",
-  authDomain: "hackability-a6980.firebaseapp.com",
-  projectId: "hackability-a6980",
-  storageBucket: "hackability-a6980.firebasestorage.app",
-  messagingSenderId: "361281138633",
-  appId: "1:361281138633:web:740138b0c8ef277a760218"
-};
+// ---------- Supabase Config ----------
+const SUPABASE_URL = 'https://otzrqnmyrzegqqxgwdbd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_w-apjLisOCfwXc824ZZZEA_dDKWjQXh';
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
-const storage = firebase.storage();
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ---------- Default homepage structure ----------
 const DEFAULT_HOMEPAGE = {
@@ -27,68 +18,27 @@ const DEFAULT_HOMEPAGE = {
   },
   hero: {
     parent: {
-      eyebrow: "",
-      title: "",
-      subtitle: "",
-      primary_btn: "",
-      secondary_btn: "",
-      navBrand: ""
+      eyebrow: "", title: "", subtitle: "",
+      primary_btn: "", secondary_btn: "", navBrand: ""
     },
     college: {
-      eyebrow: "",
-      title: "",
-      subtitle: "",
-      primary_btn: "",
-      secondary_btn: "",
-      navBrand: "",
-      backLabel: ""
+      eyebrow: "", title: "", subtitle: "",
+      primary_btn: "", secondary_btn: "", navBrand: "", backLabel: ""
     },
     school: {
-      eyebrow: "",
-      title: "",
-      subtitle: "",
-      primary_btn: "",
-      secondary_btn: "",
-      navBrand: "",
-      backLabel: ""
+      eyebrow: "", title: "", subtitle: "",
+      primary_btn: "", secondary_btn: "", navBrand: "", backLabel: ""
     }
   },
-  about: {
-    eyebrow: "",
-    title: "",
-    description: "",
-    cta_text: ""
-  },
-  verticals: {
-    eyebrow: "",
-    title: "",
-    cards: []
-  },
+  about: { eyebrow: "", title: "", description: "", cta_text: "" },
+  verticals: { eyebrow: "", title: "", cards: [] },
   products: {
-    eyebrow: "",
-    title: "",
-    badge: "",
-    product_name: "",
-    description: "",
-    features: [],
-    cta_text: ""
+    eyebrow: "", title: "", badge: "", product_name: "",
+    description: "", features: [], cta_text: ""
   },
-  impact: {
-    eyebrow: "",
-    title: "",
-    stats: []
-  },
-  cta: {
-    title: "",
-    subtitle: "",
-    primary_btn: "",
-    secondary_btn: ""
-  },
-  footer: {
-    description: "",
-    contact_email: "",
-    copyright: ""
-  }
+  impact: { eyebrow: "", title: "", stats: [] },
+  cta: { title: "", subtitle: "", primary_btn: "", secondary_btn: "" },
+  footer: { description: "", contact_email: "", copyright: "" }
 };
 
 // ---------- Toast Notification System ----------
@@ -138,21 +88,31 @@ function initSidebar() {
   }
 }
 
-// ---------- Auth ----------
+// ---------- Auth (Supabase) ----------
 function isLoginPage() {
   return window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/admin/');
 }
 
-function handleAuthState() {
-  auth.onAuthStateChanged(user => {
-    if (isLoginPage()) {
-      if (user) window.location.href = 'dashboard.html';
+async function handleAuthState() {
+  const { data: { session } } = await sb.auth.getSession();
+
+  if (isLoginPage()) {
+    if (session) window.location.href = 'dashboard.html';
+  } else {
+    if (!session) {
+      window.location.href = 'index.html';
     } else {
-      if (!user) window.location.href = 'index.html';
-      else {
-        populateUserInfo(user);
-        if (typeof onAuthReady === 'function') onAuthReady(user);
-      }
+      populateUserInfo(session.user);
+      if (typeof onAuthReady === 'function') onAuthReady(session.user);
+    }
+  }
+
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' && !isLoginPage()) {
+      window.location.href = 'index.html';
+    }
+    if (event === 'SIGNED_IN' && isLoginPage()) {
+      window.location.href = 'dashboard.html';
     }
   });
 }
@@ -165,7 +125,7 @@ function populateUserInfo(user) {
 }
 
 // Login
-function loginUser() {
+async function loginUser() {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
   const errorEl = document.getElementById('login-error');
@@ -179,47 +139,68 @@ function loginUser() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Signing in…';
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = 'dashboard.html';
-    })
-    .catch(err => {
-      btn.disabled = false;
-      btn.textContent = 'Sign In';
-      let msg = 'Login failed. Please try again.';
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-        msg = 'Invalid email or password.';
-      } else if (err.code === 'auth/too-many-requests') {
-        msg = 'Too many attempts. Please wait a moment.';
-      } else if (err.code === 'auth/invalid-email') {
-        msg = 'Please enter a valid email address.';
-      }
-      errorEl.textContent = msg;
-      errorEl.classList.add('show');
-    });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+    let msg = 'Login failed. Please try again.';
+    if (error.message.includes('Invalid login')) {
+      msg = 'Invalid email or password.';
+    } else if (error.message.includes('Email not confirmed')) {
+      msg = 'Please confirm your email first.';
+    }
+    errorEl.textContent = msg;
+    errorEl.classList.add('show');
+  } else {
+    window.location.href = 'dashboard.html';
+  }
 }
 
 // Logout
-function logoutUser() {
-  auth.signOut().then(() => {
-    window.location.href = 'index.html';
-  });
+async function logoutUser() {
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
 }
 
-// ---------- Firestore: Load Homepage ----------
+// ---------- Supabase: Load Homepage ----------
 let homepageData = null;
 
 async function loadHomepageData() {
   try {
-    const docRef = db.collection('site_content').doc('homepage');
-    const doc = await docRef.get();
-    if (doc.exists) {
-      homepageData = doc.data();
-    } else {
-      // First run — create document with defaults
+    const { data, error } = await sb.from('site_content').select('*');
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      // First run — seed default data
       homepageData = JSON.parse(JSON.stringify(DEFAULT_HOMEPAGE));
-      await docRef.set(homepageData);
+      const sections = [
+        { section_key: 'navbar', data: homepageData.navbar },
+        { section_key: 'hero_parent', data: homepageData.hero.parent },
+        { section_key: 'hero_college', data: homepageData.hero.college },
+        { section_key: 'hero_school', data: homepageData.hero.school },
+        { section_key: 'about', data: homepageData.about },
+        { section_key: 'verticals', data: homepageData.verticals },
+        { section_key: 'products', data: homepageData.products },
+        { section_key: 'impact', data: homepageData.impact },
+        { section_key: 'cta', data: homepageData.cta },
+        { section_key: 'marquee', data: [] },
+        { section_key: 'footer', data: homepageData.footer }
+      ];
+      await sb.from('site_content').upsert(sections);
       showToast('Initialized homepage with default structure.', 'info');
+    } else {
+      // Reconstruct the nested object from rows
+      homepageData = {};
+      data.forEach(row => {
+        if (row.section_key.startsWith('hero_')) {
+          if (!homepageData.hero) homepageData.hero = {};
+          const subKey = row.section_key.replace('hero_', '');
+          homepageData.hero[subKey] = row.data;
+        } else {
+          homepageData[row.section_key] = row.data;
+        }
+      });
     }
     populateAllSections();
   } catch (err) {
@@ -234,6 +215,7 @@ function populateAllSections() {
   populateNavbar(homepageData.navbar || {});
   const hero = homepageData.hero || {};
   populateSimpleSection('hero_parent', hero.parent || {});
+  if(typeof renderCarouselSlides === 'function') renderCarouselSlides((hero.parent && hero.parent.carousel_slides) ? hero.parent.carousel_slides : []);
   populateSimpleSection('hero_college', hero.college || {});
   populateSimpleSection('hero_school', hero.school || {});
   populateSimpleSection('about', homepageData.about || {});
@@ -241,6 +223,7 @@ function populateAllSections() {
   populateProducts(homepageData.products || {});
   populateImpact(homepageData.impact || {});
   populateSimpleSection('cta', homepageData.cta || {});
+  if(typeof renderMarqueePartners === 'function') renderMarqueePartners(homepageData.marquee || []);
   populateSimpleSection('footer', homepageData.footer || {});
 
   // Hide loader
@@ -509,6 +492,177 @@ function collectSimpleSection(sectionKey, fields) {
   return data;
 }
 
+// ---------- Carousel Images ----------
+function renderCarouselSlides(slides) {
+  const container = document.getElementById('carousel_slides-list');
+  if (!container) return;
+  container.innerHTML = '';
+  slides.forEach((slide, idx) => {
+    container.appendChild(createCarouselSlide(idx, slide));
+  });
+}
+
+function addCarouselSlide() {
+  const container = document.getElementById('carousel_slides-list');
+  const idx = container.children.length;
+  container.appendChild(createCarouselSlide(idx, {}));
+}
+
+function createCarouselSlide(idx, data = {}) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div class="list-item-header">
+      <span>Slide #${idx + 1}</span>
+      <button class="btn-remove-item" onclick="removeListItem(this)">✕ Remove</button>
+    </div>
+    <div class="form-row" style="align-items:flex-end;">
+      <div class="form-group" style="flex:2;">
+        <label>Image URL</label>
+        <input type="text" class="slide-url" value="${escapeAttr(data.image || '')}" placeholder="https://..." />
+        <div class="upload-progress-container" style="display:none; height: 4px; background: #e0e0e0; border-radius: 2px; margin-top: 4px; overflow: hidden; width: 100%;">
+          <div class="upload-progress-fill" style="width: 0%; height: 100%; background: #0D1B8E; transition: width 0.3s ease;"></div>
+        </div>
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label>Upload Image</label>
+        <input type="file" accept="image/*" onchange="uploadImage(this, 'carousel')" />
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+// ---------- Supabase Storage Upload (shared) ----------
+async function uploadImage(input, folder) {
+  let file = input.files[0];
+  if (!file) return;
+  const parentRow = input.closest('.form-row');
+  const urlInput = parentRow.querySelector('input[type="text"]');
+  const progressContainer = parentRow.querySelector('.upload-progress-container');
+  const progressFill = parentRow.querySelector('.upload-progress-fill');
+
+  urlInput.value = 'Uploading...';
+  if (progressContainer) {
+    progressContainer.style.display = 'block';
+    progressFill.style.width = '0%';
+    requestAnimationFrame(() => { progressFill.style.width = '30%'; });
+  }
+
+  const saveBtns = document.querySelectorAll('.btn-primary');
+  saveBtns.forEach(btn => btn.disabled = true);
+
+  try {
+    // Background Removal Interception
+    if ((folder === 'marquee' || folder === 'partners') && typeof imglyRemoveBackground !== 'undefined') {
+      urlInput.value = '🤖 Removing background AI...';
+      try {
+        const transparentBlob = await imglyRemoveBackground(file);
+        file = new File([transparentBlob], `transparent_${file.name.split('.')[0]}.png`, { type: 'image/png' });
+        if (progressFill) progressFill.style.width = '60%';
+      } catch (bgErr) {
+        console.warn("Background removal failed, proceeding with original.", bgErr);
+      }
+      urlInput.value = 'Uploading to storage...';
+    }
+
+    const fileName = `${folder}/${Date.now()}_${file.name}`;
+    const { data, error } = await sb.storage.from('uploads').upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+
+    if (error) throw error;
+
+    const { data: urlData } = sb.storage.from('uploads').getPublicUrl(data.path);
+    urlInput.value = urlData.publicUrl;
+
+    if (progressFill) progressFill.style.width = '100%';
+    showToast('Image uploaded successfully!', 'success');
+  } catch (err) {
+    console.error('UPLOAD ERROR:', err);
+    urlInput.value = '';
+    showToast('Upload failed: ' + (err.message || err.error || 'Unknown error'), 'error');
+    alert('Upload Error:\n\n' + (err.message || JSON.stringify(err)) + '\n\nMake sure:\n1. Storage bucket "uploads" exists (public)\n2. Storage policies allow authenticated uploads\n3. You ran the SQL setup script');
+  } finally {
+    if (progressContainer) setTimeout(() => { progressContainer.style.display = 'none'; }, 500);
+    saveBtns.forEach(btn => btn.disabled = false);
+  }
+}
+
+function collectHeroParentData() {
+  const simple = collectSimpleSection('hero_parent', ['eyebrow','title','subtitle','primary_btn','secondary_btn','navBrand']);
+  const container = document.getElementById('carousel_slides-list');
+  const carousel_slides = Array.from(container.querySelectorAll('.list-item')).map(item => ({
+    image: item.querySelector('.slide-url').value
+  }));
+  return { ...simple, carousel_slides };
+}
+
+// ---------- Marquee Partners ----------
+function renderMarqueePartners(partners) {
+  const container = document.getElementById('marquee_partners-list');
+  if (!container) return;
+  container.innerHTML = '';
+  (Array.isArray(partners) ? partners : []).forEach((partner, idx) => {
+    container.appendChild(createMarqueePartner(idx, partner));
+  });
+}
+
+function addMarqueePartner() {
+  const container = document.getElementById('marquee_partners-list');
+  const idx = container.children.length;
+  container.appendChild(createMarqueePartner(idx, {}));
+}
+
+function createMarqueePartner(idx, data = {}) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div class="list-item-header">
+      <span>Partner #${idx + 1}</span>
+      <button class="btn-remove-item" onclick="removeListItem(this)">✕ Remove</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Company Name</label>
+        <input type="text" class="partner-name" value="${escapeAttr(data.name || '')}" placeholder="e.g. Google" />
+      </div>
+      <div class="form-group">
+        <label>Website URL</label>
+        <input type="text" class="partner-link" value="${escapeAttr(data.url || '')}" placeholder="https://" />
+      </div>
+    </div>
+    <div class="form-row" style="align-items:flex-end;">
+      <div class="form-group" style="flex:2;">
+        <label>Logo Image URL</label>
+        <input type="text" class="partner-logo" value="${escapeAttr(data.logo || '')}" placeholder="https://" />
+        <div class="upload-progress-container" style="display:none; height: 4px; background: #e0e0e0; border-radius: 2px; margin-top: 4px; overflow: hidden; width: 100%;">
+           <div class="upload-progress-fill" style="width: 0%; height: 100%; background: #0D1B8E; transition: width 0.3s ease;"></div>
+        </div>
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label>Upload Logo</label>
+        <input type="file" accept="image/*" onchange="uploadImage(this, 'marquee')" />
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function collectMarqueeData() {
+  const container = document.getElementById('marquee_partners-list');
+  return Array.from(container.querySelectorAll('.list-item')).map(item => {
+    let logoUrl = item.querySelector('.partner-logo').value.trim();
+    if (logoUrl === 'Uploading...') logoUrl = '';
+    return {
+      name: item.querySelector('.partner-name').value.trim(),
+      url: item.querySelector('.partner-link').value.trim(),
+      logo: logoUrl
+    };
+  });
+}
+
 function collectVerticalsData() {
   const container = document.getElementById('verticals-cards-list');
   const cards = Array.from(container.querySelectorAll('.list-item')).map(item => ({
@@ -556,7 +710,7 @@ function collectImpactData() {
   };
 }
 
-// ---------- Save Section ----------
+// ---------- Save Section (Supabase) ----------
 async function saveSection(sectionKey) {
   const btn = event.currentTarget;
   const originalText = btn.innerHTML;
@@ -570,7 +724,7 @@ async function saveSection(sectionKey) {
         sectionData = collectNavbarData();
         break;
       case 'hero_parent':
-        sectionData = collectSimpleSection('hero_parent', ['eyebrow','title','subtitle','primary_btn','secondary_btn','navBrand']);
+        sectionData = collectHeroParentData();
         break;
       case 'hero_college':
         sectionData = collectSimpleSection('hero_college', ['eyebrow','title','subtitle','primary_btn','secondary_btn','navBrand','backLabel']);
@@ -593,6 +747,9 @@ async function saveSection(sectionKey) {
       case 'cta':
         sectionData = collectSimpleSection('cta', ['title','subtitle','primary_btn','secondary_btn']);
         break;
+      case 'marquee':
+        sectionData = collectMarqueeData();
+        break;
       case 'footer':
         sectionData = collectSimpleSection('footer', ['description','contact_email','copyright']);
         break;
@@ -600,18 +757,13 @@ async function saveSection(sectionKey) {
         throw new Error('Unknown section: ' + sectionKey);
     }
 
-    let updatePayload = {};
-    if (sectionKey.startsWith('hero_')) {
-      const subKey = sectionKey.split('_')[1];
-      updatePayload = { hero: { [subKey]: sectionData } };
-    } else {
-      updatePayload = { [sectionKey]: sectionData };
-    }
+    const { error } = await sb.from('site_content').upsert({
+      section_key: sectionKey,
+      data: sectionData,
+      updated_at: new Date().toISOString()
+    });
 
-    await db.collection('site_content').doc('homepage').set(
-      updatePayload,
-      { merge: true }
-    );
+    if (error) throw error;
 
     showToast(`${formatSectionName(sectionKey)} saved successfully!`, 'success');
   } catch (err) {
@@ -645,16 +797,17 @@ function formatSectionName(key) {
 async function uploadDropdownLogo(inputEl) {
   const file = inputEl.files[0];
   if (!file) return;
-  const storageRef = storage.ref(`admin/logos/${Date.now()}_${file.name}`);
   try {
     showToast('Uploading logo…', 'info');
-    const snapshot = await storageRef.put(file);
-    const url = await snapshot.ref.getDownloadURL();
-    // Set the URL in the adjacent logo input
+    const fileName = `logos/${Date.now()}_${file.name}`;
+    const { data, error } = await sb.storage.from('uploads').upload(fileName, file);
+    if (error) throw error;
+
+    const { data: urlData } = sb.storage.from('uploads').getPublicUrl(data.path);
     const listItem = inputEl.closest('.list-item');
     if (listItem) {
       const logoInput = listItem.querySelector('.dd-logo');
-      if (logoInput) logoInput.value = url;
+      if (logoInput) logoInput.value = urlData.publicUrl;
     }
     showToast('Logo uploaded successfully!', 'success');
   } catch (err) {
@@ -673,7 +826,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginBtn = document.getElementById('login-btn');
   if (loginBtn) {
     loginBtn.addEventListener('click', loginUser);
-    // Enter key support
     document.getElementById('login-password')?.addEventListener('keydown', e => {
       if (e.key === 'Enter') loginUser();
     });
@@ -695,25 +847,26 @@ function onAuthReady(user) {
   }
 }
 
-// ---------- Analytics ----------
+// ---------- Analytics (Supabase) ----------
 async function loadAnalytics() {
   const visitorsEl = document.getElementById('analytics-total-visitors');
   const pagesListEl = document.getElementById('analytics-top-pages');
   if (!visitorsEl || !pagesListEl) return;
 
   try {
-    const snapshot = await db.collection('analytics').orderBy('views', 'desc').get();
+    const { data, error } = await sb.from('analytics').select('*').order('views', { ascending: false });
+    if (error) throw error;
+
     let totalViews = 0;
     const pages = [];
 
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      totalViews += data.views || 0;
-      pages.push({ path: doc.id, views: data.views });
+    (data || []).forEach(row => {
+      totalViews += row.views || 0;
+      pages.push({ path: row.path, views: row.views });
     });
 
     visitorsEl.textContent = totalViews.toLocaleString();
-    
+
     if (pages.length === 0) {
       pagesListEl.innerHTML = '<div class="text-grey-mid">No analytics data yet. Visit the site to log views!</div>';
       return;
@@ -727,6 +880,6 @@ async function loadAnalytics() {
     `).join('');
   } catch (err) {
     console.error('Error loading analytics:', err);
-    visitorsEl.textContent = 'Error';
+    if (visitorsEl) visitorsEl.textContent = 'Error';
   }
 }

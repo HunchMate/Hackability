@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackability — Developing Talent for What's Next</title>
+  <meta name="description" content="Hackability partners with colleges and universities to strengthen innovation, entrepreneurship, and industry engagement." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/logoloop.css" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Tailwind CDN (dev only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:        '#0D1B8E',
+            'navy-dark': '#0A1570',
+            'navy-mid':  '#1A2FA8',
+            'navy-tint': '#E8F0FF',
+            yellow:      '#F5C200',
+            'yellow-dark':'#D4A800',
+            'yellow-tint':'#FFF8D6',
+            'grey-light': '#F4F4F6',
+            'grey-mid':   '#9CA3AF',
+            'grey-dark':  '#374151',
+            'hk-border':  '#E2E8F0',
+          },
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+            data:    ['Space Grotesk', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Sticky Nav */
+    /* Premium Floating Sticky Nav */
+    .sticky-nav-container {
+      position: sticky;
+      top: 16px;
+      z-index: 40;
+      display: flex;
+      justify-content: center;
+      padding: 0 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      pointer-events: none;
+    }
+    .sticky-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      overflow-x: auto;
+      scrollbar-width: none;
+      pointer-events: auto;
+    }
+    .sticky-nav-menu::-webkit-scrollbar {
+      display: none;
+    }
+    .sticky-nav-pill {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #374151;
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      display: block;
+    }
+    .sticky-nav-pill:hover {
+      background: rgba(255, 255, 255, 0.5);
+      color: #0D1B8E;
+    }
+    .sticky-nav-pill.active {
+      background: #ffffff;
+      color: #0D1B8E;
+      box-shadow: 0 2px 8px rgba(13, 27, 142, 0.08);
+    }
+    
+    /* Mobile sticky nav overrides */
+    @media (max-width: 768px) {
+      .sticky-nav-container {
+        position: relative;
+        top: auto;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+      .sticky-nav-menu {
+        flex-wrap: wrap;
+        border-radius: 1.5rem;
+        justify-content: center;
+      }
+      .sticky-nav-pill {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Custom Scrollbar for Carousel */
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #E2E8F0;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #9CA3AF;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #6B7280;
+    }
+
+    /* Hide scrollbar entirely for hide-scrollbar class */
+    .hide-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari and Opera */
+    }
+
+    /* Preloader Animation */
+    @keyframes preloaderFadeInDown {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes preloaderDrawLine {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes preloaderStarPop {
+      0% { opacity: 0; transform: scale(0) rotate(-45deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    body.loading {
+      overflow: hidden;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="css/card-nav.css" />
+</head>
+<body class="font-body bg-white text-grey-dark">
+
+  <!-- ===================== GLOSSY PRELOADER ===================== -->
+  <div id="page-preloader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center justify-center gap-2 transform translate-y-[-20px] opacity-0" style="animation: preloaderFadeInDown 0.6s ease-out forwards 0.1s;">
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-white text-center mb-2">Hackability</h1>
+      <svg width="300" height="20" viewBox="0 0 300 20" class="absolute -bottom-6 left-1/2 -translate-x-1/2 overflow-visible">
+        <path
+          d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
+          stroke="currentColor"
+          stroke-width="3"
+          fill="none"
+          class="text-white"
+          stroke-linecap="round"
+          style="stroke-dasharray: 310; stroke-dashoffset: 310; animation: preloaderDrawLine 1.5s ease-in-out forwards 0.4s;"
+        />
+        <g style="transform: translate(288px, -2px);" class="text-white">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" style="opacity: 0; transform-box: fill-box; transform-origin: center; animation: preloaderStarPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.8s;" />
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    document.body.classList.add('loading');
+    const _preloaderStart = Date.now();
+    window.addEventListener('load', () => {
+      const elapsed = Date.now() - _preloaderStart;
+      const remain = Math.max(0, 1800 - elapsed);
+      setTimeout(() => {
+        const p = document.getElementById('page-preloader');
+        if(p) {
+          p.style.opacity = '0';
+          setTimeout(() => { p.remove(); document.body.classList.remove('loading'); }, 1000);
+        }
+      }, remain);
+    });
+  </script>
+
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 pt-6">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
+      
+      <!-- Logo -->
+      <div class="flex-1 flex justify-start">
+        <a href="index.html" class="flex items-center" id="logo-link">
+          <img src="assets/logo-dark.png" alt="Hackability" style="height:36px; filter: brightness(0) invert(1);" />
+        </a>
+      </div>
+
+      <!-- Desktop Nav (Mega Menu) -->
+      <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2">
+        <ul class="flex items-center gap-6 list-none m-0 px-8 py-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
+          <li class="flex items-center">
+            <a href="about.html" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+          </li>
+          
+          <!-- Our Ecosystem Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Ecosystem <i class="ph-bold ph-caret-down text-xs"></i>
+            </button>
+            <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <div class="grid grid-cols-2 gap-4">
+                <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                  <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
+                  <div>
+                    <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
+                    <span class="text-xs text-grey-dark block">Innovation programs for schools and young minds.</span>
+                  </div>
+                </a>
+                <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors bg-grey-light mega-menu-grid-bg">
+                  <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
+                  <div>
+                    <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
+                    <span class="text-xs text-grey-dark block">Ecosystem and programs for Higher Education.</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Products Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Products <i class="ph-bold ph-caret-down text-xs"></i>
+            </button>
+            <div class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">inCamp</span>
+                  <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
+                </div>
+              </a>
+            </div>
+          </li>
+
+
+          <li class="flex items-center">
+            <a href="#" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Mobile hamburger (Right aligned) -->
+      <!-- Mobile hamburger (CardNav style) -->
+      <div class="flex-1 flex justify-end lg:hidden items-center z-50">
+        <div class="hamburger-menu text-white" aria-label="Open menu" tabindex="0">
+          <div class="hamburger-line bg-current"></div>
+          <div class="hamburger-line bg-current"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- CardNav Mobile Dropdown Content -->
+    <div class="card-nav-content lg:hidden">
+      <!-- Card 1: Our Ecosystem -->
+      <div class="nav-card" style="background-color: #0D1B8E; color: white;">
+        <div class="nav-card-label font-display">Our Ecosystem</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="hatch.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hatch (K-12)
+          </a>
+          <a class="nav-card-link" href="hackability.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hackability (Higher Ed)
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Products -->
+      <div class="nav-card" style="background-color: #6D28D9; color: white;">
+        <div class="nav-card-label font-display">Products</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="index.html#products">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            inCamp Platform
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Company -->
+      <div class="nav-card" style="background-color: #F5C200; color: #0D1B8E;">
+        <div class="nav-card-label font-display">Company</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link text-navy" href="about.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            About Us
+          </a>
+          <a class="nav-card-link text-navy" href="#">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Blog
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
+    <!-- Background -->
+    <div class="absolute inset-0 z-[0] pointer-events-none">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/hackability_hero_bg.png');"></div>
+    </div>
+    
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-[1] pointer-events-none"></div>
+
+    <div class="w-full px-4 lg:px-6 pt-32 md:pt-48 pb-20 md:pb-32 flex flex-col items-start relative z-[10]">
+      <!-- Text column -->
+      <div id="hero-text" class="flex flex-col items-start text-left max-w-4xl">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-6 reveal reveal-delay-1">
+          <i class="ph-bold ph-graduation-cap text-yellow" style="font-size:18px;"></i>
+          <span class="text-white text-sm font-bold tracking-wide uppercase">Hackability for Higher Education</span>
+        </div>
+        
+        <!-- H1 -->
+        <h1 id="hero-title" class="font-display font-extrabold text-white leading-tight mb-6 reveal reveal-delay-2 drop-shadow-2xl"
+            style="font-size:clamp(40px,5vw,64px); letter-spacing:-1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+          Developing Talent <br/> <span style="color:#F5C200;">for What's Next</span>
+        </h1>
+        
+        <!-- Subtext -->
+        <p id="hero-sub" class="text-lg md:text-xl mb-6 reveal reveal-delay-3 text-white/90 drop-shadow-xl" style="max-width:700px; line-height:1.7; font-weight: 500; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+          Connecting learning with industry, innovation, and opportunity.
+        </p>
+
+        <div class="flex flex-wrap gap-4 reveal reveal-delay-4">
+          <a href="#what-is-hackability" class="btn-flow btn-flow-yellow">
+            <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
+            <span class="flow-text">Explore Programs</span>
+            <span class="flow-circle"></span>
+            <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AURORA WRAPPER ===================== -->
+  <div class="aurora-wrapper">
+    <div class="aurora-bg"></div>
+    <div class="futuristic-grid"></div>
+
+  <!-- ===================== STICKY NAV ===================== -->
+  <div class="sticky-nav-container">
+    <ul class="sticky-nav-menu">
+      <li><a href="#what-is-hackability" class="sticky-nav-pill active">What is Hackability?</a></li>
+      <li><a href="#focus-domains" class="sticky-nav-pill">Focus Domains</a></li>
+      <li><a href="#what-we-enable" class="sticky-nav-pill">What We Enable</a></li>
+      <li><a href="#program-partners" class="sticky-nav-pill">Program Partners</a></li>
+      <li><a href="#impact" class="sticky-nav-pill">Impact</a></li>
+      <li><a href="#our-journey" class="sticky-nav-pill">Our Journey</a></li>
+    </ul>
+  </div>
+
+  <!-- ===================== WHAT IS HACKABILITY? ===================== -->
+  <section id="what-is-hackability" class="py-20 bg-transparent scroll-mt-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-6">An Innovation & Talent Development Company</h2>
+          <p class="text-grey-dark text-lg mb-6 leading-relaxed">
+            Hackability partners with colleges and universities to strengthen innovation, entrepreneurship, industry engagement, and student development.
+          </p>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            Through structured programs, strategic partnerships, and ecosystem-driven initiatives, we help institutions create meaningful learning experiences, build future-ready talent, and connect education with real-world opportunities.
+          </p>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 bg-navy-tint rounded-3xl transform rotate-3 scale-105 -z-10"></div>
+          <img src="assets/images/hackability_illustration.png" alt="University students collaborating on tech" class="w-full h-auto rounded-3xl shadow-xl object-cover" style="aspect-ratio: 4/3;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOCUS DOMAINS ===================== -->
+  <section id="focus-domains" class="py-16 md:py-24 cyber-dark-bg text-white scroll-mt-24 relative overflow-hidden">
+    <div class="cyber-dark-grid"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="font-display font-bold text-white text-3xl md:text-4xl mb-4">Focus Domains</h2>
+        <p class="text-grey-mid text-lg max-w-2xl mx-auto">We design and enable programs across three core domains.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Domain 1: Innovation -->
+        <div class="glass-panel-dark relative z-10 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 group overflow-hidden">
+          <i class="ph-fill ph-lightbulb absolute -bottom-6 -right-6 text-[10rem] text-white/5 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none"></i>
+          
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:border-white transition-colors duration-500 relative z-10">
+              <i class="ph-bold ph-lightbulb text-white text-3xl group-hover:text-black transition-colors duration-500"></i>
+            </div>
+            <h3 class="font-display font-bold text-white text-2xl relative z-10">Innovation</h3>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Design Thinking</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Innovation Challenges</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Ideathons & Competitions</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Project-Based Learning</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Problem Solving Workshops</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Culture Building</span>
+          </div>
+        </div>
+
+        <!-- Domain 2: Emerging Technologies -->
+        <div class="glass-panel-dark relative z-10 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 group overflow-hidden">
+          <i class="ph-fill ph-cpu absolute -bottom-6 -right-6 text-[10rem] text-white/5 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none"></i>
+          
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:border-white transition-colors duration-500 relative z-10">
+              <i class="ph-bold ph-cpu text-white text-3xl group-hover:text-black transition-colors duration-500"></i>
+            </div>
+            <h3 class="font-display font-bold text-white text-2xl relative z-10">Emerging Tech</h3>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Generative AI</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Data & Analytics</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Web3 & Blockchain</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Cybersecurity</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Cloud Computing</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">3D & CAD Designing</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">IoT & Electronics</span>
+          </div>
+        </div>
+
+        <!-- Domain 3: Entrepreneurship -->
+        <div class="glass-panel-dark relative z-10 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 group overflow-hidden">
+          <i class="ph-fill ph-rocket-launch absolute -bottom-6 -right-6 text-[10rem] text-white/5 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 pointer-events-none"></i>
+          
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:border-white transition-colors duration-500 relative z-10">
+              <i class="ph-bold ph-rocket-launch text-white text-3xl group-hover:text-black transition-colors duration-500"></i>
+            </div>
+            <h3 class="font-display font-bold text-white text-2xl relative z-10">Entrepreneurship</h3>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Startup Awareness</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Entrepreneurship Dev</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Startup Pitching</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Business Plans</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Founder Interactions</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Venture Building</span>
+            <span class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white shadow-sm hover:bg-white/20 transition-colors cursor-default">Ecosystem Exposure</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT WE ENABLE ===================== -->
+  <section id="what-we-enable" class="py-16 md:py-24 bg-transparent scroll-mt-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 mb-12">
+      <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">What We Enable</h2>
+      <p class="text-grey-dark text-lg">Outcomes delivered through our programs and partnerships.</p>
+    </div>
+
+    <!-- Horizontal Scroll Carousel -->
+    <div class="relative w-full pb-8">
+      <div id="enable-carousel" class="flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 pb-4 custom-scrollbar" style="scroll-padding-left: 1.5rem;">
+        
+        <!-- Card 1 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-student text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Talent Development</h3>
+          <p class="text-grey-dark leading-relaxed">Building future-ready skills, mindsets, and capabilities.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-handshake text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Industry Engagement</h3>
+          <p class="text-grey-dark leading-relaxed">Connecting institutions with industry, experts, and opportunities.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-lightbulb-filament text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Innovation Culture</h3>
+          <p class="text-grey-dark leading-relaxed">Embedding innovation and problem-solving across campuses.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-rocket-launch text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Entrepreneurship</h3>
+          <p class="text-grey-dark leading-relaxed">Encouraging entrepreneurial thinking and venture creation.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-briefcase text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Student Opportunities</h3>
+          <p class="text-grey-dark leading-relaxed">Enabling access to projects, mentors, exposure, and experiences.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
+          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
+            <i class="ph-bold ph-buildings text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-3">Institutional Impact</h3>
+          <p class="text-grey-dark leading-relaxed">Supporting measurable outcomes across student and campus development.</p>
+        </div>
+
+      </div>
+      
+      <!-- Gradient Fade out for scroll indication -->
+      <div class="absolute top-0 right-0 bottom-8 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PROGRAM PARTNERS ===================== -->
+  <section id="program-partners" class="py-20 bg-transparent scroll-mt-24 border-y border-white/30 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 text-center mb-12">
+      <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">Program Partners</h2>
+      <p class="text-grey-dark text-lg max-w-2xl mx-auto">Collaborating with organizations that help create meaningful learning and development opportunities.</p>
+    </div>
+
+    <!-- Infinite Scroll Marquee -->
+    <div class="marquee-container" style="--marquee-width: 100vw; --marquee-elements: 6; --marquee-elements-displayed: 5; --marquee-element-width: 250px; --marquee-animation-duration: 20s;">
+      <ul class="marquee-content">
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">Microsoft</span>
+        </li>
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">Google</span>
+        </li>
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">AWS</span>
+        </li>
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">IBM</span>
+        </li>
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">Cisco</span>
+        </li>
+        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
+          <span class="font-bold text-grey-dark text-xl">Intel</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== IMPACT & TESTIMONIALS ===================== -->
+  <section id="impact" class="py-16 md:py-24 scroll-mt-24 relative overflow-hidden">
+    <!-- Animated Gradient Background Container -->
+    <div id="impact-animated-bg" class="absolute inset-0 z-0 opacity-0 transition-all duration-[2000ms] ease-out transform scale-110"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
+      <div>
+        <h2 class="font-display font-bold text-white text-3xl md:text-4xl mb-4">Impact & Stories</h2>
+        <p class="text-white/80 text-lg max-w-2xl">Creating measurable outcomes across institutions and learners.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="impact-prev" class="w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
+          <i class="ph-bold ph-arrow-left text-xl"></i>
+        </button>
+        <button id="impact-next" class="w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
+          <i class="ph-bold ph-arrow-right text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Combined Slider -->
+    <div class="relative w-full pb-8 z-10">
+      <div id="impact-slider" class="flex gap-8 overflow-x-auto snap-x snap-mandatory px-6 pb-8 hide-scrollbar" style="scroll-padding-left: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));">
+        
+        <!-- Impact Story 1 -->
+        <div class="snap-start shrink-0 w-[350px] md:w-[450px] glass-panel-blue rounded-3xl overflow-hidden border border-white/60 group">
+          <div class="h-56 relative overflow-hidden">
+            <div class="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors z-10"></div>
+            <img src="assets/images/impact_1.png" alt="Student Presentation" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="p-8">
+            <h3 class="font-display font-bold text-xl mb-3 text-navy group-hover:text-yellow-dark transition-colors">National Hackathon Winners</h3>
+            <p class="text-grey-dark leading-relaxed text-sm">Over 500 students from our partner institutions participated and built fully functional prototypes solving urban challenges.</p>
+          </div>
+        </div>
+
+        <!-- Testimonial 1 -->
+        <div class="snap-start shrink-0 w-[350px] md:w-[450px] glass-panel-yellow rounded-3xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="text-yellow mb-6">
+              <i class="ph-fill ph-quotes text-4xl"></i>
+            </div>
+            <p class="text-navy text-lg font-medium leading-relaxed mb-8">"Partnering with Hackability completely transformed our campus culture. The structured innovation programs gave our students the exact industry exposure they needed."</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy font-bold text-xl shrink-0">
+              DR
+            </div>
+            <div>
+              <h4 class="font-bold text-navy">Dr. Ramesh Kumar</h4>
+              <p class="text-sm text-grey-dark">Dean of Innovation, XYZ University</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact Story 2 -->
+        <div class="snap-start shrink-0 w-[350px] md:w-[450px] glass-panel-blue rounded-3xl overflow-hidden border border-white/60 group">
+          <div class="h-56 relative overflow-hidden">
+            <div class="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors z-10"></div>
+            <img src="assets/images/impact_2.png" alt="Students Coding" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="p-8">
+            <h3 class="font-display font-bold text-xl mb-3 text-navy group-hover:text-yellow-dark transition-colors">10,000+ Hours of Coding</h3>
+            <p class="text-grey-dark leading-relaxed text-sm">Students engaged in deep-tech bootcamps focusing on full-stack development and Generative AI, leading to a 40% increase in placements.</p>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="snap-start shrink-0 w-[350px] md:w-[450px] glass-panel-yellow rounded-3xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="text-yellow mb-6">
+              <i class="ph-fill ph-quotes text-4xl"></i>
+            </div>
+            <p class="text-navy text-lg font-medium leading-relaxed mb-8">"The venture building support helped our students take their final year projects and turn them into registered, funded startups."</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy font-bold text-xl shrink-0">
+              AS
+            </div>
+            <div>
+              <h4 class="font-bold text-navy">Anita Sharma</h4>
+              <p class="text-sm text-grey-dark">Director, Tech Institute</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact Story 3 -->
+        <div class="snap-start shrink-0 w-[350px] md:w-[450px] bg-navy rounded-3xl overflow-hidden border border-white/10 group">
+          <div class="h-56 relative overflow-hidden">
+            <div class="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors z-10"></div>
+            <img src="assets/images/impact_3.png" alt="Innovation Lab" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="p-8">
+            <h3 class="font-display font-bold text-xl mb-3 text-navy group-hover:text-yellow-dark transition-colors">Campus Innovation Labs</h3>
+            <p class="text-grey-dark leading-relaxed text-sm">Established state-of-the-art maker spaces equipped with IoT kits and 3D printers, accessible to over 5,000 students annually.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OUR JOURNEY ===================== -->
+  <section id="our-journey" class="py-16 md:py-24 bg-transparent scroll-mt-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">Our Journey</h2>
+        <p class="text-grey-dark text-lg max-w-2xl mx-auto">A growing ecosystem driven by impact, partnerships, and opportunities.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        
+        <!-- Left: Animated Stats -->
+        <div class="lg:col-span-5 grid grid-cols-2 gap-8 self-start sticky top-32">
+          
+          <div class="glass-panel-yellow p-8 rounded-3xl text-center">
+            <div class="font-data font-bold text-5xl text-navy mb-2 flex justify-center">
+              <span class="counter" data-target="50">0</span><span class="text-yellow">+</span>
+            </div>
+            <p class="text-grey-dark font-medium text-sm uppercase tracking-wider">Institutions</p>
+          </div>
+          
+          <div class="glass-panel-yellow p-8 rounded-3xl text-center">
+            <div class="font-data font-bold text-5xl text-navy mb-2 flex justify-center">
+              <span class="counter" data-target="25000">0</span><span class="text-yellow">+</span>
+            </div>
+            <p class="text-grey-dark font-medium text-sm uppercase tracking-wider">Students Impacted</p>
+          </div>
+          
+          <div class="glass-panel-yellow p-8 rounded-3xl text-center">
+            <div class="font-data font-bold text-5xl text-navy mb-2 flex justify-center">
+              <span class="counter" data-target="500">0</span><span class="text-yellow">+</span>
+            </div>
+            <p class="text-grey-dark font-medium text-sm uppercase tracking-wider">Programs Delivered</p>
+          </div>
+          
+          <div class="glass-panel-yellow p-8 rounded-3xl text-center">
+            <div class="font-data font-bold text-5xl text-navy mb-2 flex justify-center">
+              <span class="counter" data-target="100">0</span><span class="text-yellow">+</span>
+            </div>
+            <p class="text-grey-dark font-medium text-sm uppercase tracking-wider">Ecosystem Partners</p>
+          </div>
+
+        </div>
+
+        <!-- Right: Vertical Timeline -->
+        <div class="lg:col-span-7 relative">
+          <!-- Vertical Line -->
+          <div class="absolute left-[23px] top-4 bottom-4 w-1 bg-hk-border rounded-full hidden sm:block"></div>
+          
+          <div class="space-y-12">
+            
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-buildings text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Expanded across multiple institutions</h3>
+              </div>
+            </div>
+
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-handshake text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Built a growing ecosystem</h3>
+                <p class="text-grey-dark mt-2">Forged strategic alliances with industry and program partners to deliver unparalleled value.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-rocket-launch text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Enabled key initiatives</h3>
+                <p class="text-grey-dark mt-2">Successfully rolled out comprehensive innovation, entrepreneurship, and technology initiatives.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-student text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Supported thousands of learners</h3>
+                <p class="text-grey-dark mt-2">Delivered highly impactful, hands-on student learning experiences across campuses.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-briefcase text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Created pathways to industry</h3>
+                <p class="text-grey-dark mt-2">Opened up exclusive avenues for industry engagement and opportunity access for our talent pool.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-6 relative group">
+              <div class="w-12 h-12 shrink-0 rounded-full bg-yellow text-navy flex items-center justify-center font-bold z-10 group-hover:scale-110 transition-transform hidden sm:flex">
+                <i class="ph-bold ph-chart-line-up text-xl"></i>
+              </div>
+              <div class="glass-panel-blue p-8 rounded-2xl flex-1 hover:-translate-y-1 transition-all">
+                <h3 class="font-bold text-navy text-xl">Developing scalable models</h3>
+                <p class="text-grey-dark mt-2">Continuously iterating and developing scalable models for massive institutional impact.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  </div> <!-- End Aurora Wrapper -->
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-navy-dark border-t border-white/10 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div class="col-span-1 md:col-span-2">
+          <a href="index.html" class="inline-block mb-6">
+            <img src="assets/logo-light.png" alt="Hackability Logo" style="height:40px;" />
+          </a>
+          <p class="text-white/70 max-w-md leading-relaxed mb-8">
+            Building innovation-driven talent ecosystems at scale. We connect institutions, industry, and learners to create the future.
+          </p>
+          <div class="flex items-center gap-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i class="ph-fill ph-twitter-logo text-xl"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-6">Explore</h4>
+          <ul class="space-y-4">
+            <li><a href="about.html" class="text-white/70 hover:text-yellow transition-colors">About Us</a></li>
+            <li><a href="hackability.html" class="text-white/70 hover:text-yellow transition-colors">Hackability (Higher Ed)</a></li>
+            <li><a href="hatch.html" class="text-white/70 hover:text-yellow transition-colors">Hatch (Schools)</a></li>
+            <li><a href="index.html#products" class="text-white/70 hover:text-yellow transition-colors">inCamp</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-6">Contact</h4>
+          <ul class="space-y-4 text-white/70">
+            <li class="flex items-start gap-3">
+              <i class="ph-bold ph-envelope-simple mt-1 text-yellow"></i>
+              <a href="mailto:hello@hackability.in" class="hover:text-white transition-colors">hello@hackability.in</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="ph-bold ph-map-pin mt-1 text-yellow"></i>
+              <span>Innovation Hub, Tech Park, City, Country</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-white/50 text-sm">© 2026 Hackability. All rights reserved.</p>
+        <div class="flex items-center gap-6 text-sm">
+          <a href="#" class="text-white/50 hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="text-white/50 hover:text-white transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/animations.js?v=3"></script>
+  <script src="js/main.js?v=6"></script>
+  <script src="js/hackability.js"></script>
+  <script src="js/card-nav.js" defer></script>
+</body>
+</html>

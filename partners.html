@@ -41,6 +41,8 @@
   </script>
 
   <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="css/card-nav.css" />
 </head>
 <body class="font-body bg-grey-light text-grey-dark pt-24">
 
@@ -53,6 +55,50 @@
       <a href="/" class="text-navy font-semibold flex items-center gap-2 hover:underline">
         <i class="ph-bold ph-arrow-left"></i> Back to Home
       </a>
+    </div>
+  
+    <!-- CardNav Mobile Dropdown Content -->
+    <div class="card-nav-content lg:hidden">
+      <!-- Card 1: Our Ecosystem -->
+      <div class="nav-card" style="background-color: #0D1B8E; color: white;">
+        <div class="nav-card-label font-display">Our Ecosystem</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="hatch.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hatch (K-12)
+          </a>
+          <a class="nav-card-link" href="hackability.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hackability (Higher Ed)
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Products -->
+      <div class="nav-card" style="background-color: #6D28D9; color: white;">
+        <div class="nav-card-label font-display">Products</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="index.html#products">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            inCamp Platform
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Company -->
+      <div class="nav-card" style="background-color: #F5C200; color: #0D1B8E;">
+        <div class="nav-card-label font-display">Company</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link text-navy" href="about.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            About Us
+          </a>
+          <a class="nav-card-link text-navy" href="#">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Blog
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -94,12 +140,12 @@
     }
   </style>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
 
   <script src="js/partners.js?v=3"></script>
   <script src="js/analytics.js"></script>
+  <script src="js/card-nav.js" defer></script>
 </body>
 </html>

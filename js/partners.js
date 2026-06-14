@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   let partners = [];
 
-  // 1. Fetch data from Firebase Firestore
+  // 1. Fetch data from Supabase
   try {
-    const snapshot = await db.collection('partners').get();
-    partners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const { data, error } = await sb.from('partners').select('*');
+    if (error) throw error;
+    partners = data || [];
   } catch (err) {
-    console.error('Error fetching partners from Firestore:', err);
+    console.error('Error fetching partners from Supabase:', err);
   }
 
   // Remove loading

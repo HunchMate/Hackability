@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Migrate Data: Firebase -> Supabase</title>
+  <style>
+    body { font-family: monospace; padding: 40px; background: #0A1570; color: #fff; }
+    h1 { color: #F5C200; }
+    .log { background: #000; padding: 20px; border-radius: 8px; margin-top: 20px; min-height: 200px; }
+    .success { color: #4ade80; }
+    .error { color: #f87171; }
+    button { background: #F5C200; color: #000; padding: 10px 20px; font-weight: bold; border: none; cursor: pointer; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>Firebase to Supabase Migration</h1>
+  <p>Click the button below to copy all your text, hero titles, and partners from Firebase over to Supabase.</p>
+  
+  <button id="migrateBtn" onclick="startMigration()">Start Migration</button>
+
+  <div class="log" id="log">Waiting to start...<br></div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+
+  <script>
+    // 1. Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4Yi7dHSOvmjb2victqbUI_H6Y86YMeIQ",
+      authDomain: "hackability-a6980.firebaseapp.com",
+      projectId: "hackability-a6980",
+      storageBucket: "hackability-a6980.firebasestorage.app"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const logEl = document.getElementById('log');
+    function logMsg(msg, type = '') {
+      logEl.innerHTML += `<span class="${type}">${msg}</span><br>`;
+    }
+
+    async function startMigration() {
+      document.getElementById('migrateBtn').disabled = true;
+      logMsg('Starting migration...', 'success');
+
+      // Authenticate first to pass RLS policies
+      const email = prompt("To bypass database security, please enter your Admin Email:");
+      if (!email) {
+        logMsg('Migration cancelled. Email required.', 'error');
+        document.getElementById('migrateBtn').disabled = false;
+        return;
+      }
+      const password = prompt("Please enter your Admin Password:");
+      
+      logMsg('Authenticating with Supabase...');
+      const { data: authData, error: authError } = await sb.auth.signInWithPassword({ email, password });
+      
+      if (authError) {
+        logMsg('❌ Authentication failed: ' + authError.message, 'error');
+        document.getElementById('migrateBtn').disabled = false;
+        return;
+      }
+      
+      logMsg('Authenticated successfully! Proceeding with migration...', 'success');
+
+      try {
+        // --- Migrate Homepage Content ---
+        logMsg('Fetching homepage content from Firebase...');
+        const doc = await db.collection('site_content').doc('homepage').get();
+        if (doc.exists) {
+          const data = doc.data();
+          const sections = [];
+          for (const key in data) {
+            if (key === 'hero') {
+              sections.push({ section_key: 'hero_parent', data: data.hero.parent || {} });
+              sections.push({ section_key: 'hero_college', data: data.hero.college || {} });
+              sections.push({ section_key: 'hero_school', data: data.hero.school || {} });
+            } else {
+              sections.push({ section_key: key, data: data[key] });
+            }
+          }
+          logMsg(`Found ${sections.length} sections. Pushing to Supabase...`);
+          const { error } = await sb.from('site_content').upsert(sections);
+          if (error) throw error;
+          logMsg('✅ Homepage content migrated successfully!', 'success');
+        } else {
+          logMsg('No homepage content found in Firebase.');
+        }
+
+        // --- Migrate Partners ---
+        logMsg('Fetching partners from Firebase...');
+        const partnersSnap = await db.collection('partners').get();
+        const partners = [];
+        partnersSnap.forEach(doc => {
+          partners.push({
+            title: doc.data().title || '',
+            description: doc.data().description || '',
+            logo: doc.data().logo || '',
+            url: doc.data().url || '',
+            category: doc.data().category || 'Other'
+          });
+        });
+        
+        if (partners.length > 0) {
+          logMsg(`Found ${partners.length} partners. Pushing to Supabase...`);
+          const { error: pError } = await sb.from('partners').insert(partners);
+          if (pError) throw pError;
+          logMsg('✅ Partners migrated successfully!', 'success');
+        } else {
+          logMsg('No partners found in Firebase.');
+        }
+
+        // --- Migrate Analytics ---
+        logMsg('Fetching analytics from Firebase...');
+        const analyticsSnap = await db.collection('analytics').get();
+        const analytics = [];
+        analyticsSnap.forEach(doc => {
+          analytics.push({
+            path: doc.id,
+            views: doc.data().views || 0
+          });
+        });
+        
+        if (analytics.length > 0) {
+          logMsg(`Found ${analytics.length} analytics records. Pushing to Supabase...`);
+          const { error: aError } = await sb.from('analytics').upsert(analytics);
+          if (aError) throw aError;
+          logMsg('✅ Analytics migrated successfully!', 'success');
+        } else {
+          logMsg('No analytics found in Firebase.');
+        }
+
+        logMsg('<br>🎉 ALL DONE! Your data is fully migrated to Supabase.', 'success');
+        logMsg('You can now go back to localhost:3000 and do a Hard Refresh.', 'success');
+
+      } catch (err) {
+        console.error(err);
+        logMsg('❌ ERROR: ' + err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

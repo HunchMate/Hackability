@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mega Menu Dropdowns — JS-positioned, appended to body
   // ===========================
   const megaMenuItems = document.querySelectorAll('.mega-menu-item');
+  const allDropdownPanels = [];
   
   megaMenuItems.forEach((item) => {
     const button = item.querySelector('button');
@@ -190,12 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Move dropdown panel out of the nav pill and into document.body
     // so no parent overflow/backdrop-filter can clip it
     document.body.appendChild(content);
+    allDropdownPanels.push(content);
 
     // Style the extracted panel as a fixed-position dropdown
     content.style.position = 'fixed';
     content.style.display = 'none';
     content.style.zIndex = '99999';
-    // Remove the CSS-driven visibility/opacity — we use display now
     content.style.visibility = 'visible';
     content.style.opacity = '1';
     content.style.pointerEvents = 'auto';
@@ -206,9 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function positionDropdown() {
       const rect = button.getBoundingClientRect();
       const contentWidth = content.offsetWidth;
-      // Center the dropdown under the button
       let leftPos = rect.left + rect.width / 2 - contentWidth / 2;
-      // Keep it within viewport
       if (leftPos < 8) leftPos = 8;
       if (leftPos + contentWidth > window.innerWidth - 8) {
         leftPos = window.innerWidth - contentWidth - 8;
@@ -220,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function openMenu() {
       // Close all other menus first
       megaMenuItems.forEach(otherItem => {
-        const otherBtn = otherItem.querySelector('button');
         if (otherItem !== item && otherItem._closeMenu) {
           otherItem._closeMenu();
         }
@@ -237,9 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
       item.classList.remove('menu-open');
     }
 
-    // Store closeMenu on the item for other items to call
     item._closeMenu = closeMenu;
+    item._isOpen = () => isOpen;
 
+    // Click to toggle
     button.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -250,45 +249,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Also open on hover for desktop
-    item.addEventListener('mouseenter', () => {
-      openMenu();
-    });
-
-    item.addEventListener('mouseleave', () => {
-      // Small delay to allow moving to dropdown
-      item._hoverTimeout = setTimeout(() => {
-        if (!content.matches(':hover')) {
-          closeMenu();
-        }
-      }, 150);
-    });
-
-    content.addEventListener('mouseenter', () => {
-      clearTimeout(item._hoverTimeout);
-    });
-
-    content.addEventListener('mouseleave', () => {
-      closeMenu();
-    });
-
-    // Prevent clicks inside dropdown from closing it
+    // Stop clicks inside dropdown from bubbling to document
     content.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
-    // Reposition on scroll/resize
+    // Close on scroll (navbar hides anyway)
     window.addEventListener('scroll', () => {
-      if (isOpen) positionDropdown();
-    }, { passive: true });
-    window.addEventListener('resize', () => {
-      if (isOpen) positionDropdown();
+      if (isOpen) closeMenu();
     }, { passive: true });
   });
 
-  // Close all menus on click outside
+  // Close all menus when clicking anywhere outside buttons or panels
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.mega-menu-item')) {
+    const clickedButton = e.target.closest('.mega-menu-item button');
+    const clickedPanel = allDropdownPanels.some(p => p.contains(e.target));
+    if (!clickedButton && !clickedPanel) {
       megaMenuItems.forEach(item => {
         if (item._closeMenu) item._closeMenu();
       });

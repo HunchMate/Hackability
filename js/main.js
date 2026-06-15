@@ -181,22 +181,50 @@ document.addEventListener('DOMContentLoaded', () => {
   // Toggle Mega Menu on click/touch
   // ===========================
   const megaMenuItems = document.querySelectorAll('.mega-menu-item');
-  megaMenuItems.forEach(item => {
+  console.log('[NAV DEBUG] Found', megaMenuItems.length, 'mega-menu-items');
+  
+  megaMenuItems.forEach((item, index) => {
     const button = item.querySelector('button');
+    const content = item.querySelector('.mega-menu-content');
+    console.log('[NAV DEBUG] Item', index, '- button:', !!button, '- content:', !!content, '- button text:', button ? button.textContent.trim() : 'N/A');
+    
     if (button) {
       button.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
+        console.log('[NAV DEBUG] Button CLICKED:', button.textContent.trim());
+        
+        // Close all other menus
         megaMenuItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('menu-open');
           }
         });
+        
+        // Toggle this menu
+        const wasOpen = item.classList.contains('menu-open');
         item.classList.toggle('menu-open');
+        console.log('[NAV DEBUG] Toggled menu-open. Was:', wasOpen, 'Now:', item.classList.contains('menu-open'));
+        
+        // Debug: force check computed styles on content
+        if (content) {
+          const cs = window.getComputedStyle(content);
+          console.log('[NAV DEBUG] Content visibility:', cs.visibility, 'opacity:', cs.opacity, 'display:', cs.display, 'pointerEvents:', cs.pointerEvents);
+        }
+      });
+    }
+    
+    // Prevent clicks inside dropdown from closing it
+    if (content) {
+      content.addEventListener('click', (e) => {
+        e.stopPropagation();
       });
     }
   });
 
-  document.addEventListener('click', () => {
+  document.addEventListener('click', (e) => {
+    // Don't close if clicking inside a mega-menu-item
+    if (e.target.closest('.mega-menu-item')) return;
     megaMenuItems.forEach(item => {
       item.classList.remove('menu-open');
     });

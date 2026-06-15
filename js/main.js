@@ -178,56 +178,121 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===========================
-  // Toggle Mega Menu on click/touch
+  // Mega Menu Dropdowns — JS-positioned, appended to body
   // ===========================
   const megaMenuItems = document.querySelectorAll('.mega-menu-item');
-  console.log('[NAV DEBUG] Found', megaMenuItems.length, 'mega-menu-items');
   
-  megaMenuItems.forEach((item, index) => {
+  megaMenuItems.forEach((item) => {
     const button = item.querySelector('button');
     const content = item.querySelector('.mega-menu-content');
-    console.log('[NAV DEBUG] Item', index, '- button:', !!button, '- content:', !!content, '- button text:', button ? button.textContent.trim() : 'N/A');
-    
-    if (button) {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[NAV DEBUG] Button CLICKED:', button.textContent.trim());
-        
-        // Close all other menus
-        megaMenuItems.forEach(otherItem => {
-          if (otherItem !== item) {
-            otherItem.classList.remove('menu-open');
-          }
-        });
-        
-        // Toggle this menu
-        const wasOpen = item.classList.contains('menu-open');
-        item.classList.toggle('menu-open');
-        console.log('[NAV DEBUG] Toggled menu-open. Was:', wasOpen, 'Now:', item.classList.contains('menu-open'));
-        
-        // Debug: force check computed styles on content
-        if (content) {
-          const cs = window.getComputedStyle(content);
-          console.log('[NAV DEBUG] Content visibility:', cs.visibility, 'opacity:', cs.opacity, 'display:', cs.display, 'pointerEvents:', cs.pointerEvents);
+    if (!button || !content) return;
+
+    // Move dropdown panel out of the nav pill and into document.body
+    // so no parent overflow/backdrop-filter can clip it
+    document.body.appendChild(content);
+
+    // Style the extracted panel as a fixed-position dropdown
+    content.style.position = 'fixed';
+    content.style.display = 'none';
+    content.style.zIndex = '99999';
+    // Remove the CSS-driven visibility/opacity — we use display now
+    content.style.visibility = 'visible';
+    content.style.opacity = '1';
+    content.style.pointerEvents = 'auto';
+    content.style.transform = 'none';
+
+    let isOpen = false;
+
+    function positionDropdown() {
+      const rect = button.getBoundingClientRect();
+      const contentWidth = content.offsetWidth;
+      // Center the dropdown under the button
+      let leftPos = rect.left + rect.width / 2 - contentWidth / 2;
+      // Keep it within viewport
+      if (leftPos < 8) leftPos = 8;
+      if (leftPos + contentWidth > window.innerWidth - 8) {
+        leftPos = window.innerWidth - contentWidth - 8;
+      }
+      content.style.top = (rect.bottom + 10) + 'px';
+      content.style.left = leftPos + 'px';
+    }
+
+    function openMenu() {
+      // Close all other menus first
+      megaMenuItems.forEach(otherItem => {
+        const otherBtn = otherItem.querySelector('button');
+        if (otherItem !== item && otherItem._closeMenu) {
+          otherItem._closeMenu();
         }
       });
+      content.style.display = 'block';
+      positionDropdown();
+      isOpen = true;
+      item.classList.add('menu-open');
     }
-    
+
+    function closeMenu() {
+      content.style.display = 'none';
+      isOpen = false;
+      item.classList.remove('menu-open');
+    }
+
+    // Store closeMenu on the item for other items to call
+    item._closeMenu = closeMenu;
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Also open on hover for desktop
+    item.addEventListener('mouseenter', () => {
+      openMenu();
+    });
+
+    item.addEventListener('mouseleave', () => {
+      // Small delay to allow moving to dropdown
+      item._hoverTimeout = setTimeout(() => {
+        if (!content.matches(':hover')) {
+          closeMenu();
+        }
+      }, 150);
+    });
+
+    content.addEventListener('mouseenter', () => {
+      clearTimeout(item._hoverTimeout);
+    });
+
+    content.addEventListener('mouseleave', () => {
+      closeMenu();
+    });
+
     // Prevent clicks inside dropdown from closing it
-    if (content) {
-      content.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
+    content.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Reposition on scroll/resize
+    window.addEventListener('scroll', () => {
+      if (isOpen) positionDropdown();
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      if (isOpen) positionDropdown();
+    }, { passive: true });
   });
 
+  // Close all menus on click outside
   document.addEventListener('click', (e) => {
-    // Don't close if clicking inside a mega-menu-item
-    if (e.target.closest('.mega-menu-item')) return;
-    megaMenuItems.forEach(item => {
-      item.classList.remove('menu-open');
-    });
+    if (!e.target.closest('.mega-menu-item')) {
+      megaMenuItems.forEach(item => {
+        if (item._closeMenu) item._closeMenu();
+      });
+    }
   });
 
   // ===========================

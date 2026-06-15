@@ -49,19 +49,29 @@ window.initPageSwitcher = function(cmsData) {
   switchPage(initialPage);
 };
 
+let isFirstLoad = true;
+
 window.switchPage = function(target) {
   if (!PAGE_CONTENT) return;
   const content = PAGE_CONTENT[target];
   if (!content) return;
 
-  // Fade out hero content
   const heroText = document.getElementById('hero-text');
-  if (heroText) {
-    heroText.style.opacity = '0';
-    heroText.style.transform = 'translateY(16px)';
+  
+  if (isFirstLoad) {
+    // Initial hydration: update instantly without visual flash
+    updateContent();
+    isFirstLoad = false;
+  } else {
+    // Fade out hero content
+    if (heroText) {
+      heroText.style.opacity = '0';
+      heroText.style.transform = 'translateY(16px)';
+    }
+    setTimeout(updateContent, 300);
   }
 
-  setTimeout(() => {
+  function updateContent() {
     // Update hero headline
     const heroTitle = document.getElementById('hero-title');
     if (heroTitle) heroTitle.innerHTML = content.heroTitle;
@@ -116,7 +126,7 @@ window.switchPage = function(target) {
 
     // Update body data attr for CSS targeting
     document.body.dataset.page = target;
-  }, 300);
+  }
 }
 
 // Back button wires up to parent

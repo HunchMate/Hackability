@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
               productUrl = isHomepage ? '#products' : 'index.html#products';
             }
             return `
-              <a href="${productUrl}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+              <a href="${productUrl}" class="relative flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
                 <!-- Optional Logo (fallback to text if empty) -->
                 ${product.logo ? `
                   <img src="${product.logo}" alt="${product.name}" class="w-10 h-10 object-contain flex-shrink-0" />
@@ -417,13 +417,13 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
           }).join('');
           
-          if (desktopDropdown) {
+          if (desktopDropdown && data.navbar.products_dropdown.length > 0) {
             desktopDropdown.innerHTML = dropdownHtml;
             console.log('Successfully rendered dynamic desktop products dropdown.');
           }
           
           // For mobile, use premium layout with icons
-          if (mobileDropdown) {
+          if (mobileDropdown && data.navbar.products_dropdown.length > 0) {
             mobileDropdown.innerHTML = data.navbar.products_dropdown.map(product => {
               let productUrl = product.url;
               if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
@@ -469,12 +469,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </a>
           `).join('');
           
-          if (desktopPartnersDropdown) {
+          if (desktopPartnersDropdown && data.navbar.partners_dropdown.length > 0) {
             desktopPartnersDropdown.innerHTML = partnersHtml;
             console.log('Successfully rendered dynamic desktop partners dropdown.');
           }
           
-          if (mobilePartnersDropdown) {
+          if (mobilePartnersDropdown && data.navbar.partners_dropdown.length > 0) {
             mobilePartnersDropdown.innerHTML = data.navbar.partners_dropdown.map(partner => `
               <a class="nav-card-link" href="${partner.url}">
                 <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>

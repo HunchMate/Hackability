@@ -345,6 +345,10 @@ input:focus,textarea:focus,select:focus{border-color:var(--color-blue-900);box-s
   white-space: nowrap !important;
 }
 
+.mega-menu-content a {
+  white-space: normal !important;
+}
+
 /* Animate Caret Arrows on Hover / Open */
 .mega-menu-item button i.ph-caret-down {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);

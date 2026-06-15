@@ -1,6 +1,91 @@
-// ===========================
-// Main JS — Core nav, scroll, and utilities
-// ===========================
+// ==========================================================================
+// Main JS — Core nav, scroll, and utilities with remote error logging
+// ==========================================================================
+
+function sendRemoteLog(type, ...args) {
+  const message = args.map(arg => {
+    if (typeof arg === 'object') {
+      try {
+        return JSON.stringify(arg);
+      } catch(e) {
+        return String(arg);
+      }
+    }
+    return String(arg);
+  }).join(' ');
+  
+  fetch('http://localhost:3000/log', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ type, message })
+  }).catch(() => {});
+}
+
+// Override console methods
+const originalLog = console.log;
+const originalWarn = console.warn;
+const originalError = console.error;
+
+console.log = function(...args) {
+  originalLog.apply(console, args);
+  sendRemoteLog('log', ...args);
+};
+console.warn = function(...args) {
+  originalWarn.apply(console, args);
+  const firstArg = args[0] ? String(args[0]) : '';
+  if (/resizeobserver/i.test(firstArg) || /resize observer/i.test(firstArg) || /loop completed/i.test(firstArg) || /limit exceeded/i.test(firstArg)) {
+    return;
+  }
+  sendRemoteLog('warn', ...args);
+};
+console.error = function(...args) {
+  originalError.apply(console, args);
+  const firstArg = args[0] ? String(args[0]) : '';
+  if (/resizeobserver/i.test(firstArg) || /resize observer/i.test(firstArg) || /loop completed/i.test(firstArg) || /limit exceeded/i.test(firstArg)) {
+    return;
+  }
+  sendRemoteLog('error', ...args);
+};
+
+// Global unhandled error overlay for front-end debugging
+window.addEventListener('error', function(e) {
+  const msg = e.message || (e.error && e.error.message) || '';
+  // Ignore harmless ResizeObserver warnings
+  if (msg && (/resizeobserver/i.test(msg) || /resize observer/i.test(msg) || /loop completed/i.test(msg) || /limit exceeded/i.test(msg))) {
+    try {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    } catch(err) {}
+    return;
+  }
+  
+  sendRemoteLog('uncaught', `Error: ${msg} at ${e.filename}:${e.lineno}`);
+  
+  const errBox = document.getElementById('debug-error-box') || (() => {
+    const box = document.createElement('div');
+    box.id = 'debug-error-box';
+    box.style.position = 'fixed';
+    box.style.bottom = '10px';
+    box.style.left = '10px';
+    box.style.background = 'rgba(239, 68, 68, 0.95)';
+    box.style.color = 'white';
+    box.style.padding = '12px 16px';
+    box.style.borderRadius = '8px';
+    box.style.zIndex = '999999';
+    box.style.fontSize = '12px';
+    box.style.fontFamily = 'monospace';
+    box.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+    box.style.maxWidth = '400px';
+    box.style.maxHeight = '200px';
+    box.style.overflowY = 'auto';
+    document.body.appendChild(box);
+    return box;
+  })();
+  errBox.innerHTML += `<div><strong>Error:</strong> ${msg} at ${e.filename ? e.filename.split('/').pop() : 'inline'}:${e.lineno}</div>`;
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   // ===========================
@@ -57,22 +142,63 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================
   // Smooth scroll for anchor links
   // ===========================
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      let href = this.getAttribute('href');
+      if (!href) return;
       
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        const navHeight = navbar ? navbar.offsetHeight : 72;
-        const targetPosition = targetEl.offsetTop - navHeight;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+      // If it's a relative link to a hash on the current page (e.g. "index.html#products" on index.html)
+      const currentPath = window.location.pathname;
+      const isHomepage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '';
+      
+      if (href.startsWith('index.html#') && isHomepage) {
+        href = href.substring(10); // change to "#products"
       }
+      
+      if (href.startsWith('#') && href !== '#') {
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          e.preventDefault();
+          const navHeight = navbar ? navbar.offsetHeight : 72;
+          const targetPosition = targetEl.offsetTop - navHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile nav if open
+          const hamburger = document.querySelector('.hamburger-menu');
+          if (hamburger && hamburger.classList.contains('open')) {
+            hamburger.click();
+          }
+        }
+      }
+    });
+  });
+
+  // ===========================
+  // Toggle Mega Menu on click/touch
+  // ===========================
+  const megaMenuItems = document.querySelectorAll('.mega-menu-item');
+  megaMenuItems.forEach(item => {
+    const button = item.querySelector('button');
+    if (button) {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        megaMenuItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('menu-open');
+          }
+        });
+        item.classList.toggle('menu-open');
+      });
+    }
+  });
+
+  document.addEventListener('click', () => {
+    megaMenuItems.forEach(item => {
+      item.classList.remove('menu-open');
     });
   });
 
@@ -109,183 +235,249 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function hydrateCMSData(data) {
-    // 1. Simple Text & Attribute Mapping
-    document.querySelectorAll('[data-cms-id]').forEach(el => {
-      const path = el.getAttribute('data-cms-id').split('.');
-      let value = data;
-      for (const key of path) {
-        if (value && value[key] !== undefined) {
-          value = value[key];
-        } else {
-          value = null;
-          break;
-        }
-      }
-      
-      if (value !== null) {
-        if (el.tagName === 'IMG') {
-          el.src = value;
-        } else {
-          el.innerHTML = value;
-        }
-      }
-    });
-
-    // 2. Verticals Cards Generation
-    const verticalsGrid = document.getElementById('verticals-grid');
-    if (verticalsGrid && data.verticals && data.verticals.cards) {
-      verticalsGrid.innerHTML = data.verticals.cards.map((card, index) => `
-        <div class="bg-white rounded-2xl p-8 border border-hk-border hover:-translate-y-1 transition-transform duration-300 cursor-pointer group" style="animation-delay: ${index * 100}ms">
-          <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center transition-colors" style="background: ${index === 0 ? '#FFF8D6' : '#E8F0FF'};">
-            <i class="ph-bold ${card.icon}" style="font-size:28px;color:${index === 0 ? '#D4A800' : '#0D1B8E'};"></i>
-          </div>
-          <h3 class="font-display font-bold text-navy text-2xl mb-3">${card.title}</h3>
-          <p class="text-grey-dark mb-6" style="line-height:1.6;">${card.description}</p>
-          <div class="flex items-center gap-2 flex-wrap">
-            ${(card.tags || []).map(tag => `<span class="px-3 py-1 rounded-full bg-grey-light text-navy font-medium text-xs">${tag}</span>`).join('')}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // 3. Products Features List
-    const featuresList = document.getElementById('products-features-list');
-    if (featuresList && data.products && data.products.features) {
-      featuresList.innerHTML = data.products.features.map(feature => `
-        <li class="flex items-center gap-3" style="color:rgba(255,255,255,0.82);">
-          <i class="ph-bold ${feature.icon}" style="font-size:20px;color:#F5C200;flex-shrink:0;"></i>
-          <span>${feature.text}</span>
-        </li>
-      `).join('');
-    }
-
-    // 4. Impact Stats Generation
-    const statsGrid = document.getElementById('impact-stats-grid');
-    if (statsGrid && data.impact && data.impact.stats) {
-      statsGrid.innerHTML = data.impact.stats.map((stat, index) => `
-        <div class="stat-card rounded-2xl p-6 text-center bg-white" style="border:1px solid #E2E8F0; animation-delay: ${index * 100}ms">
-          <i class="ph-bold ${stat.icon}" style="font-size:32px;color:#0D1B8E;margin-bottom:12px;display:block;"></i>
-          <div class="stat-number font-data font-bold text-navy" style="font-size:42px;">${stat.number}${stat.suffix}</div>
-          <div class="text-xs font-semibold text-grey-mid uppercase tracking-wider">${stat.label}</div>
-        </div>
-      `).join('');
-    }
-
-    // 5. Products Dropdown Generation
-    const desktopDropdown = document.getElementById('products-dropdown-desktop');
-    const mobileDropdown = document.getElementById('products-dropdown-mobile');
-    
-    if (data.navbar && data.navbar.products_dropdown) {
-      const dropdownHtml = data.navbar.products_dropdown.map(product => `
-        <a href="${product.url}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
-          <!-- Optional Logo (fallback to text if empty) -->
-          ${product.logo ? `
-            <img src="${product.logo}" alt="${product.name}" class="w-10 h-10 object-contain flex-shrink-0" />
-          ` : `
-            <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
-              ${product.name.charAt(0)}
-            </div>
-          `}
-          <div class="flex-1">
-            <div class="flex items-center justify-between">
-              <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${product.name}</span>
-              <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
-            </div>
-            <span class="text-grey-dark text-[13px] leading-snug block">${product.description}</span>
-          </div>
-        </a>
-      `).join('');
-      
-      if (desktopDropdown) desktopDropdown.innerHTML = dropdownHtml;
-      
-      // For mobile, slightly simpler styling
-      if (mobileDropdown) {
-        mobileDropdown.innerHTML = data.navbar.products_dropdown.map(product => `
-          <a href="${product.url}" class="text-grey-dark text-sm hover:text-navy no-underline py-2 block">${product.name}</a>
-        `).join('');
-      }
-    }
-
-    // 6. Partners Dropdown Generation
-    const desktopPartnersDropdown = document.getElementById('partners-dropdown-desktop');
-    const mobilePartnersDropdown = document.getElementById('partners-dropdown-mobile');
-    
-    if (data.navbar && data.navbar.partners_dropdown) {
-      const partnersHtml = data.navbar.partners_dropdown.map(partner => `
-        <a href="${partner.url}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
-          ${partner.logo ? `
-            <img src="${partner.logo}" alt="${partner.name}" class="w-10 h-10 object-contain flex-shrink-0" />
-          ` : `
-            <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
-              ${partner.name.charAt(0)}
-            </div>
-          `}
-          <div class="flex-1">
-            <div class="flex items-center justify-between">
-              <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${partner.name}</span>
-              <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
-            </div>
-            ${partner.description ? `<span class="text-grey-dark text-[13px] leading-snug block">${partner.description}</span>` : ''}
-          </div>
-        </a>
-      `).join('');
-      
-      if (desktopPartnersDropdown) desktopPartnersDropdown.innerHTML = partnersHtml;
-      
-      if (mobilePartnersDropdown) {
-        mobilePartnersDropdown.innerHTML = data.navbar.partners_dropdown.map(partner => `
-          <a href="${partner.url}" class="text-grey-dark text-sm hover:text-navy no-underline py-2 block">${partner.name}</a>
-        `).join('');
-      }
-    }
-
-    // 7. Hero Carousel Generation
-    const carouselBg = document.getElementById('hero-carousel-bg');
-    if (carouselBg && data.hero && data.hero.parent && data.hero.parent.carousel_slides && data.hero.parent.carousel_slides.length > 0) {
-      const slides = data.hero.parent.carousel_slides;
-      carouselBg.innerHTML = slides.map((slide, i) => `
-        <div class="hero-slide ${i === 0 ? 'active' : ''}" style="background-image: url('${slide.image}')"></div>
-      `).join('');
-
-      if (slides.length > 1) {
-        let currentSlide = 0;
-        const slideEls = carouselBg.querySelectorAll('.hero-slide');
-        setInterval(() => {
-          slideEls[currentSlide].classList.remove('active');
-          currentSlide = (currentSlide + 1) % slides.length;
-          slideEls[currentSlide].classList.add('active');
-        }, 5000);
-      }
-    }
-
-    // 8. Marquee Partners Generation (Using LogoLoop)
-    const marqueeContainer = document.querySelector('.marquee-container');
-    if (marqueeContainer && data.marquee && data.marquee.length > 0) {
-      const logos = data.marquee.map(p => {
-        if (p.logo) {
-          return { src: p.logo, alt: p.name, href: p.url || '#', title: p.name };
-        } else {
-          return { 
-            node: `<div style="height: 100%; min-width: 150px; background: white; border-radius: 0.5rem; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; padding: 0 1.5rem; font-weight: bold; color: #0D1B8E;">${p.name}</div>`, 
-            href: p.url || '#', 
-            title: p.name 
-          };
+    try {
+      // 1. Simple Text & Attribute Mapping
+      document.querySelectorAll('[data-cms-id]').forEach(el => {
+        try {
+          const path = el.getAttribute('data-cms-id').split('.');
+          let value = data;
+          for (const key of path) {
+            if (value && value[key] !== undefined) {
+              value = value[key];
+            } else {
+              value = null;
+              break;
+            }
+          }
+          
+          if (value !== null) {
+            if (el.tagName === 'IMG') {
+              el.src = value;
+            } else {
+              el.innerHTML = value;
+            }
+          }
+        } catch (e) {
+          console.error('Error hydrating data-cms-id:', el, e);
         }
       });
-      
-      if (window._marqueeLoop) window._marqueeLoop.destroy();
 
-      window._marqueeLoop = new LogoLoop('.marquee-container', {
-        logos: logos,
-        speed: 120,
-        direction: 'left',
-        logoHeight: 64,
-        gap: 32,
-        hoverSpeed: 20,
-        fadeOut: true,
-        fadeOutColor: '#F2F5FF',
-        scaleOnHover: true
-      });
+      // 2. Verticals Cards Generation
+      try {
+        const verticalsGrid = document.getElementById('verticals-grid');
+        if (verticalsGrid && data.verticals && data.verticals.cards) {
+          verticalsGrid.innerHTML = data.verticals.cards.map((card, index) => `
+            <div class="bg-white rounded-2xl p-8 border border-hk-border hover:-translate-y-1 transition-transform duration-300 cursor-pointer group" style="animation-delay: ${index * 100}ms">
+              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center transition-colors" style="background: ${index === 0 ? '#FFF8D6' : '#E8F0FF'};">
+                <i class="ph-bold ${card.icon}" style="font-size:28px;color:${index === 0 ? '#D4A800' : '#0D1B8E'};"></i>
+              </div>
+              <h3 class="font-display font-bold text-navy text-2xl mb-3">${card.title}</h3>
+              <p class="text-grey-dark mb-6" style="line-height:1.6;">${card.description}</p>
+              <div class="flex items-center gap-2 flex-wrap">
+                ${(card.tags || []).map(tag => `<span class="px-3 py-1 rounded-full bg-grey-light text-navy font-medium text-xs">${tag}</span>`).join('')}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Error generating verticals grid:', e);
+      }
+
+      // 3. Products Features List
+      try {
+        const featuresList = document.getElementById('products-features-list');
+        if (featuresList && data.products && data.products.features) {
+          featuresList.innerHTML = data.products.features.map(feature => `
+            <li class="flex items-center gap-3" style="color:rgba(255,255,255,0.82);">
+              <i class="ph-bold ${feature.icon}" style="font-size:20px;color:#F5C200;flex-shrink:0;"></i>
+              <span>${feature.text}</span>
+            </li>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Error generating products features list:', e);
+      }
+
+      // 4. Impact Stats Generation
+      try {
+        const statsGrid = document.getElementById('impact-stats-grid');
+        if (statsGrid && data.impact && data.impact.stats) {
+          statsGrid.innerHTML = data.impact.stats.map((stat, index) => `
+            <div class="stat-card rounded-2xl p-6 text-center bg-white" style="border:1px solid #E2E8F0; animation-delay: ${index * 100}ms">
+              <i class="ph-bold ${stat.icon}" style="font-size:32px;color:#0D1B8E;margin-bottom:12px;display:block;"></i>
+              <div class="stat-number font-data font-bold text-navy" style="font-size:42px;">${stat.number}${stat.suffix}</div>
+              <div class="text-xs font-semibold text-grey-mid uppercase tracking-wider">${stat.label}</div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Error generating stats grid:', e);
+      }
+
+      // 5. Products Dropdown Generation
+      try {
+        const desktopDropdown = document.getElementById('products-dropdown-desktop');
+        const mobileDropdown = document.getElementById('products-dropdown-mobile');
+        
+        if (data.navbar && data.navbar.products_dropdown) {
+          const dropdownHtml = data.navbar.products_dropdown.map(product => {
+            let productUrl = product.url;
+            if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
+              const currentPath = window.location.pathname;
+              const isHomepage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '';
+              productUrl = isHomepage ? '#products' : 'index.html#products';
+            }
+            return `
+              <a href="${productUrl}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+                <!-- Optional Logo (fallback to text if empty) -->
+                ${product.logo ? `
+                  <img src="${product.logo}" alt="${product.name}" class="w-10 h-10 object-contain flex-shrink-0" />
+                ` : `
+                  <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
+                    ${(product.name || 'P').charAt(0)}
+                  </div>
+                `}
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${product.name}</span>
+                    <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                  </div>
+                  <span class="text-grey-dark text-[13px] leading-snug block">${product.description}</span>
+                </div>
+              </a>
+            `;
+          }).join('');
+          
+          if (desktopDropdown) {
+            desktopDropdown.innerHTML = dropdownHtml;
+            console.log('Successfully rendered dynamic desktop products dropdown.');
+          }
+          
+          // For mobile, use premium layout with icons
+          if (mobileDropdown) {
+            mobileDropdown.innerHTML = data.navbar.products_dropdown.map(product => {
+              let productUrl = product.url;
+              if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
+                const currentPath = window.location.pathname;
+                const isHomepage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '';
+                productUrl = isHomepage ? '#products' : 'index.html#products';
+              }
+              return `
+                <a class="nav-card-link" href="${productUrl}">
+                  <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                  ${product.name}
+                </a>
+              `;
+            }).join('');
+          }
+        }
+      } catch (e) {
+        console.error('Error generating products dropdown:', e);
+      }
+
+      // 6. Partners Dropdown Generation
+      try {
+        const desktopPartnersDropdown = document.getElementById('partners-dropdown-desktop');
+        const mobilePartnersDropdown = document.getElementById('partners-dropdown-mobile');
+        
+        if (data.navbar && data.navbar.partners_dropdown) {
+          const partnersHtml = data.navbar.partners_dropdown.map(partner => `
+            <a href="${partner.url}" class="flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+              ${partner.logo ? `
+                <img src="${partner.logo}" alt="${partner.name}" class="w-10 h-10 object-contain flex-shrink-0" />
+              ` : `
+                <div class="w-10 h-10 rounded bg-white border border-hk-border flex items-center justify-center flex-shrink-0 text-navy font-bold shadow-sm text-sm">
+                  ${(partner.name || 'P').charAt(0)}
+                </div>
+              `}
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-navy font-bold text-[15px] block leading-none mb-1 group-hover/item:text-navy-mid">${partner.name}</span>
+                  <i class="ph-bold ph-arrow-up-right text-grey-mid text-sm opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                </div>
+                ${partner.description ? `<span class="text-grey-dark text-[13px] leading-snug block">${partner.description}</span>` : ''}
+              </div>
+            </a>
+          `).join('');
+          
+          if (desktopPartnersDropdown) {
+            desktopPartnersDropdown.innerHTML = partnersHtml;
+            console.log('Successfully rendered dynamic desktop partners dropdown.');
+          }
+          
+          if (mobilePartnersDropdown) {
+            mobilePartnersDropdown.innerHTML = data.navbar.partners_dropdown.map(partner => `
+              <a class="nav-card-link" href="${partner.url}">
+                <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                ${partner.name}
+              </a>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        console.error('Error generating partners dropdown:', e);
+      }
+
+      // 7. Hero Carousel Generation
+      try {
+        const carouselBg = document.getElementById('hero-carousel-bg');
+        if (carouselBg && data.hero && data.hero.parent && data.hero.parent.carousel_slides && data.hero.parent.carousel_slides.length > 0) {
+          const slides = data.hero.parent.carousel_slides;
+          carouselBg.innerHTML = slides.map((slide, i) => `
+            <div class="hero-slide ${i === 0 ? 'active' : ''}" style="background-image: url('${slide.image}')"></div>
+          `).join('');
+
+          if (slides.length > 1) {
+            let currentSlide = 0;
+            const slideEls = carouselBg.querySelectorAll('.hero-slide');
+            setInterval(() => {
+              slideEls[currentSlide].classList.remove('active');
+              currentSlide = (currentSlide + 1) % slides.length;
+              slideEls[currentSlide].classList.add('active');
+            }, 5000);
+          }
+        }
+      } catch (e) {
+        console.error('Error generating carousel slides:', e);
+      }
+
+      // 8. Marquee Partners Generation (Using LogoLoop)
+      try {
+        const marqueeContainer = document.querySelector('.marquee-container');
+        if (marqueeContainer && data.marquee && data.marquee.length > 0) {
+          const logos = data.marquee.map(p => {
+            if (p.logo) {
+              return { src: p.logo, alt: p.name, href: p.url || '#', title: p.name };
+            } else {
+              return { 
+                node: `<div style="height: 100%; min-width: 150px; background: white; border-radius: 0.5rem; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; padding: 0 1.5rem; font-weight: bold; color: #0D1B8E;">${p.name}</div>`, 
+                href: p.url || '#', 
+                title: p.name 
+              };
+            }
+          });
+          
+          if (window._marqueeLoop) window._marqueeLoop.destroy();
+
+          if (typeof LogoLoop !== 'undefined') {
+            window._marqueeLoop = new LogoLoop('.marquee-container', {
+              logos: logos,
+              speed: 120,
+              direction: 'left',
+              logoHeight: 64,
+              gap: 32,
+              hoverSpeed: 20,
+              fadeOut: true,
+              fadeOutColor: '#F2F5FF',
+              scaleOnHover: true
+            });
+          }
+        }
+      } catch (e) {
+        console.error('Error generating marquee loop:', e);
+      }
+    } catch (globalError) {
+      console.error('Global error in hydrateCMSData:', globalError);
     }
   }
 

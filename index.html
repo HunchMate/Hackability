@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/design-system.css?v=12" />
   <link rel="stylesheet" href="css/logoloop.css" />
 
   <!-- Phosphor Icons -->
@@ -48,7 +48,7 @@
     }
   </script>
 
-  <link rel="stylesheet" href="css/design-system.css?v=2" />
+  <!-- design-system.css loaded above -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
 </head>
@@ -67,15 +67,15 @@
 
       <!-- Desktop Nav (Mega Menu) -->
       <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2">
-        <ul class="flex items-center gap-6 list-none m-0 px-8 py-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
           <li class="flex items-center">
-            <a href="about.html" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+            <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
         </li>
         
         <!-- Our Ecosystem Dropdown -->
         <li class="mega-menu-item flex items-center">
-          <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-            Our Ecosystem <i class="ph-bold ph-caret-down text-xs"></i>
+          <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
           </button>
           
           <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
@@ -99,12 +99,12 @@
         </li>
 
         <!-- Products Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Products <i class="ph-bold ph-caret-down text-xs"></i>
-            </button>
+        <li class="mega-menu-item flex items-center">
+          <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            Products <i class="ph-bold ph-caret-down text-sm"></i>
+          </button>
           
-          <div class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+          <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
             <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
               <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
               <div>
@@ -115,17 +115,49 @@
           </div>
         </li>
 
-
+        <!-- Our Network Dropdown -->
+        <li class="mega-menu-item flex items-center">
+          <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            Our Network <i class="ph-bold ph-caret-down text-sm"></i>
+          </button>
+          
+          <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+              <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
+              <div>
+                <span class="text-sm font-bold text-navy block">Colleges</span>
+                <span class="text-xs text-grey-dark block">Partner institutions.</span>
+              </div>
+            </a>
+            <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+              <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
+              <div>
+                <span class="text-sm font-bold text-navy block">Organizations</span>
+                <span class="text-xs text-grey-dark block">Corporate partners.</span>
+              </div>
+            </a>
+            <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+              <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
+              <div>
+                <span class="text-sm font-bold text-navy block">Mentors</span>
+                <span class="text-xs text-grey-dark block">Our expert mentors.</span>
+              </div>
+            </a>
+          </div>
+        </li>
           <li class="flex items-center">
-            <a href="#" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+            <a href="#" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
           </li>
         </ul>
       </div>
 
-      <!-- Mobile hamburger (Right aligned) -->
-      <!-- Mobile hamburger (CardNav style) -->
-      <div class="flex-1 flex justify-end lg:hidden items-center z-50">
-        <div class="hamburger-menu text-white" aria-label="Open menu" tabindex="0">
+      <!-- Right aligned controls: Contact (Desktop) & Hamburger (Mobile) -->
+      <div class="flex-1 flex justify-end items-center gap-4 z-50">
+        <a href="#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-white/20 bg-white/10 text-base font-bold text-white hover:bg-white hover:text-navy transition-colors shadow-sm">
+          Contact us
+        </a>
+        <!-- Mobile hamburger (CardNav style) -->
+        <div class="hamburger-menu text-white lg:hidden" aria-label="Open menu" tabindex="0">
           <div class="hamburger-line bg-current"></div>
           <div class="hamburger-line bg-current"></div>
         </div>
@@ -152,7 +184,7 @@
       <!-- Card 2: Products -->
       <div class="nav-card" style="background-color: #6D28D9; color: white;">
         <div class="nav-card-label font-display">Products</div>
-        <div class="nav-card-links mt-4">
+        <div id="products-dropdown-mobile" class="nav-card-links mt-4">
           <a class="nav-card-link" href="index.html#products">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             inCamp Platform
@@ -171,6 +203,25 @@
           <a class="nav-card-link text-navy" href="#">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             Blog
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: Our Network -->
+      <div class="nav-card" style="background-color: #059669; color: white;">
+        <div class="nav-card-label font-display">Our Network</div>
+        <div id="partners-dropdown-mobile" class="nav-card-links mt-4">
+          <a class="nav-card-link" href="partners.html?category=Colleges">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Colleges
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Organizations">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Organizations
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Mentors">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Mentors
           </a>
         </div>
       </div>
@@ -197,8 +248,7 @@
         <!-- H1 -->
         <h1 id="hero-title" class="font-display font-extrabold text-white leading-tight mb-6 reveal reveal-delay-2 drop-shadow-2xl"
             style="font-size:clamp(36px,8vw,64px); letter-spacing:-1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6);">
-          Building Innovation-Driven<br>
-          <span style="color:#F5C200;">Talent Ecosystems</span>
+          Building Innovation-Driven <span style="color:#F5C200;">Talent Ecosystems</span>
         </h1>
 
         <!-- Subtext -->
@@ -214,7 +264,7 @@
   <section id="trust" class="bg-white py-12 overflow-hidden border-b border-hk-border relative">
     <!-- Dynamic background accent -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orb-yellow rounded-full blur-[80px] animate-blob pointer-events-none opacity-30"></div>
-    <div class="max-w-7xl mx-auto px-6 mb-8 text-left">
+    <div class="max-w-7xl mx-auto px-6 mb-8 text-center">
       <h3 class="text-navy-dark font-display font-bold text-xl md:text-2xl">Trusted by Institutions, Industry & Ecosystem Partners</h3>
     </div>
     <div class="marquee-container overflow-hidden w-full relative">
@@ -227,7 +277,6 @@
   <!-- ===================== 3. OUR ECOSYSTEM ===================== -->
   <section id="ecosystem" class="bg-grey-light py-16 lg:py-20 relative z-[10] border-b border-hk-border overflow-hidden">
     <!-- Dynamic background accents -->
-    <div class="absolute inset-0 bg-pattern-plus opacity-100 z-0 pointer-events-none"></div>
     <div class="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-orb-cyan rounded-full blur-[100px] animate-blob-reverse pointer-events-none opacity-30 z-0"></div>
     <div class="absolute bottom-1/4 right-[-10%] w-[600px] h-[600px] bg-orb-violet rounded-full blur-[120px] animate-blob pointer-events-none opacity-20 z-0"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -347,7 +396,7 @@
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-10 reveal flex flex-col items-center">
         <h2 class="font-display font-bold text-yellow text-4xl md:text-5xl lg:text-6xl mb-3">Products</h2>
-        <p class="font-display font-medium text-blue-400 text-xl md:text-2xl max-w-3xl">Digital Innovation Infrastructure for Educational Institutions</p>
+        <p class="font-display font-medium text-white text-xl md:text-2xl max-w-3xl">Digital Innovation Infrastructure for Educational Institutions</p>
       </div>
 
       <div class="rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center reveal bg-white text-navy shadow-[0_20px_50px_rgba(245,194,0,0.15)] relative overflow-hidden">
@@ -373,9 +422,49 @@
           </a>
         </div>
 
-        <div class="relative z-10 w-full rounded-2xl overflow-hidden shadow-xl border border-hk-border">
-          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard Preview" class="w-full h-auto object-cover" />
+        <div class="relative z-10 w-full rounded-2xl overflow-hidden shadow-xl border border-hk-border" id="incamp-carousel">
+          <!-- Slide 1 (relative to provide container height) -->
+          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 1" class="carousel-slide relative w-full h-auto object-cover transition-opacity duration-1000 opacity-100" />
+          <!-- Slide 2 -->
+          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 2" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+          <!-- Slide 3 -->
+          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 3" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+          
+          <!-- Indicators -->
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20 bg-black/30 px-3 py-2 rounded-full backdrop-blur-sm">
+            <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-100 transition-opacity duration-500"></span>
+            <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-40 transition-opacity duration-500"></span>
+            <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-40 transition-opacity duration-500"></span>
+          </div>
         </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('incamp-carousel');
+            if(!carousel) return;
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = carousel.querySelectorAll('.carousel-dot');
+            if(slides.length === 0) return;
+            let currentSlide = 0;
+            
+            setInterval(() => {
+              // Fade out current
+              slides[currentSlide].classList.remove('opacity-100');
+              slides[currentSlide].classList.add('opacity-0');
+              dots[currentSlide].classList.remove('opacity-100');
+              dots[currentSlide].classList.add('opacity-40');
+              
+              // Move to next
+              currentSlide = (currentSlide + 1) % slides.length;
+              
+              // Fade in next
+              slides[currentSlide].classList.remove('opacity-0');
+              slides[currentSlide].classList.add('opacity-100');
+              dots[currentSlide].classList.remove('opacity-40');
+              dots[currentSlide].classList.add('opacity-100');
+            }, 3500);
+          });
+        </script>
       </div>
     </div>
   </section>
@@ -447,7 +536,7 @@
           Trusted by Innovative Leaders
         </h2>
         <p class="text-left text-white/75 text-lg">
-          See what our customers have to say about us.
+          See what people have to say about us.
         </p>
       </div>
 
@@ -828,11 +917,11 @@
   <script src="js/supabase-config.js"></script>
 
   <!-- Scripts -->
-  <script src="js/page-switcher.js?v=3"></script>
-  <script src="js/animations.js?v=3"></script>
-  <script src="js/logoloop.js"></script>
-  <script src="js/main.js?v=6"></script>
-  <script src="js/analytics.js?v=2"></script>
+  <script src="js/page-switcher.js?v=11"></script>
+  <script src="js/animations.js?v=11"></script>
+  <script src="js/logoloop.js?v=11"></script>
+  <script src="js/main.js?v=11"></script>
+  <script src="js/analytics.js?v=11"></script>
   <script src="js/card-nav.js" defer></script>
 </body>
 </html>

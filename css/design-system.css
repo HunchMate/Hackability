@@ -339,6 +339,59 @@ input:focus,textarea:focus,select:focus{border-color:var(--color-blue-900);box-s
 /* ==========================================================================
    Mega Menu Dropdowns
    ========================================================================== */
+/* Prevent navbar items from wrapping text */
+.mega-menu-item button,
+#navbar ul li a {
+  white-space: nowrap !important;
+}
+
+/* Animate Caret Arrows on Hover / Open */
+.mega-menu-item button i.ph-caret-down {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.mega-menu-item:hover button i.ph-caret-down,
+.mega-menu-item.menu-open button i.ph-caret-down {
+  transform: rotate(180deg);
+}
+
+/* Dynamic arrow up right transition inside mega menu dropdown links */
+.mega-menu-content a i.ph-arrow-up-right {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transform: translate(0, 0);
+}
+
+.mega-menu-content a:hover i.ph-arrow-up-right {
+  transform: translate(2px, -2px);
+  opacity: 1 !important;
+}
+
+/* Nav pill — use ::before for backdrop-blur so the <ul> doesn't clip dropdowns */
+.nav-pill {
+  position: relative;
+  overflow: visible !important;
+  /* Reset: no backdrop-filter on the <ul> itself */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.nav-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  z-index: -1;
+  pointer-events: none;
+}
+
 .mega-menu-item {
   position: relative;
 }
@@ -351,7 +404,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--color-blue-900);box-s
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(20px) scale(0.95);
-  z-index: 100;
+  z-index: 9999;
   pointer-events: none;
 }
 
@@ -365,7 +418,8 @@ input:focus,textarea:focus,select:focus{border-color:var(--color-blue-900);box-s
   height: 20px;
 }
 
-.mega-menu-item:hover .mega-menu-content {
+.mega-menu-item:hover .mega-menu-content,
+.mega-menu-item.menu-open .mega-menu-content {
   visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(10px) scale(1);

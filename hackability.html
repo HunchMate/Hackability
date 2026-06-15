@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/design-system.css?v=12" />
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/logoloop.css" />
 
   <!-- Phosphor Icons -->
@@ -64,12 +66,10 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: #ffffff;
+      border: 1px solid #E2E8F0;
       border-radius: 9999px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       overflow-x: auto;
       scrollbar-width: none;
       pointer-events: auto;
@@ -100,8 +100,7 @@
     /* Mobile sticky nav overrides */
     @media (max-width: 768px) {
       .sticky-nav-container {
-        position: relative;
-        top: auto;
+        top: 16px;
         margin-top: 1rem;
         margin-bottom: 1rem;
       }
@@ -212,15 +211,15 @@
 
       <!-- Desktop Nav (Mega Menu) -->
       <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2">
-        <ul class="flex items-center gap-6 list-none m-0 px-8 py-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
           <li class="flex items-center">
-            <a href="about.html" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+            <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
           </li>
           
           <!-- Our Ecosystem Dropdown -->
           <li class="mega-menu-item flex items-center">
-            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Ecosystem <i class="ph-bold ph-caret-down text-xs"></i>
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
             </button>
             <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
               <div class="grid grid-cols-2 gap-4">
@@ -244,10 +243,10 @@
 
           <!-- Products Dropdown -->
           <li class="mega-menu-item flex items-center">
-            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Products <i class="ph-bold ph-caret-down text-xs"></i>
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Products <i class="ph-bold ph-caret-down text-sm"></i>
             </button>
-            <div class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
               <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
                 <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
                 <div>
@@ -258,17 +257,48 @@
             </div>
           </li>
 
-
+          <!-- Our Network Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Network <i class="ph-bold ph-caret-down text-sm"></i>
+            </button>
+            <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Colleges</span>
+                  <span class="text-xs text-grey-dark block">Partner institutions.</span>
+                </div>
+              </a>
+              <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Organizations</span>
+                  <span class="text-xs text-grey-dark block">Corporate partners.</span>
+                </div>
+              </a>
+              <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Mentors</span>
+                  <span class="text-xs text-grey-dark block">Our expert mentors.</span>
+                </div>
+              </a>
+            </div>
+          </li>
           <li class="flex items-center">
-            <a href="#" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+            <a href="#" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
           </li>
         </ul>
       </div>
 
-      <!-- Mobile hamburger (Right aligned) -->
-      <!-- Mobile hamburger (CardNav style) -->
-      <div class="flex-1 flex justify-end lg:hidden items-center z-50">
-        <div class="hamburger-menu text-white" aria-label="Open menu" tabindex="0">
+      <!-- Right aligned controls: Contact (Desktop) & Hamburger (Mobile) -->
+      <div class="flex-1 flex justify-end items-center gap-4 z-50">
+        <a href="#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-white/20 bg-white/10 text-base font-bold text-white hover:bg-white hover:text-navy transition-colors shadow-sm">
+          Contact us
+        </a>
+        <!-- Mobile hamburger (CardNav style) -->
+        <div class="hamburger-menu text-white lg:hidden" aria-label="Open menu" tabindex="0">
           <div class="hamburger-line bg-current"></div>
           <div class="hamburger-line bg-current"></div>
         </div>
@@ -295,7 +325,7 @@
       <!-- Card 2: Products -->
       <div class="nav-card" style="background-color: #6D28D9; color: white;">
         <div class="nav-card-label font-display">Products</div>
-        <div class="nav-card-links mt-4">
+        <div id="products-dropdown-mobile" class="nav-card-links mt-4">
           <a class="nav-card-link" href="index.html#products">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             inCamp Platform
@@ -314,6 +344,25 @@
           <a class="nav-card-link text-navy" href="#">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             Blog
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: Our Network -->
+      <div class="nav-card" style="background-color: #059669; color: white;">
+        <div class="nav-card-label font-display">Our Network</div>
+        <div id="partners-dropdown-mobile" class="nav-card-links mt-4">
+          <a class="nav-card-link" href="partners.html?category=Colleges">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Colleges
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Organizations">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Organizations
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Mentors">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Mentors
           </a>
         </div>
       </div>
@@ -350,23 +399,9 @@
           Connecting learning with industry, innovation, and opportunity.
         </p>
 
-        <div class="flex flex-wrap gap-4 reveal reveal-delay-4">
-          <a href="#what-is-hackability" class="btn-flow btn-flow-yellow">
-            <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
-            <span class="flow-text">Explore Programs</span>
-            <span class="flow-circle"></span>
-            <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
-          </a>
-        </div>
-
       </div>
     </div>
   </section>
-
-  <!-- ===================== AURORA WRAPPER ===================== -->
-  <div class="aurora-wrapper">
-    <div class="aurora-bg"></div>
-    <div class="futuristic-grid"></div>
 
   <!-- ===================== STICKY NAV ===================== -->
   <div class="sticky-nav-container">
@@ -381,7 +416,7 @@
   </div>
 
   <!-- ===================== WHAT IS HACKABILITY? ===================== -->
-  <section id="what-is-hackability" class="py-20 bg-transparent scroll-mt-24 relative overflow-hidden">
+  <section id="what-is-hackability" class="py-20 bg-white scroll-mt-24 relative overflow-hidden text-grey-dark">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -482,106 +517,155 @@
   </section>
 
   <!-- ===================== WHAT WE ENABLE ===================== -->
-  <section id="what-we-enable" class="py-16 md:py-24 bg-transparent scroll-mt-24 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 mb-12">
-      <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">What We Enable</h2>
-      <p class="text-grey-dark text-lg">Outcomes delivered through our programs and partnerships.</p>
-    </div>
+  <section id="what-we-enable" class="py-16 md:py-24 bg-black scroll-mt-24 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="font-display font-bold text-white text-3xl md:text-4xl lg:text-5xl mb-4">What We Enable</h2>
+        <p class="text-white/80 text-lg">Outcomes delivered through our programs and partnerships.</p>
+      </div>      <style>
+        .card-overlay {
+          clip-path: circle(0px at 56px 56px);
+          transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .card-overlay {
+          clip-path: circle(150% at 56px 56px);
+        }
+      </style>
 
-    <!-- Horizontal Scroll Carousel -->
-    <div class="relative w-full pb-8">
-      <div id="enable-carousel" class="flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 pb-4 custom-scrollbar" style="scroll-padding-left: 1.5rem;">
-        
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Card 1 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-student text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-student text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Core Domain</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Talent Development</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Talent Development</h3>
-          <p class="text-grey-dark leading-relaxed">Building future-ready skills, mindsets, and capabilities.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-student text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Core Domain</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Talent Development</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
+          </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-handshake text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-handshake text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Partnerships</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Industry Engagement</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Industry Engagement</h3>
-          <p class="text-grey-dark leading-relaxed">Connecting institutions with industry, experts, and opportunities.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-handshake text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Partnerships</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Industry Engagement</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
+          </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-lightbulb-filament text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-lightbulb-filament text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Ecosystem</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Innovation Culture</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Innovation Culture</h3>
-          <p class="text-grey-dark leading-relaxed">Embedding innovation and problem-solving across campuses.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-lightbulb-filament text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Ecosystem</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Innovation Culture</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
+          </div>
         </div>
 
         <!-- Card 4 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-rocket-launch text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-rocket-launch text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Ventures</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Entrepreneurship</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Entrepreneurship</h3>
-          <p class="text-grey-dark leading-relaxed">Encouraging entrepreneurial thinking and venture creation.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-rocket-launch text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Ventures</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Entrepreneurship</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
+          </div>
         </div>
 
         <!-- Card 5 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-briefcase text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-briefcase text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Experience</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Student Opportunities</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Student Opportunities</h3>
-          <p class="text-grey-dark leading-relaxed">Enabling access to projects, mentors, exposure, and experiences.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-briefcase text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Experience</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Student Opportunities</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
+          </div>
         </div>
 
         <!-- Card 6 -->
-        <div class="snap-start shrink-0 w-[300px] md:w-[350px] glass-panel-yellow rounded-3xl p-8 hover:shadow-lg transition-all relative z-10">
-          <div class="w-12 h-12 rounded-full bg-navy-tint text-navy flex items-center justify-center mb-6">
-            <i class="ph-bold ph-buildings text-2xl"></i>
+        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+          <!-- Base Layer -->
+          <div class="w-full h-full flex flex-col p-8">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
+              <i class="ph-bold ph-buildings text-2xl text-white"></i>
+            </div>
+            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Outcomes</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Institutional Impact</h3>
+            <p class="text-white/80 text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
           </div>
-          <h3 class="font-display font-bold text-navy text-xl mb-3">Institutional Impact</h3>
-          <p class="text-grey-dark leading-relaxed">Supporting measurable outcomes across student and campus development.</p>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
+              <i class="ph-bold ph-buildings text-2xl text-white"></i>
+            </div>
+            <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Outcomes</p>
+            <h3 class="font-display font-semibold text-navy text-2xl mb-4">Institutional Impact</h3>
+            <p class="text-navy/90 text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
+          </div>
         </div>
 
       </div>
-      
-      <!-- Gradient Fade out for scroll indication -->
-      <div class="absolute top-0 right-0 bottom-8 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-    </div>
-  </section>
-
-  <!-- ===================== PROGRAM PARTNERS ===================== -->
-  <section id="program-partners" class="py-20 bg-transparent scroll-mt-24 border-y border-white/30 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 text-center mb-12">
-      <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">Program Partners</h2>
-      <p class="text-grey-dark text-lg max-w-2xl mx-auto">Collaborating with organizations that help create meaningful learning and development opportunities.</p>
-    </div>
-
-    <!-- Infinite Scroll Marquee -->
-    <div class="marquee-container" style="--marquee-width: 100vw; --marquee-elements: 6; --marquee-elements-displayed: 5; --marquee-element-width: 250px; --marquee-animation-duration: 20s;">
-      <ul class="marquee-content">
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">Microsoft</span>
-        </li>
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">Google</span>
-        </li>
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">AWS</span>
-        </li>
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">IBM</span>
-        </li>
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">Cisco</span>
-        </li>
-        <li class="glass-panel-blue rounded-xl flex items-center justify-center h-24 px-8">
-          <span class="font-bold text-grey-dark text-xl">Intel</span>
-        </li>
-      </ul>
     </div>
   </section>
 
@@ -589,6 +673,117 @@
   <section id="impact" class="py-16 md:py-24 scroll-mt-24 relative overflow-hidden">
     <!-- Animated Gradient Background Container -->
     <div id="impact-animated-bg" class="absolute inset-0 z-0 opacity-0 transition-all duration-[2000ms] ease-out transform scale-110"></div>
+
+    <!-- Program Partners (Logo Cloud) — now inside Impact section -->
+    <div class="w-full relative z-10 px-4 md:px-0 mb-16 md:mb-24">
+      <!-- Desktop Heading -->
+      <h2 class="hidden md:block mb-10 text-center font-display">
+        <span class="block font-medium text-xl md:text-2xl text-white/50 mb-2">Already used by</span>
+        <span class="font-bold text-3xl md:text-4xl text-white tracking-tight">Best in the Game</span>
+      </h2>
+
+      <!-- Mobile Heading -->
+      <h2 class="md:hidden mb-8 text-center font-display text-white/60 text-lg tracking-wide">
+        Companies we <span class="text-white font-semibold">collaborate</span> with.
+      </h2>
+
+      <!-- Desktop Slider Container -->
+      <div class="hidden md:block relative mx-auto w-full py-8">
+
+        <style>
+          @keyframes slide-logos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+          }
+          .animate-slide-logos {
+            animation: slide-logos 30s linear infinite;
+          }
+          .animate-slide-logos:hover {
+            animation-play-state: paused;
+          }
+        </style>
+
+        <!-- Slider -->
+        <div class="overflow-hidden flex w-full relative" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
+          
+          <!-- Group 1 -->
+          <div class="flex animate-slide-logos w-max shrink-0 items-center">
+            <div class="flex gap-16 px-8 items-center justify-center">
+              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+            </div>
+          </div>
+
+          <!-- Group 2 (Duplicate for seamless loop) -->
+          <div class="flex animate-slide-logos w-max shrink-0 items-center" aria-hidden="true">
+            <div class="flex gap-16 px-8 items-center justify-center">
+              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mobile Grid Container -->
+      <div class="grid md:hidden grid-cols-2 border-y border-white/10 w-full max-w-sm mx-auto relative mt-4">
+        
+        <!-- Cell 1 (Nvidia) -->
+        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-4 opacity-90">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        </div>
+        
+        <!-- Cell 2 (Supabase) -->
+        <div class="border-b border-white/10 py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-4 opacity-90">
+        </div>
+
+        <!-- Cell 3 (GitHub) -->
+        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-5 opacity-90">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        </div>
+
+        <!-- Cell 4 (OpenAI) -->
+        <div class="border-b border-white/10 py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-5 opacity-90">
+        </div>
+
+        <!-- Cell 5 (Turso) -->
+        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-4 opacity-90">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        </div>
+
+        <!-- Cell 6 (Clerk) -->
+        <div class="border-b border-white/10 py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-5 opacity-90">
+        </div>
+
+        <!-- Cell 7 (Claude) -->
+        <div class="border-r border-white/10 py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-4 opacity-90">
+        </div>
+
+        <!-- Cell 8 (Vercel) -->
+        <div class="py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-4 opacity-90">
+        </div>
+      </div>
+    </div>
     
     <div class="max-w-7xl mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
       <div>
@@ -803,7 +998,7 @@
     </div>
   </section>
 
-  </div> <!-- End Aurora Wrapper -->
+
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="bg-navy-dark border-t border-white/10 pt-16 pb-8">
@@ -855,10 +1050,12 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="js/animations.js?v=3"></script>
-  <script src="js/main.js?v=6"></script>
-  <script src="js/hackability.js"></script>
+  <!-- Supabase Config -->
+  <script src="js/supabase-config.js"></script>
+
+  <script src="js/animations.js?v=11"></script>
+  <script src="js/main.js?v=11"></script>
+  <script src="js/hackability.js?v=11"></script>
   <script src="js/card-nav.js" defer></script>
 </body>
 </html>

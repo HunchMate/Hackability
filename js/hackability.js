@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Scroll Spy for Sticky Nav
   // ===========================
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.sticky-nav-link');
+  const navLinks = document.querySelectorAll('.sticky-nav-pill');
 
   function updateActiveNav() {
     // Add offset for fixed navbar + sticky nav height
     const scrollY = window.scrollY + 150; 
 
     sections.forEach(section => {
-      const sectionTop = section.offsetTop;
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
       const sectionHeight = section.offsetHeight;
       const sectionId = section.getAttribute('id');
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetEl) {
         e.preventDefault();
         // Offset by 130px to account for both navbars
-        const targetPosition = targetEl.offsetTop - 130;
+        const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - 130;
         window.scrollTo({
           top: targetPosition,
           behavior: 'smooth'

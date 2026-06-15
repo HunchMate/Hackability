@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================
   // Sticky Nav Active State on Scroll
   // ===========================
-  const stickyLinks = document.querySelectorAll('.sticky-nav-link');
+  const stickyLinks = document.querySelectorAll('.sticky-nav-pill');
   const sections = [];
   
   // Extract sections from hrefs
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollY = window.scrollY + 150; // offset for navbar + sticky nav height
 
     sections.forEach(section => {
-      const sectionTop = section.offsetTop;
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
       const sectionHeight = section.offsetHeight;
       const sectionId = section.getAttribute('id');
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         // Calculate offset to account for fixed navbar + sticky subnav
         const offset = 140; 
-        const targetPosition = targetEl.offsetTop - offset;
+        const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - offset;
         
         window.scrollTo({
           top: targetPosition,

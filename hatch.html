@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/design-system.css?v=12" />
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/logoloop.css" />
 
   <!-- Phosphor Icons -->
@@ -100,8 +102,7 @@
     /* Mobile sticky nav overrides */
     @media (max-width: 768px) {
       .sticky-nav-container {
-        position: relative;
-        top: auto;
+        top: 16px;
         margin-top: 1rem;
         margin-bottom: 1rem;
       }
@@ -282,15 +283,15 @@
 
       <!-- Desktop Nav (Mega Menu) -->
       <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2">
-        <ul class="flex items-center gap-6 list-none m-0 px-8 py-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white/90 shadow-lg">
           <li class="flex items-center">
-            <a href="about.html" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+            <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
           </li>
           
           <!-- Our Ecosystem Dropdown -->
           <li class="mega-menu-item flex items-center">
-            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Ecosystem <i class="ph-bold ph-caret-down text-xs"></i>
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
             </button>
             <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
               <div class="grid grid-cols-2 gap-4">
@@ -314,10 +315,10 @@
 
           <!-- Products Dropdown -->
           <li class="mega-menu-item flex items-center">
-            <button class="text-sm font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Products <i class="ph-bold ph-caret-down text-xs"></i>
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Products <i class="ph-bold ph-caret-down text-sm"></i>
             </button>
-            <div class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
               <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
                 <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
                 <div>
@@ -328,17 +329,48 @@
             </div>
           </li>
 
-
+          <!-- Our Network Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Network <i class="ph-bold ph-caret-down text-sm"></i>
+            </button>
+            <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Colleges</span>
+                  <span class="text-xs text-grey-dark block">Partner institutions.</span>
+                </div>
+              </a>
+              <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Organizations</span>
+                  <span class="text-xs text-grey-dark block">Corporate partners.</span>
+                </div>
+              </a>
+              <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
+                <div>
+                  <span class="text-sm font-bold text-navy block">Mentors</span>
+                  <span class="text-xs text-grey-dark block">Our expert mentors.</span>
+                </div>
+              </a>
+            </div>
+          </li>
           <li class="flex items-center">
-            <a href="#" class="text-sm font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+            <a href="#" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
           </li>
         </ul>
       </div>
 
-      <!-- Mobile hamburger (Right aligned) -->
-      <!-- Mobile hamburger (CardNav style) -->
-      <div class="flex-1 flex justify-end lg:hidden items-center z-50">
-        <div class="hamburger-menu text-white" aria-label="Open menu" tabindex="0">
+      <!-- Right aligned controls: Contact (Desktop) & Hamburger (Mobile) -->
+      <div class="flex-1 flex justify-end items-center gap-4 z-50">
+        <a href="#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-white/20 bg-white/10 text-base font-bold text-white hover:bg-white hover:text-navy transition-colors shadow-sm">
+          Contact us
+        </a>
+        <!-- Mobile hamburger (CardNav style) -->
+        <div class="hamburger-menu text-white lg:hidden" aria-label="Open menu" tabindex="0">
           <div class="hamburger-line bg-current"></div>
           <div class="hamburger-line bg-current"></div>
         </div>
@@ -365,7 +397,7 @@
       <!-- Card 2: Products -->
       <div class="nav-card" style="background-color: #6D28D9; color: white;">
         <div class="nav-card-label font-display">Products</div>
-        <div class="nav-card-links mt-4">
+        <div id="products-dropdown-mobile" class="nav-card-links mt-4">
           <a class="nav-card-link" href="index.html#products">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             inCamp Platform
@@ -384,6 +416,25 @@
           <a class="nav-card-link text-navy" href="#">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             Blog
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: Our Network -->
+      <div class="nav-card" style="background-color: #059669; color: white;">
+        <div class="nav-card-label font-display">Our Network</div>
+        <div id="partners-dropdown-mobile" class="nav-card-links mt-4">
+          <a class="nav-card-link" href="partners.html?category=Colleges">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Colleges
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Organizations">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Organizations
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Mentors">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Mentors
           </a>
         </div>
       </div>
@@ -443,7 +494,84 @@
   </div>
 
   <!-- ===================== WHAT IS HATCH? ===================== -->
-  <section id="what-is-hatch" class="py-20 bg-transparent scroll-mt-24 relative overflow-hidden">
+  <section id="what-is-hatch" class="py-16 md:py-24 bg-transparent scroll-mt-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-6">What is HATCH?</h2>
+          <p class="text-grey-dark text-lg mb-6 leading-relaxed">
+            HATCH is a school-focused vertical under hackability. It partners with schools to provide entrepreneurship and innovation education for students in Grades 3–12. Through experiential learning, students explore ideas, solve real-world problems, build solutions, and develop entrepreneurial thinking.
+          </p>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            HATCH combines creativity, innovation, technology, and hands-on application to create meaningful learning experiences beyond traditional classrooms.
+          </p>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 bg-yellow-tint rounded-3xl transform rotate-3 scale-105 -z-10"></div>
+          <img src="assets/images/hatch_illustration.png" alt="Students collaborating on tech" class="w-full h-auto rounded-3xl shadow-xl object-cover" style="aspect-ratio: 4/3;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY HATCH? ===================== -->
+  <section id="why-hatch" class="py-16 md:py-24 bg-transparent scroll-mt-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">Why Hatch?</h2>
+        <p class="text-grey-dark text-lg max-w-2xl mx-auto">Building future-ready capabilities through experiential learning.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Block 1: Entrepreneurial Thinking -->
+        <div class="glass-panel-blue p-8 rounded-2xl hover:-translate-y-1 transition-all border border-white/60 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-yellow-tint flex items-center justify-center text-yellow-dark text-2xl mb-6">
+              <i class="ph-bold ph-lightbulb"></i>
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl mb-4">Entrepreneurial Thinking</h3>
+            <p class="text-grey-dark text-sm leading-relaxed">Develop opportunity recognition, initiative, creativity, and value-creation mindsets.</p>
+          </div>
+        </div>
+
+        <!-- Block 2: Innovation & Problem Solving -->
+        <div class="glass-panel-blue p-8 rounded-2xl hover:-translate-y-1 transition-all border border-white/60 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-yellow-tint flex items-center justify-center text-yellow-dark text-2xl mb-6">
+              <i class="ph-bold ph-wrench"></i>
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl mb-4">Innovation & Problem Solving</h3>
+            <p class="text-grey-dark text-sm leading-relaxed">Learn structured approaches to identify challenges and develop meaningful solutions.</p>
+          </div>
+        </div>
+
+        <!-- Block 3: Real-World Application -->
+        <div class="glass-panel-blue p-8 rounded-2xl hover:-translate-y-1 transition-all border border-white/60 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-yellow-tint flex items-center justify-center text-yellow-dark text-2xl mb-6">
+              <i class="ph-bold ph-sketch-logo"></i>
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl mb-4">Real-World Application</h3>
+            <p class="text-grey-dark text-sm leading-relaxed">Apply learning through projects, prototypes, challenges, and practical experiences.</p>
+          </div>
+        </div>
+
+        <!-- Block 4: Future-Ready Skills -->
+        <div class="glass-panel-blue p-8 rounded-2xl hover:-translate-y-1 transition-all border border-white/60 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-yellow-tint flex items-center justify-center text-yellow-dark text-2xl mb-6">
+              <i class="ph-bold ph-users-three"></i>
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl mb-4">Future-Ready Skills</h3>
+            <p class="text-grey-dark text-sm leading-relaxed">Build collaboration, communication, leadership, and adaptability for a changing world.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRACKS BY GRADE ===================== -->
+  <section id="tracks" class="py-20 bg-transparent scroll-mt-24 relative overflow-hidden">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-12">
         <h2 class="font-display font-bold text-navy text-3xl md:text-4xl mb-4">Tracks by Grade</h2>
@@ -838,10 +966,12 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="js/animations.js?v=3"></script>
-  <script src="js/main.js?v=6"></script>
-  <script src="js/hatch.js"></script>
+  <!-- Supabase Config -->
+  <script src="js/supabase-config.js"></script>
+
+  <script src="js/animations.js?v=11"></script>
+  <script src="js/main.js?v=11"></script>
+  <script src="js/hatch.js?v=11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.1.0/tsparticles.engine.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3.1.0/tsparticles.slim.min.js"></script>
   <script src="js/sparkles.js"></script>

@@ -175,7 +175,9 @@ class LogoLoop {
     }
 
     if (window.ResizeObserver) {
-      this.resizeObserver = new ResizeObserver(() => this.updateDimensions());
+      this.resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(() => this.updateDimensions());
+      });
       this.resizeObserver.observe(this.container);
       if (this.seqRef) this.resizeObserver.observe(this.seqRef);
     } else {

@@ -259,7 +259,9 @@ export class LightfallEffect {
     };
 
     this.resize();
-    this.ro = new ResizeObserver(this.resize);
+    this.ro = new ResizeObserver(() => {
+      requestAnimationFrame(this.resize);
+    });
     this.ro.observe(this.container);
 
     this.onPointerMove = e => {

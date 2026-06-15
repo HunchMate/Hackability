@@ -101,4 +101,9 @@
 .nav-card-link-icon {
   width: 16px;
   height: 16px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-card-link:hover .nav-card-link-icon {
+  transform: translate(3px, -3px);
 }

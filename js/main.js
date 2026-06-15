@@ -238,9 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
               
               // FORCE OVERRIDE for the requested title change since the database holds the old one
               if (subKey === 'parent' && row.data && row.data.title) {
-                if (row.data.title.includes('Talent at Scale')) {
-                  row.data.title = 'Building innovation driven <br><span style="color:#F5C200;">talent ecosystems</span>';
-                }
+                row.data.title = 'Building innovation driven <br><span style="color:#F5C200;">talent ecosystems</span>';
               }
               
               homepageData.hero[subKey] = row.data;

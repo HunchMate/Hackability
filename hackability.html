@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #0A1570;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,10 +66,12 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem;
-      background: #ffffff;
-      border: 1px solid #E2E8F0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 9999px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
       overflow-x: auto;
       scrollbar-width: none;
       pointer-events: auto;
@@ -92,7 +94,7 @@
       color: #0D1B8E;
     }
     .sticky-nav-pill.active {
-      background: #ffffff;
+      background: #e2e8f0;
       color: #0D1B8E;
       box-shadow: 0 2px 8px rgba(13, 27, 142, 0.08);
     }
@@ -158,7 +160,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
 </head>
-<body class="font-body bg-white text-grey-dark">
+<body class="font-body bg-white text-grey-dark flex flex-col min-h-screen">
 
   <!-- ===================== GLOSSY PRELOADER ===================== -->
   <div id="page-preloader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
@@ -227,7 +229,7 @@
                   <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
                   <div class="pr-6">
                     <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
-                    <span class="text-xs text-grey-dark block">Entrepreneurship program for school students</span>
+                    <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
                   </div>
                   <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </a>
@@ -235,7 +237,7 @@
                   <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
                   <div class="pr-6">
                     <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
-                    <span class="text-xs text-grey-dark block">Talent development program for higher education</span>
+                    <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
                   </div>
                   <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </a>
@@ -293,7 +295,7 @@
             </div>
           </li>
           <li class="flex items-center">
-            <a href="#" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
+            <a href="blog.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Blog</a>
           </li>
         </ul>
       </div>
@@ -347,7 +349,7 @@
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             About Us
           </a>
-          <a class="nav-card-link text-navy" href="#">
+          <a class="nav-card-link text-navy" href="blog.html">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             Blog
           </a>
@@ -375,6 +377,7 @@
     </div>
   </nav>
 
+  <main class="flex-grow">
   <!-- ===================== HERO SECTION ===================== -->
   <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
     <!-- Background -->
@@ -523,12 +526,13 @@
   </section>
 
   <!-- ===================== WHAT WE ENABLE ===================== -->
-  <section id="what-we-enable" class="py-16 md:py-24 bg-black scroll-mt-24 relative z-10">
+  <section id="what-we-enable" class="py-16 md:py-24 bg-white border-b border-hk-border scroll-mt-24 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="font-display font-bold text-white text-3xl md:text-4xl lg:text-5xl mb-4">What We Enable</h2>
-        <p class="text-white/80 text-lg">Outcomes delivered through our programs and partnerships.</p>
-      </div>      <style>
+        <h2 class="font-display font-bold text-navy text-3xl md:text-4xl lg:text-5xl mb-4">What We Enable</h2>
+        <p class="text-grey-dark text-lg">Outcomes delivered through our programs and partnerships.</p>
+      </div>
+      <style>
         .card-overlay {
           clip-path: circle(0px at 56px 56px);
           transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -540,134 +544,134 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Card 1 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
-              <i class="ph-bold ph-student text-2xl text-white"></i>
-            </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Core Domain</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Talent Development</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
               <i class="ph-bold ph-student text-2xl text-white"></i>
             </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Core Domain</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Talent Development</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-student text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Core Domain</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Talent Development</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Building future-ready skills, mindsets, and capabilities.</p>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
-              <i class="ph-bold ph-handshake text-2xl text-white"></i>
-            </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Partnerships</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Industry Engagement</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
               <i class="ph-bold ph-handshake text-2xl text-white"></i>
             </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Partnerships</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Industry Engagement</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-handshake text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Partnerships</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Industry Engagement</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Connecting institutions with industry, experts, and opportunities.</p>
           </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
-              <i class="ph-bold ph-lightbulb-filament text-2xl text-white"></i>
-            </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Ecosystem</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Innovation Culture</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
               <i class="ph-bold ph-lightbulb-filament text-2xl text-white"></i>
             </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Ecosystem</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Innovation Culture</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-lightbulb-filament text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Ecosystem</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Innovation Culture</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Embedding innovation and problem-solving across campuses.</p>
           </div>
         </div>
 
         <!-- Card 4 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
-              <i class="ph-bold ph-rocket-launch text-2xl text-white"></i>
-            </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Ventures</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Entrepreneurship</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
               <i class="ph-bold ph-rocket-launch text-2xl text-white"></i>
             </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Ventures</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Entrepreneurship</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-rocket-launch text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Ventures</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Entrepreneurship</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Encouraging entrepreneurial thinking and venture creation.</p>
           </div>
         </div>
 
         <!-- Card 5 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
-              <i class="ph-bold ph-briefcase text-2xl text-white"></i>
-            </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Experience</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Student Opportunities</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
               <i class="ph-bold ph-briefcase text-2xl text-white"></i>
             </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Experience</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Student Opportunities</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-briefcase text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Experience</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Student Opportunities</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Enabling access to projects, mentors, exposure, and experiences.</p>
           </div>
         </div>
 
         <!-- Card 6 -->
-        <div class="group relative rounded-3xl border border-white/10 bg-white/5 shadow-sm overflow-hidden text-left cursor-default">
+        <div class="group relative rounded-3xl border border-hk-border bg-white shadow-sm overflow-hidden text-left cursor-default">
           <!-- Base Layer -->
           <div class="w-full h-full flex flex-col p-8">
             <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg">
               <i class="ph-bold ph-buildings text-2xl text-white"></i>
             </div>
-            <p class="text-white/50 text-sm mb-2 font-medium tracking-wide uppercase">Outcomes</p>
-            <h3 class="font-display font-semibold text-white text-2xl mb-4">Institutional Impact</h3>
-            <p class="text-white/80 text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
-          </div>
-          <!-- Overlay Layer -->
-          <div class="card-overlay absolute inset-0 w-full h-full bg-sky-100 flex flex-col p-8 z-10 pointer-events-none">
-            <div class="h-12 w-12 mb-6 bg-navy flex items-center justify-center rounded-full shadow-lg ring-2 ring-sky-200 ring-offset-4 ring-offset-sky-100">
-              <i class="ph-bold ph-buildings text-2xl text-white"></i>
-            </div>
             <p class="text-navy/60 text-sm mb-2 font-medium tracking-wide uppercase">Outcomes</p>
             <h3 class="font-display font-semibold text-navy text-2xl mb-4">Institutional Impact</h3>
-            <p class="text-navy/90 text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
+            <p class="text-grey-dark text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
+          </div>
+          <!-- Overlay Layer -->
+          <div class="card-overlay absolute inset-0 w-full h-full bg-navy flex flex-col p-8 z-10 pointer-events-none">
+            <div class="h-12 w-12 mb-6 bg-white flex items-center justify-center rounded-full shadow-lg ring-2 ring-white/20 ring-offset-4 ring-offset-navy">
+              <i class="ph-bold ph-buildings text-2xl text-navy"></i>
+            </div>
+            <p class="text-yellow text-sm mb-2 font-medium tracking-wide uppercase">Outcomes</p>
+            <h3 class="font-display font-semibold text-white text-2xl mb-4">Institutional Impact</h3>
+            <p class="text-white/95 text-base leading-relaxed font-normal">Supporting measurable outcomes across student and campus development.</p>
           </div>
         </div>
 
@@ -675,22 +679,18 @@
     </div>
   </section>
 
-  <!-- ===================== IMPACT & TESTIMONIALS ===================== -->
-  <section id="impact" class="py-16 md:py-24 scroll-mt-24 relative overflow-hidden">
-    <!-- Animated Gradient Background Container -->
-    <div id="impact-animated-bg" class="absolute inset-0 z-0 opacity-0 transition-all duration-[2000ms] ease-out transform scale-110"></div>
-
-    <!-- Program Partners (Logo Cloud) — now inside Impact section -->
-    <div class="w-full relative z-10 px-4 md:px-0 mb-16 md:mb-24">
+  <!-- ===================== PROGRAM PARTNERS ===================== -->
+  <section id="program-partners" class="bg-white py-16 md:py-24 border-t border-hk-border relative overflow-hidden">
+    <div class="w-full relative z-10 px-4 md:px-0 mb-8 md:mb-12">
       <!-- Desktop Heading -->
       <h2 class="hidden md:block mb-10 text-center font-display">
-        <span class="block font-medium text-xl md:text-2xl text-white/50 mb-2">Already used by</span>
-        <span class="font-bold text-3xl md:text-4xl text-white tracking-tight">Best in the Game</span>
+        <span class="block font-medium text-xl md:text-2xl text-grey-dark/70 mb-2">Already used by</span>
+        <span class="font-bold text-3xl md:text-4xl text-navy tracking-tight">Best in the Game</span>
       </h2>
 
       <!-- Mobile Heading -->
-      <h2 class="md:hidden mb-8 text-center font-display text-white/60 text-lg tracking-wide">
-        Companies we <span class="text-white font-semibold">collaborate</span> with.
+      <h2 class="md:hidden mb-8 text-center font-display text-grey-dark/80 text-lg tracking-wide">
+        Companies we <span class="text-navy font-semibold">collaborate</span> with.
       </h2>
 
       <!-- Desktop Slider Container -->
@@ -715,28 +715,28 @@
           <!-- Group 1 -->
           <div class="flex animate-slide-logos w-max shrink-0 items-center">
             <div class="flex gap-16 px-8 items-center justify-center">
-              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
             </div>
           </div>
 
           <!-- Group 2 (Duplicate for seamless loop) -->
           <div class="flex animate-slide-logos w-max shrink-0 items-center" aria-hidden="true">
             <div class="flex gap-16 px-8 items-center justify-center">
-              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
             </div>
           </div>
 
@@ -744,70 +744,74 @@
       </div>
 
       <!-- Mobile Grid Container -->
-      <div class="grid md:hidden grid-cols-2 border-y border-white/10 w-full max-w-sm mx-auto relative mt-4">
+      <div class="grid md:hidden grid-cols-2 border-y border-hk-border w-full max-w-sm mx-auto relative mt-4">
         
         <!-- Cell 1 (Nvidia) -->
-        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-4 opacity-90">
-          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-4 opacity-70 brightness-0">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
         
         <!-- Cell 2 (Supabase) -->
-        <div class="border-b border-white/10 py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-4 opacity-90">
+        <div class="border-b border-hk-border py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-4 opacity-70 brightness-0">
         </div>
 
         <!-- Cell 3 (GitHub) -->
-        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-5 opacity-90">
-          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-5 opacity-70 brightness-0">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
 
         <!-- Cell 4 (OpenAI) -->
-        <div class="border-b border-white/10 py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-5 opacity-90">
+        <div class="border-b border-hk-border py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-5 opacity-70 brightness-0">
         </div>
 
         <!-- Cell 5 (Turso) -->
-        <div class="border-r border-b border-white/10 py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-4 opacity-90">
-          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-white/30 z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
+          <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-4 opacity-70 brightness-0">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
 
         <!-- Cell 6 (Clerk) -->
-        <div class="border-b border-white/10 py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-5 opacity-90">
+        <div class="border-b border-hk-border py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-5 opacity-70 brightness-0">
         </div>
 
         <!-- Cell 7 (Claude) -->
-        <div class="border-r border-white/10 py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-4 opacity-90">
+        <div class="border-r border-hk-border py-10 flex justify-center items-center">
+          <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-4 opacity-70 brightness-0">
         </div>
 
         <!-- Cell 8 (Vercel) -->
         <div class="py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-4 opacity-90">
+          <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-4 opacity-70 brightness-0">
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== IMPACT & TESTIMONIALS ===================== -->
+  <section id="impact" class="py-16 md:py-24 scroll-mt-24 relative overflow-hidden">
+    <!-- Animated Gradient Background Container -->
+    <div id="impact-animated-bg" class="absolute inset-0 z-0 opacity-0 transition-all duration-[2000ms] ease-out transform scale-110"></div>
     
-    <div class="max-w-7xl mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
-      <div>
-        <h2 class="font-display font-bold text-white text-3xl md:text-4xl mb-4">Impact & Stories</h2>
-        <p class="text-white/80 text-lg max-w-2xl">Creating measurable outcomes across institutions and learners.</p>
-      </div>
-      <div class="flex items-center gap-4">
-        <button id="impact-prev" class="w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
-          <i class="ph-bold ph-arrow-left text-xl"></i>
-        </button>
-        <button id="impact-next" class="w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
-          <i class="ph-bold ph-arrow-right text-xl"></i>
-        </button>
-      </div>
+    <div class="max-w-7xl mx-auto px-6 mb-16 text-center relative z-10">
+      <h2 class="font-display font-bold text-white text-3xl md:text-4xl mb-4">Impact & Stories</h2>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">Creating measurable outcomes across institutions and learners.</p>
     </div>
 
     <!-- Combined Slider -->
     <div class="relative w-full pb-8 z-10">
+      <!-- Floating Navigation Buttons on Corners of the Page -->
+      <button id="impact-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center bg-black/40 hover:bg-white/20 backdrop-blur-sm transition-colors">
+        <i class="ph-bold ph-arrow-left text-xl"></i>
+      </button>
+      <button id="impact-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-white/20 text-white flex items-center justify-center bg-black/40 hover:bg-white/20 backdrop-blur-sm transition-colors">
+        <i class="ph-bold ph-arrow-right text-xl"></i>
+      </button>
+
       <div id="impact-slider" class="flex gap-8 overflow-x-auto snap-x snap-mandatory px-6 pb-8 hide-scrollbar" style="scroll-padding-left: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));">
         
         <!-- Impact Story 1 -->
@@ -1003,8 +1007,88 @@
       </div>
     </div>
   </section>
+  <!-- ===================== FINAL CTA ===================== -->
+  <section id="contact" class="py-16 md:py-24 bg-white border-t border-hk-border">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        
+        <!-- Left: Text -->
+        <div class="reveal">
+          <h2 class="font-display font-bold text-navy mb-6 typewriter-effect" data-typewriter="Let's Build Future-Ready Talent Together" style="font-size:clamp(40px, 5vw, 48px); line-height:1.1; min-height: 2.2em;">
+            &nbsp;
+          </h2>
+          <p class="text-lg text-grey-dark mb-10" style="line-height:1.7;">
+            Partner with us to create meaningful learning experiences, stronger industry engagement, and impactful talent development outcomes.
+          </p>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy">
+                <i class="ph-bold ph-envelope-simple" style="font-size:20px;"></i>
+              </div>
+              <div>
+                <div class="text-sm text-grey-mid font-medium">Email Us</div>
+                <div class="font-bold text-navy">hello@hackability.in</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-navy-tint flex items-center justify-center text-navy">
+                <i class="ph-bold ph-phone" style="font-size:20px;"></i>
+              </div>
+              <div>
+                <div class="text-sm text-grey-mid font-medium">Call Us</div>
+                <div class="font-bold text-navy">+91 98765 43210</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Right: Form -->
+        <div class="bg-grey-light p-8 md:p-10 rounded-3xl border border-hk-border reveal reveal-delay-2">
+          <form id="contact-form" class="flex flex-col gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Full Name</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="John Doe" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Organization</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="Your University/Company" required />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Designation</label>
+                <input type="text" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="Director of Innovation" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-navy mb-2">Email Address</label>
+                <input type="email" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="john@example.com" required />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-navy mb-2">Phone Number</label>
+              <input type="tel" class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-navy mb-2">Message</label>
+              <textarea class="w-full px-4 py-3 rounded-lg border border-hk-border bg-white focus:outline-none focus:border-navy transition-colors" rows="4" placeholder="How can we help you?" required></textarea>
+            </div>
+            <div class="flex gap-4 mt-2">
+              <button type="submit" class="btn-flow btn-flow-navy w-full">
+                <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
+                <span class="flow-text">Get in Touch</span>
+                <span class="flow-circle"></span>
+                <i class="ph-bold ph-arrow-right flow-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
 
+      </div>
+    </div>
+  </section>
+
+  </main>
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="bg-navy-dark border-t border-white/10 pt-16 pb-8">

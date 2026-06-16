@@ -67,3 +67,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ===========================
+// Typewriter Effect
+// ===========================
+function animateTypewriter(el) {
+  const text = el.dataset.typewriter;
+  if (!text) return;
+  el.textContent = '';
+  
+  // Create cursor
+  const cursor = document.createElement('span');
+  cursor.style.display = 'inline-block';
+  cursor.style.width = '4px';
+  cursor.style.height = '1em';
+  cursor.style.backgroundColor = '#0ea5e9'; // sky-500
+  cursor.style.marginLeft = '4px';
+  cursor.style.verticalAlign = 'text-bottom';
+  cursor.style.animation = 'typewriter-blink 0.8s infinite';
+  
+  // Add global keyframes if not exists
+  if (!document.getElementById('typewriter-style')) {
+    const style = document.createElement('style');
+    style.id = 'typewriter-style';
+    style.innerHTML = `@keyframes typewriter-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }`;
+    document.head.appendChild(style);
+  }
+  
+  let i = 0;
+  function typeChar() {
+    if (i < text.length) {
+      const charSpan = document.createElement('span');
+      charSpan.textContent = text.charAt(i);
+      el.insertBefore(charSpan, cursor);
+      i++;
+      setTimeout(typeChar, 30 + Math.random() * 40); // random delay for natural feel
+    }
+  }
+  
+  el.appendChild(cursor);
+  setTimeout(typeChar, 300); // delay start slightly
+}
+
+const typewriterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateTypewriter(entry.target);
+      typewriterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.typewriter-effect').forEach(el => typewriterObserver.observe(el));

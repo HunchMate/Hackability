@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #0D1B8E;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hackability Blog — Insights on Innovation & Education</title>
+  <meta name="description" content="Read articles, guides, and stories on K-12 entrepreneurship, university innovation labs, and emerging technology." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/design-system.css?v=13" />
+  <link rel="stylesheet" href="css/logoloop.css" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Tailwind CDN (dev only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:        '#0D1B8E',
+            'navy-dark': '#0A1570',
+            'navy-mid':  '#1A2FA8',
+            'navy-tint': '#E8F0FF',
+            yellow:      '#F5C200',
+            'yellow-dark':'#D4A800',
+            'yellow-tint':'#FFF8D6',
+            'grey-light': '#F4F4F6',
+            'grey-mid':   '#9CA3AF',
+            'grey-dark':  '#374151',
+            'hk-border':  '#E2E8F0',
+          },
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+            data:    ['Space Grotesk', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Blog Page Styles */
+    .blog-card {
+      background: white;
+      border: 1px solid rgba(13, 27, 142, 0.08);
+      border-radius: 1.5rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(13, 27, 142, 0.08);
+      border-color: rgba(13, 27, 142, 0.2);
+    }
+    .blog-card-img-wrap {
+      overflow: hidden;
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
+      position: relative;
+    }
+    .blog-card-img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blog-card:hover .blog-card-img {
+      transform: scale(1.05);
+    }
+    .filter-pill {
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .filter-pill.active {
+      background: #0D1B8E;
+      color: white;
+      box-shadow: 0 4px 12px rgba(13, 27, 142, 0.2);
+    }
+    .filter-pill:not(.active) {
+      background: #F4F4F6;
+      color: #374151;
+    }
+    .filter-pill:not(.active):hover {
+      background: #E2E8F0;
+    }
+    
+    /* Reader Modal Animation */
+    .modal-overlay {
+      background-color: rgba(10, 21, 112, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: opacity 0.4s ease-out;
+    }
+    .modal-box {
+      transform: translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-open .modal-box {
+      transform: translateY(0);
+    }
+    
+    /* Floating Header Grid */
+    .hero-glow {
+      background: radial-gradient(circle at 50% 50%, rgba(245, 194, 0, 0.15) 0%, rgba(13, 27, 142, 0) 70%);
+    }
+
+    body.loading {
+      overflow: hidden;
+    }
+    body.modal-active {
+      overflow: hidden;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="css/card-nav.css" />
+</head>
+<body class="font-body bg-white text-grey-dark flex flex-col min-h-screen">
+
+  <!-- ===================== GLOSSY PRELOADER ===================== -->
+  <div id="page-preloader" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/40 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center justify-center gap-2 transform translate-y-[-20px] opacity-0" style="animation: preloaderFadeInDown 0.6s ease-out forwards 0.1s;">
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-white text-center mb-2">Insights</h1>
+      <svg width="300" height="20" viewBox="0 0 300 20" class="absolute -bottom-6 left-1/2 -translate-x-1/2 overflow-visible">
+        <path
+          d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
+          stroke="currentColor"
+          stroke-width="3"
+          fill="none"
+          class="text-white"
+          stroke-linecap="round"
+          style="stroke-dasharray: 310; stroke-dashoffset: 310; animation: preloaderDrawLine 1.5s ease-in-out forwards 0.4s;"
+        />
+        <g style="transform: translate(288px, -2px);" class="text-white">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" style="opacity: 0; transform-box: fill-box; transform-origin: center; animation: preloaderStarPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.8s;" />
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    document.body.classList.add('loading');
+    const _preloaderStart = Date.now();
+    window.addEventListener('load', () => {
+      const elapsed = Date.now() - _preloaderStart;
+      const remain = Math.max(0, 1500 - elapsed);
+      setTimeout(() => {
+        const p = document.getElementById('page-preloader');
+        if(p) {
+          p.style.opacity = '0';
+          setTimeout(() => { p.remove(); document.body.classList.remove('loading'); }, 1000);
+        }
+      }, remain);
+    });
+  </script>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 pt-6">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
+      
+      <!-- Logo -->
+      <div class="flex-1 flex justify-start">
+        <a href="index.html" class="flex items-center" id="logo-link">
+          <img src="assets/logo-dark.png" alt="Hackability" style="height:36px; filter: brightness(0) invert(1);" />
+        </a>
+      </div>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2 z-[60]">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 rounded-full text-white/90">
+          <li class="flex items-center">
+            <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
+          </li>
+          
+          <!-- Our Ecosystem Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
+            </button>
+            <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <div class="grid grid-cols-2 gap-4">
+                <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                  <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
+                  <div class="pr-6">
+                    <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
+                    <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
+                  </div>
+                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </a>
+                <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg animate-card-glow-slow">
+                  <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
+                  <div class="pr-6">
+                    <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
+                    <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
+                  </div>
+                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Products Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Products <i class="ph-bold ph-caret-down text-sm"></i>
+            </button>
+            <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
+                <div class="flex-1 pr-4">
+                  <span class="text-sm font-bold text-navy block">inCamp</span>
+                  <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+            </div>
+          </li>
+
+          <!-- Our Network Dropdown -->
+          <li class="mega-menu-item flex items-center">
+            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+              Our Network <i class="ph-bold ph-caret-down text-sm"></i>
+            </button>
+            <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+              <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
+                <div class="flex-1 pr-4">
+                  <span class="text-sm font-bold text-navy block">Colleges</span>
+                  <span class="text-xs text-grey-dark block">Partner institutions.</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+              <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
+                <div class="flex-1 pr-4">
+                  <span class="text-sm font-bold text-navy block">Organizations</span>
+                  <span class="text-xs text-grey-dark block">Corporate partners.</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+              <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+                <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
+                <div class="flex-1 pr-4">
+                  <span class="text-sm font-bold text-navy block">Mentors</span>
+                  <span class="text-xs text-grey-dark block">Our expert mentors.</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+            </div>
+          </li>
+          <li class="flex items-center">
+            <a href="blog.html" class="text-base font-semibold text-yellow hover:text-white transition-colors cursor-pointer">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right aligned controls -->
+      <div class="flex-1 flex justify-end items-center gap-4 z-50">
+        <a href="index.html#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-white/20 bg-white/10 text-base font-bold text-white hover:bg-white hover:text-navy transition-colors shadow-sm">
+          Contact us
+        </a>
+        <div class="hamburger-menu text-white lg:hidden" aria-label="Open menu" tabindex="0">
+          <div class="hamburger-line bg-current"></div>
+          <div class="hamburger-line bg-current"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Navigation Drawer -->
+    <div class="card-nav-content lg:hidden">
+      <!-- Card 1: Our Ecosystem -->
+      <div class="nav-card" style="background-color: #0D1B8E; color: white;">
+        <div class="nav-card-label font-display">Our Ecosystem</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link" href="hatch.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hatch (K-12)
+          </a>
+          <a class="nav-card-link" href="hackability.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Hackability (Higher Ed)
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Products -->
+      <div class="nav-card" style="background-color: #6D28D9; color: white;">
+        <div class="nav-card-label font-display">Products</div>
+        <div id="products-dropdown-mobile" class="nav-card-links mt-4">
+          <a class="nav-card-link" href="index.html#products">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            inCamp Platform
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Company -->
+      <div class="nav-card" style="background-color: #F5C200; color: #0D1B8E;">
+        <div class="nav-card-label font-display">Company</div>
+        <div class="nav-card-links mt-4">
+          <a class="nav-card-link text-navy" href="about.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            About Us
+          </a>
+          <a class="nav-card-link text-navy font-bold" href="blog.html">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Blog
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: Our Network -->
+      <div class="nav-card" style="background-color: #059669; color: white;">
+        <div class="nav-card-label font-display">Our Network</div>
+        <div id="partners-dropdown-mobile" class="nav-card-links mt-4">
+          <a class="nav-card-link" href="partners.html?category=Colleges">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Colleges
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Organizations">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Organizations
+          </a>
+          <a class="nav-card-link" href="partners.html?category=Mentors">
+            <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            Mentors
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow">
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="bg-black py-32 md:py-48 relative overflow-hidden z-20">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 z-0 hero-glow"></div>
+      <!-- Background pattern -->
+      <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #0A1570 0, #0A1570 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
+
+      <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-6">
+          <i class="ph-bold ph-article text-yellow" style="font-size:18px;"></i>
+          <span class="text-white text-sm font-bold tracking-wide uppercase">Articles & Insights</span>
+        </div>
+        <h1 class="font-display font-extrabold text-white text-5xl md:text-7xl leading-tight mb-6 tracking-tight">
+          The Hackability <span class="text-yellow">Blog</span>
+        </h1>
+        <p class="text-zinc-300 text-lg md:text-xl max-w-2xl leading-relaxed">
+          Stories, frameworks, and guides at the intersection of K-12 education, higher academic institutions, and ecosystem-wide innovation.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURED POST ===================== -->
+    <section class="py-16 bg-grey-light relative z-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="font-display font-bold text-navy text-2xl md:text-3xl mb-8 flex items-center gap-3">
+          <i class="ph-bold ph-star text-yellow-dark"></i> Featured Article
+        </h2>
+        
+        <div id="featured-post-container" class="bg-white rounded-3xl border border-hk-border p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-sm">
+          <!-- Loaded dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SEARCH & FILTER BAR ===================== -->
+    <section class="py-12 bg-white sticky top-[92px] z-30 border-y border-hk-border/80 backdrop-blur-lg bg-white/95">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <!-- Search bar -->
+        <div class="relative w-full md:max-w-md">
+          <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-grey-mid text-lg"></i>
+          <input 
+            type="text" 
+            id="blog-search" 
+            class="w-full pl-12 pr-4 py-3 rounded-full border border-hk-border bg-grey-light focus:outline-none focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/5 transition-all text-sm"
+            placeholder="Search articles, topics, authors..."
+          />
+        </div>
+        
+        <!-- Category Pills -->
+        <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+          <button class="filter-pill active" data-category="all">All</button>
+          <button class="filter-pill" data-category="Hatch (K-12)">Hatch (K-12)</button>
+          <button class="filter-pill" data-category="Higher Ed">Higher Ed</button>
+          <button class="filter-pill" data-category="Innovation">Innovation</button>
+          <button class="filter-pill" data-category="Ecosystem">Ecosystem</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== POST GRID ===================== -->
+    <section class="py-16 bg-grey-light min-h-[400px]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Loaded dynamically via JS -->
+        </div>
+        
+        <!-- No posts warning -->
+        <div id="no-posts-found" class="hidden flex flex-col items-center justify-center py-20 text-center">
+          <i class="ph-bold ph-smiley-sad text-6xl text-grey-mid mb-4"></i>
+          <h3 class="text-xl font-bold text-navy mb-2">No Articles Found</h3>
+          <p class="text-grey-dark max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== NEWSLETTER SECTION ===================== -->
+    <section class="py-20 bg-white border-t border-hk-border">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-gradient-to-br from-[#0D1B8E] to-[#0A1570] text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
+          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-yellow/10 blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+          
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
+          <p class="text-white/80 text-base max-w-lg mb-8">
+            Get the latest insights on education frameworks, ecosystem-led innovations, and entrepreneurship toolkits sent straight to your inbox.
+          </p>
+          <form id="newsletter-form" class="w-full max-w-md flex flex-col sm:flex-row gap-3">
+            <input 
+              type="email" 
+              class="w-full px-5 py-3.5 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:bg-white focus:text-navy focus:placeholder-grey-mid transition-all text-sm" 
+              placeholder="Enter your email address" 
+              required
+            />
+            <button type="submit" class="px-8 py-3.5 bg-yellow text-navy font-bold text-sm rounded-full hover:bg-white transition-all shadow-md shrink-0 flex items-center justify-center gap-2">
+              Subscribe
+            </button>
+          </form>
+          <div id="newsletter-success" class="hidden mt-4 text-yellow text-sm font-semibold flex items-center gap-2">
+            <i class="ph-bold ph-check-circle"></i> Thanks for subscribing!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== ARTICLE READ MODAL ===================== -->
+  <div id="reader-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+    <div id="modal-overlay" class="absolute inset-0 modal-overlay opacity-0"></div>
+    
+    <div class="modal-box bg-white w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto">
+      
+      <!-- Read progress indicator -->
+      <div id="read-progress" class="h-1 bg-yellow w-0 absolute top-0 left-0 transition-all duration-100 z-50"></div>
+
+      <!-- Modal Header controls -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-hk-border bg-grey-light shrink-0">
+        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-navy-tint text-navy uppercase tracking-wider">Category</span>
+        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-grey-mid/20 flex items-center justify-center text-grey-dark hover:text-black transition-all">
+          <i class="ph-bold ph-x text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable article area -->
+      <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
+        <div class="max-w-2xl mx-auto">
+          <!-- Article Title -->
+          <h1 id="modal-article-title" class="font-display font-extrabold text-navy text-3xl md:text-5xl leading-tight mb-6">
+            Article Title
+          </h1>
+
+          <!-- Article Meta -->
+          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-hk-border">
+            <div class="w-12 h-12 rounded-full bg-yellow text-navy flex items-center justify-center font-bold font-display text-lg shadow-sm" id="modal-author-avatar">
+              P
+            </div>
+            <div>
+              <div class="font-bold text-navy" id="modal-article-author">Author Name</div>
+              <div class="text-xs text-grey-mid font-medium flex items-center gap-2">
+                <span id="modal-article-date">Date</span>
+                <span>•</span>
+                <span id="modal-article-readtime">Read Time</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <div class="rounded-3xl overflow-hidden mb-8 shadow-sm">
+            <div id="modal-article-image" class="w-full h-64 md:h-96 bg-cover bg-center"></div>
+          </div>
+
+          <!-- HTML Content Body -->
+          <div id="modal-article-content" class="prose max-w-none text-grey-dark text-base leading-relaxed space-y-6">
+            <!-- Article Body Content loaded via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-navy border-t border-white/10 pt-16 pb-8 text-white relative z-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div class="col-span-1 md:col-span-2">
+          <div class="flex items-center gap-2 mb-6">
+            <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" />
+          </div>
+          <p class="text-sm mb-6 text-white/50 leading-relaxed max-w-sm">
+            Building innovation-driven talent at scale through strategic partnerships and ecosystem-driven initiatives.
+          </p>
+          <div class="flex items-center gap-4">
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
+              <i class="ph-bold ph-linkedin-logo" style="font-size:18px;"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
+              <i class="ph-bold ph-twitter-logo" style="font-size:18px;"></i>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-display font-semibold text-white mb-6">Navigation</h4>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            <li><a href="about.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
+            <li><a href="index.html#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
+            <li><a href="hatch.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
+            <li><a href="index.html#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
+            <li><a href="index.html#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display font-semibold text-white mb-6">Contact</h4>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            <li><a href="mailto:hello@hackability.in" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+              <i class="ph-bold ph-envelope-simple"></i> hello@hackability.in
+            </a></li>
+            <li><a href="tel:+919876543210" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+              <i class="ph-bold ph-phone"></i> +91 98765 43210
+            </a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-white/40 m-0">
+          © Hackability. All Rights Reserved.
+        </p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Privacy Policy</a>
+          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Sample Blog Post Data
+    const blogPosts = [
+      {
+        id: 1,
+        title: "The Power of Entrepreneurial Thinking in Schools",
+        category: "Hatch (K-12)",
+        date: "June 15, 2026",
+        readTime: "5 min read",
+        author: "Puneet",
+        abstract: "Why introducing innovation and opportunity discovery in Grades 3-12 is essential to nurture resilience, creativity, and future readiness.",
+        coverImage: "linear-gradient(135deg, #FFE3E3 0%, #FFB6C1 100%)",
+        isFeatured: true,
+        content: `
+          <p class="text-lg font-semibold text-navy mb-6">Education is no longer just about memorizing facts; it is about building the capability to navigate uncertainty and solve real-world problems. Introducing kids to design thinking, risk-assessment, and value creation early on transforms their perspective.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Why Early Stage Opportunity Identification Matters</h3>
+          <p>Children possess an innate curiosity that is often filtered out by traditional educational paths. In the Hatch program, we leverage this natural curiosity. By asking questions like "What problems do people face around you every day?" we teach students to recognize opportunity where others see inconvenience.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Building Resilience Through Experiential Learning</h3>
+          <p>Entrepreneurship is a practice of resilience. When a student builds a prototype and it fails, it is not a grade penalty; it is feedback. Through miniature innovation challenges, students learn to test, iterate, and adapt. This mindset shifts failure from a dead-end to a learning step.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Practical Integration in Schools</h3>
+          <p>Integrating entrepreneurship education doesn't mean adding a heavy curriculum burden. It fits directly into science, technology, mathematics, and social studies projects, enabling students to apply theoretical knowledge to solve community problems.</p>
+        `
+      },
+      {
+        id: 2,
+        title: "Redefining College Partnerships for the Future Workforce",
+        category: "Higher Ed",
+        date: "June 10, 2026",
+        readTime: "7 min read",
+        author: "Puneet",
+        abstract: "How academic institutions can partner with industry leaders to design experiential learning pathways and bridge the talent-employability gap.",
+        coverImage: "linear-gradient(135deg, #E8F0FF 0%, #C8D6FF 100%)",
+        isFeatured: false,
+        content: `
+          <p class="text-lg font-semibold text-navy mb-6">As industry requirements evolve at supersonic speed, universities must pivot from siloed academic instructions to ecosystem-driven experiential learning.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Talent-Employability Gap</h3>
+          <p>Traditional learning systems often fall short of preparing graduates for the ambiguity of modern startup and corporate environments. While students understand theoretical computer science or business strategies, they lack the opportunity to apply them in cross-functional, real-world teams.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Campus Labs as Co-Creation Spaces</h3>
+          <p>By building dedicated Campus Labs and collaborative innovation frameworks, academic institutions can bring mentors, corporations, and technology tools directly to the students. This enables them to work on industry-defined challenges, validate products, and build startup ventures before graduation.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Future is Collaborative</h3>
+          <p>A thriving university is one that opens its borders to the ecosystem. Through structured talent development programs like Hackability, colleges not only increase student placement and startup rates, but they also become engines of regional economic growth.</p>
+        `
+      },
+      {
+        id: 3,
+        title: "Gen AI in Education: A Framework for Creative Classroom Tech",
+        category: "Innovation",
+        date: "June 05, 2026",
+        readTime: "6 min read",
+        author: "Ananya Sharma",
+        abstract: "Practical strategies and safeguards for incorporating Generative AI tools into student research, ideation, and rapid prototyping workflows.",
+        coverImage: "linear-gradient(135deg, #F5F0FF 0%, #D8C7FF 100%)",
+        isFeatured: false,
+        content: `
+          <p class="text-lg font-semibold text-navy mb-6">Generative AI tools are reshaping how knowledge is processed. Instead of restricting access, educators should provide structured frameworks to guide creative and ethical AI usage.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">AI as an Ideation Partner</h3>
+          <p>AI is an incredibly powerful brainstorming partner. Students can query large language models to explore alternative angles for their project ideas, draft user interview questions, or understand highly complex technological concepts in simple terms.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Critical Thinking Safeguard</h3>
+          <p>A critical mindset is essential. We teach students that AI is often prone to hallucinations and generalizations. Every AI-generated output must be verified, researched, and customized. The core values—originality, user empathy, and real-world validation—must come from the human designer.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Enhancing Code and CAD Prototyping</h3>
+          <p>For innovation labs, AI accelerates the technical barrier. Students can generate basic boilerplate code for microcontrollers, write web app frontends, or get layout recommendations for 3D printing. This shifts the focus from tedious syntax coding to user experience and architecture design.</p>
+        `
+      },
+      {
+        id: 4,
+        title: "Building Innovation Ecosystems: Why Mentorship Matters",
+        category: "Ecosystem",
+        date: "May 28, 2026",
+        readTime: "4 min read",
+        author: "Vikram Malhotra",
+        abstract: "Highlighting the critical role of corporate mentors and industry experts in providing feedback, credibility, and real-world networks to student teams.",
+        coverImage: "linear-gradient(135deg, #E6FFFA 0%, #B2F5EA 100%)",
+        isFeatured: false,
+        content: `
+          <p class="text-lg font-semibold text-navy mb-6">A student startup or innovation project cannot grow in a vacuum. To turn ideas into viable solutions, young creators need guidance from those who have built before them.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Breaking the Academic Bubble</h3>
+          <p>Educators provide essential academic foundations, but corporate mentors and startup founders offer practical truth. A mentor can look at a student product and say, "The market does not buy this features set," or "Your pricing model ignores key operations cost." This raw, constructive feedback is invaluable.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Network Access and Social Capital</h3>
+          <p>Industry mentors bring networks. By introducing student teams to suppliers, prospective pilot customers, or legal specialists, mentors provide the social capital necessary to launch ideas. This accelerates validation and turns conceptual student projects into actual business entities.</p>
+          
+          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Creating a Culture of Pay-It-Forward</h3>
+          <p>A thriving innovation ecosystem relies on a cycle of mentorship. Successful alumni returning to campus to judge hackathons and mentor current students creates a legacy of shared progress that sustains the ecosystem for decades.</p>
+        `
+      }
+    ];
+
+    // DOM Elements
+    const featuredContainer = document.getElementById('featured-post-container');
+    const postsGrid = document.getElementById('posts-grid');
+    const noPostsWarning = document.getElementById('no-posts-found');
+    const searchInput = document.getElementById('blog-search');
+    const filterContainer = document.getElementById('filter-container');
+    const readerModal = document.getElementById('reader-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalScrollArea = document.getElementById('modal-body-scroll');
+    const readProgressBar = document.getElementById('read-progress');
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Render Featured Post
+    function renderFeatured() {
+      const featured = blogPosts.find(p => p.isFeatured);
+      if (!featured) return;
+
+      featuredContainer.innerHTML = `
+        <div class="lg:col-span-6 rounded-2xl h-64 lg:h-96 shadow-sm overflow-hidden flex items-center justify-center" style="background: ${featured.coverImage};">
+          <i class="ph-bold ph-newspaper text-navy/20 text-8xl"></i>
+        </div>
+        <div class="lg:col-span-6 flex flex-col justify-center items-start">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-navy-tint text-navy uppercase tracking-wider mb-4">${featured.category}</span>
+          <h3 class="font-display font-extrabold text-navy text-2xl md:text-4xl mb-4 leading-tight">${featured.title}</h3>
+          <p class="text-grey-dark text-base mb-6 leading-relaxed">${featured.abstract}</p>
+          
+          <div class="flex items-center justify-between w-full border-t border-hk-border pt-6 mt-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center font-bold font-display text-sm">${featured.author[0]}</div>
+              <div>
+                <div class="font-bold text-navy text-sm">${featured.author}</div>
+                <div class="text-xs text-grey-mid font-medium">${featured.date} • ${featured.readTime}</div>
+              </div>
+            </div>
+            <button onclick="openArticle(${featured.id})" class="px-6 py-2.5 bg-navy text-white font-bold text-sm rounded-full hover:bg-yellow hover:text-navy transition-all shadow-sm">
+              Read Article
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Cards in Grid
+    function renderGrid() {
+      const filtered = blogPosts.filter(post => {
+        const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+        const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              post.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              post.category.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        postsGrid.innerHTML = '';
+        noPostsWarning.classList.remove('hidden');
+      } else {
+        noPostsWarning.classList.add('hidden');
+        postsGrid.innerHTML = filtered.map(post => `
+          <div class="blog-card flex flex-col h-full cursor-pointer overflow-hidden shadow-sm" onclick="openArticle(${post.id})">
+            <div class="blog-card-img-wrap h-48 flex items-center justify-center" style="background: ${post.coverImage};">
+              <i class="ph-bold ph-article text-navy/15 text-6xl"></i>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+              <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-navy-tint text-navy uppercase tracking-wider mb-3 w-fit">${post.category}</span>
+              <h3 class="font-display font-bold text-navy text-xl mb-3 leading-snug hover:text-yellow-dark transition-colors flex-grow">${post.title}</h3>
+              <p class="text-grey-dark text-sm leading-relaxed mb-6 line-clamp-3">${post.abstract}</p>
+              
+              <div class="flex items-center gap-3 border-t border-hk-border pt-4 mt-auto">
+                <div class="w-8 h-8 rounded-full bg-grey-dark text-white flex items-center justify-center font-bold text-xs">${post.author[0]}</div>
+                <div>
+                  <div class="font-bold text-navy text-xs">${post.author}</div>
+                  <div class="text-[10px] text-grey-mid font-medium">${post.date} • ${post.readTime}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Open Reader Modal
+    window.openArticle = function(id) {
+      const post = blogPosts.find(p => p.id === id);
+      if (!post) return;
+
+      document.getElementById('modal-article-category').textContent = post.category;
+      document.getElementById('modal-article-title').textContent = post.title;
+      document.getElementById('modal-article-author').textContent = post.author;
+      document.getElementById('modal-article-date').textContent = post.date;
+      document.getElementById('modal-article-readtime').textContent = post.readTime;
+      document.getElementById('modal-author-avatar').textContent = post.author[0];
+      
+      const modalImg = document.getElementById('modal-article-image');
+      modalImg.style.background = post.coverImage;
+      modalImg.style.backgroundSize = 'cover';
+      modalImg.style.backgroundPosition = 'center';
+      
+      document.getElementById('modal-article-content').innerHTML = post.content;
+      
+      readerModal.classList.remove('hidden');
+      readerModal.classList.add('flex');
+      document.body.classList.add('modal-active');
+      
+      setTimeout(() => {
+        readerModal.classList.add('modal-open');
+        document.getElementById('modal-overlay').style.opacity = '1';
+      }, 50);
+
+      // Reset scroll position and progress bar
+      modalScrollArea.scrollTop = 0;
+      readProgressBar.style.width = '0%';
+    };
+
+    // Close Reader Modal
+    function closeModal() {
+      readerModal.classList.remove('modal-open');
+      document.getElementById('modal-overlay').style.opacity = '0';
+      document.body.classList.remove('modal-active');
+      
+      setTimeout(() => {
+        readerModal.classList.remove('flex');
+        readerModal.classList.add('hidden');
+      }, 400);
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Track scroll progress inside modal to update progress indicator
+    modalScrollArea.addEventListener('scroll', () => {
+      const scrollHeight = modalScrollArea.scrollHeight - modalScrollArea.clientHeight;
+      if (scrollHeight > 0) {
+        const scrolled = (modalScrollArea.scrollTop / scrollHeight) * 100;
+        readProgressBar.style.width = `${scrolled}%`;
+      }
+    });
+
+    // Handle Search Input
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderGrid();
+    });
+
+    // Handle Category Filter Clicks
+    filterContainer.addEventListener('click', (e) => {
+      const pill = e.target.closest('.filter-pill');
+      if (!pill) return;
+
+      document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+      pill.classList.add('active');
+
+      currentCategory = pill.dataset.category;
+      renderGrid();
+    });
+
+    // Handle Newsletter Submission
+    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('newsletter-form').classList.add('hidden');
+      document.getElementById('newsletter-success').classList.remove('hidden');
+    });
+
+    // Initialize Layout
+    renderFeatured();
+    renderGrid();
+  </script>
+
+  <!-- Navbar and Mobile Menu Behaviors -->
+  <script src="js/main.js?v=17"></script>
+  <script src="js/card-nav.js" defer></script>
+</body>
+</html>

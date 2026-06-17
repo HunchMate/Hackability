@@ -130,6 +130,18 @@
       color: #d4d4d8 !important;
       line-height: 1.8;
     }
+
+    /* Preloader Animation Keyframes */
+    @keyframes preloaderFadeInDown {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes preloaderDrawLine {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes preloaderStarPop {
+      0% { opacity: 0; transform: scale(0) rotate(-45deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />

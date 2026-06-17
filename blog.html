@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: #09090b;">
+<html lang="en" style="background-color: #f8f9fa;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,12 +9,15 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/design-system.css?v=13" />
   <link rel="stylesheet" href="css/logoloop.css" />
 
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <!-- Tailwind CDN (dev only) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,11 +37,21 @@
             'grey-mid':   '#9CA3AF',
             'grey-dark':  '#374151',
             'hk-border':  '#E2E8F0',
+            
+            // Bower Blog Colors
+            'bower-primary': '#fb6900',
+            'bower-secondary': '#1e2e68',
+            'bower-accent': '#f5c344',
+            'bower-dark': '#2d3436',
+            'bower-muted': '#6c757d',
+            'bower-peach': '#FEE5D9'
           },
           fontFamily: {
             display: ['Sora', 'sans-serif'],
             body:    ['DM Sans', 'sans-serif'],
             data:    ['Space Grotesk', 'sans-serif'],
+            playfair: ['Playfair Display', 'serif'],
+            inter:    ['Inter', 'sans-serif'],
           },
         }
       }
@@ -56,24 +69,19 @@
     }
 
     /* Faint Grid Background Pattern */
-    .bg-grid-pattern {
+    .bg-grid-pattern-light {
       background-size: 50px 50px;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        linear-gradient(to right, rgba(13, 27, 142, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(13, 27, 142, 0.02) 1px, transparent 1px);
     }
     
     .blog-card {
-      background: #0c0c0e;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 1.5rem;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .blog-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(255, 255, 255, 0.15);
-      background: #121215;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 40px rgba(13, 27, 142, 0.08);
     }
     
     .filter-pill {
@@ -85,25 +93,109 @@
       cursor: pointer;
     }
     .filter-pill.active {
-      background: #ffffff;
-      color: #09090b;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+      background: #1e2e68;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(30, 46, 104, 0.2);
     }
     .filter-pill:not(.active) {
-      background: #18181b;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      color: #a1a1aa;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      color: #6c757d;
     }
     .filter-pill:not(.active):hover {
-      background: #27272a;
-      color: #ffffff;
+      background: #f3f4f6;
+      color: #1e2e68;
     }
     
+    /* Glossy Category Cards with Glowing Animation */
+    .glossy-category-card {
+      height: 100px;
+      width: 200px;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(30, 46, 104, 0.2);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1;
+      background: linear-gradient(135deg, #b73400 10%, #1e2e68 100%);
+      margin: 0 auto;
+    }
+
+    /* Glossy effect overlay */
+    .glossy-category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0) 100%);
+      border-radius: 15px 15px 100px 100px;
+      z-index: 1;
+    }
+
+    /* Animated glowing border */
+    .glossy-category-card::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: linear-gradient(45deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      border-radius: 18px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      animation: glow 4s infinite linear;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+      25% {
+        opacity: 0.5;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      }
+      50% {
+        opacity: 0.8;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+      }
+      75% {
+        opacity: 0.5;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    .glossy-category-card:hover {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 15px 30px rgba(30, 46, 104, 0.4);
+    }
+    
+    .glossy-category-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Swiper Custom Styling */
+    .category-swiper {
+      padding: 10px 40px;
+    }
+
     /* Reader Modal Animation */
     .modal-overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       transition: opacity 0.4s ease-out;
     }
     .modal-box {
@@ -121,14 +213,20 @@
       overflow: hidden;
     }
 
-    /* Typographic updates for dark mode prose */
-    .prose-invert h3 {
-      color: #ffffff !important;
-      font-family: 'Sora', 'sans-serif';
+    /* Typographic updates for light mode prose */
+    .prose-custom h3 {
+      color: #1e2e68 !important;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
     }
-    .prose-invert p {
-      color: #d4d4d8 !important;
+    .prose-custom p {
+      color: #374151 !important;
       line-height: 1.8;
+      margin-bottom: 1.25rem;
+      font-family: 'Inter', sans-serif;
     }
 
     /* Preloader Animation Keyframes */
@@ -291,18 +389,58 @@
   </nav>
 
   <!-- Main Content Container with Faint Grid Pattern Background -->
-  <main class="flex-grow bg-zinc-950 bg-grid-pattern relative">
+  <main class="flex-grow bg-[#f8f9fa] bg-grid-pattern-light relative text-[#2d3436]">
     
-    <!-- Top Header Title/Description -->
-    <section class="max-w-7xl mx-auto px-6 pt-36 pb-8 relative z-10">
-      <h1 class="font-display font-extrabold text-white text-5xl md:text-6xl mb-4 tracking-tight">Blog</h1>
-      <p class="text-zinc-500 text-base md:text-lg max-w-2xl leading-relaxed">
-        Discover insightful resources and expert advice from our seasoned team to elevate your knowledge.
-      </p>
+    <!-- Hero Section with First Post (Bower School Style) -->
+    <section class="max-w-7xl mx-auto px-6 pt-36 pb-12 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" data-aos="fade-up">
+        <div class="space-y-6">
+          <div class="inline-flex items-center gap-2">
+            <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-[#1e2e68] text-white uppercase tracking-wider">LEAD</span>
+            <span class="text-xs text-zinc-500 font-semibold">June 14, 2026</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl font-playfair font-bold text-[#1e2e68] italic leading-tight">
+            From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar
+          </h1>
+          <p class="text-zinc-600 text-base md:text-lg leading-relaxed font-inter">
+            For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button onclick="openArticle(1)" class="px-6 py-3 bg-[#1e2e68] hover:bg-[#fb6900] text-white rounded-full font-semibold transition-all shadow-md flex items-center gap-2">
+              <i class="ph-bold ph-book-open text-lg"></i> Explore Post
+            </button>
+            <a href="#latest-posts" class="px-6 py-3 border border-zinc-300 text-zinc-600 rounded-full font-semibold hover:bg-zinc-100 transition-all flex items-center gap-2 no-underline">
+              <i class="ph-bold ph-arrow-down text-lg"></i> More Articles
+            </a>
+          </div>
+        </div>
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200">
+          <img src="https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg" alt="From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar" class="w-full h-[350px] object-cover transition-transform duration-500 hover:scale-105" />
+        </div>
+      </div>
     </section>
 
-    <!-- Search bar & Category Filters -->
-    <section class="max-w-7xl mx-auto px-6 py-6 sticky top-0 z-30 bg-zinc-950/80 backdrop-blur-lg border-y border-zinc-900/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <!-- Categories Section (Bower School Peach Banner & Carousel) -->
+    <section class="w-full py-10 bg-[#FEE5D9] relative z-10 mb-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-[#fb6900] italic mb-6">Categories</h2>
+        
+        <!-- Swiper Carousel -->
+        <div class="swiper category-swiper overflow-visible pb-8">
+          <div class="swiper-wrapper" id="categories-swiper-wrapper">
+            <!-- Populated dynamically via JS to count post numbers -->
+          </div>
+          
+          <!-- Swiper Navigation & Pagination -->
+          <div class="swiper-pagination !bottom-0"></div>
+          <div class="swiper-button-next !text-[#1e2e68] !w-9 !h-9 !bg-white/80 hover:!bg-white !rounded-full !shadow-sm after:!text-sm after:!font-bold"></div>
+          <div class="swiper-button-prev !text-[#1e2e68] !w-9 !h-9 !bg-white/80 hover:!bg-white !rounded-full !shadow-sm after:!text-sm after:!font-bold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search bar & Category Filters (Sticky Top-0 viewport snap) -->
+    <section class="max-w-7xl mx-auto px-6 py-4 sticky top-0 z-30 bg-[#f8f9fa]/90 backdrop-blur-md border-y border-zinc-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <!-- Category Pills -->
       <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
         <button class="filter-pill active" data-category="all">All</button>
@@ -311,57 +449,63 @@
         <button class="filter-pill" data-category="Seed">Seed</button>
       </div>
 
-      <!-- Search bar -->
-      <div class="relative w-full md:max-w-md">
-        <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 text-lg"></i>
-        <input 
-          type="text" 
-          id="blog-search" 
-          class="w-full pl-12 pr-5 py-3 rounded-full border border-zinc-800 bg-zinc-900/50 text-white placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-zinc-950 focus:ring-1 focus:ring-white/20 transition-all text-sm"
-          placeholder="Search by title or topic..."
-        />
+      <!-- Search bar & Button -->
+      <div class="flex items-center gap-2 w-full md:max-w-md">
+        <div class="relative flex-grow">
+          <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"></i>
+          <input 
+            type="text" 
+            id="blog-search" 
+            class="w-full pl-12 pr-5 py-3 rounded-full border border-zinc-200 bg-white text-zinc-800 placeholder-zinc-400 focus:outline-none focus:border-[#1e2e68] transition-all text-sm shadow-sm"
+            placeholder="Search for blog posts..."
+          />
+        </div>
+        <button id="blog-search-btn" class="px-6 py-3 bg-[#1e2e68] hover:bg-[#fb6900] text-white rounded-full font-semibold transition-all text-sm shadow-sm shrink-0">
+          Search
+        </button>
       </div>
     </section>
 
     <!-- Post Cards Grid Section -->
     <section class="py-12 relative z-10 min-h-[400px]">
       <div class="max-w-7xl mx-auto px-6">
+        <h2 id="latest-posts" class="text-3xl md:text-4xl font-playfair font-bold text-[#fb6900] italic mb-8">Latest Articles</h2>
         <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Loaded dynamically via JS -->
         </div>
         
         <!-- No posts warning -->
         <div id="no-posts-found" class="hidden flex flex-col items-center justify-center py-20 text-center">
-          <i class="ph-bold ph-smiley-sad text-6xl text-zinc-600 mb-4"></i>
-          <h3 class="text-xl font-bold text-white mb-2">No Articles Found</h3>
+          <i class="ph-bold ph-smiley-sad text-6xl text-zinc-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-zinc-800 mb-2">No Articles Found</h3>
           <p class="text-zinc-500 max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
         </div>
       </div>
     </section>
 
     <!-- ===================== NEWSLETTER SECTION ===================== -->
-    <section class="py-20 border-t border-zinc-900/60 relative z-10">
+    <section class="py-20 border-t border-zinc-200 relative z-10 bg-[#f8f9fa]">
       <div class="max-w-4xl mx-auto px-6">
-        <div class="bg-zinc-900 border border-zinc-800 text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
-          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-yellow/5 blur-3xl pointer-events-none"></div>
-          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-zinc-700/5 blur-3xl pointer-events-none"></div>
+        <div class="bg-[#1e2e68] text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
+          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-[#fb6900]/10 blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-[#f5c344]/10 blur-3xl pointer-events-none"></div>
           
-          <h2 class="font-display font-bold text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
-          <p class="text-zinc-400 text-base max-w-lg mb-8 leading-relaxed">
-            Get the latest insights on education frameworks, ecosystem-led innovations, and entrepreneurship toolkits sent straight to your inbox.
+          <h2 class="font-playfair font-bold text-3xl md:text-4xl mb-4 italic">Subscribe to Our Newsletter</h2>
+          <p class="text-white/80 text-base max-w-lg mb-8 leading-relaxed font-inter">
+            Stay updated with our latest articles, events, and entrepreneurial insights delivered directly to your inbox.
           </p>
           <form id="newsletter-form" class="w-full max-w-md flex flex-col sm:flex-row gap-3">
             <input 
               type="email" 
-              class="w-full px-5 py-3.5 rounded-full bg-zinc-950 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-yellow focus:ring-1 focus:ring-yellow/20 transition-all text-sm" 
-              placeholder="Enter your email address" 
+              class="w-full px-5 py-3.5 rounded-full bg-white border border-transparent text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#fb6900] transition-all text-sm" 
+              placeholder="Your email address" 
               required
             />
-            <button type="submit" class="px-8 py-3.5 bg-yellow text-navy font-bold text-sm rounded-full hover:bg-white transition-all shadow-md shrink-0 flex items-center justify-center gap-2">
+            <button type="submit" class="px-8 py-3.5 bg-[#fb6900] hover:bg-white hover:text-[#fb6900] text-white font-bold text-sm rounded-full transition-all shadow-md shrink-0 flex items-center justify-center gap-2">
               Subscribe
             </button>
           </form>
-          <div id="newsletter-success" class="hidden mt-4 text-yellow text-sm font-semibold flex items-center gap-2">
+          <div id="newsletter-success" class="hidden mt-4 text-[#f5c344] text-sm font-semibold flex items-center gap-2">
             <i class="ph-bold ph-check-circle"></i> Thanks for subscribing!
           </div>
         </div>
@@ -369,19 +513,19 @@
     </section>
   </main>
 
-  <!-- ===================== ARTICLE READ MODAL ===================== -->
+  <!-- ===================== ARTICLE READ MODAL (Light Themed) ===================== -->
   <div id="reader-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
     <div id="modal-overlay" class="absolute inset-0 modal-overlay opacity-0"></div>
     
-    <div class="modal-box bg-zinc-950 border border-zinc-800/80 w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto text-white">
+    <div class="modal-box bg-white border border-zinc-200 w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto text-zinc-800">
       
       <!-- Read progress indicator -->
-      <div id="read-progress" class="h-1 bg-yellow w-0 absolute top-0 left-0 transition-all duration-100 z-50"></div>
+      <div id="read-progress" class="h-1 bg-[#fb6900] w-0 absolute top-0 left-0 transition-all duration-100 z-50"></div>
 
       <!-- Modal Header controls -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-900 bg-zinc-900/60 backdrop-blur-md shrink-0">
-        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-yellow/10 border border-yellow/25 text-yellow uppercase tracking-wider">Category</span>
-        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-100 bg-[#f8f9fa] backdrop-blur-md shrink-0">
+        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-[#1e2e68]/10 border border-[#1e2e68]/20 text-[#1e2e68] uppercase tracking-wider">Category</span>
+        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-zinc-200/50 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-all">
           <i class="ph-bold ph-x text-xl"></i>
         </button>
       </div>
@@ -390,17 +534,17 @@
       <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
         <div class="max-w-2xl mx-auto">
           <!-- Article Title -->
-          <h1 id="modal-article-title" class="font-display font-bold text-white text-3xl md:text-5xl leading-tight mb-6">
+          <h1 id="modal-article-title" class="font-playfair font-bold text-[#1e2e68] italic text-3xl md:text-5xl leading-tight mb-6">
             Article Title
           </h1>
 
           <!-- Article Meta -->
-          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-900">
-            <div class="w-12 h-12 rounded-full bg-yellow text-navy flex items-center justify-center font-bold font-display text-lg shadow-sm" id="modal-author-avatar">
+          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-100">
+            <div class="w-12 h-12 rounded-full bg-[#1e2e68] text-white flex items-center justify-center font-bold font-inter text-lg shadow-sm" id="modal-author-avatar">
               P
             </div>
             <div>
-              <div class="font-bold text-white" id="modal-article-author">Author Name</div>
+              <div class="font-bold text-[#1e2e68]" id="modal-article-author">Author Name</div>
               <div class="text-xs text-zinc-500 font-medium flex items-center gap-2">
                 <span id="modal-article-date">Date</span>
                 <span>•</span>
@@ -410,12 +554,12 @@
           </div>
 
           <!-- Featured Image -->
-          <div class="rounded-3xl overflow-hidden mb-8 shadow-sm border border-zinc-900">
+          <div class="rounded-3xl overflow-hidden mb-8 shadow-md border border-zinc-100">
             <div id="modal-article-image" class="w-full h-64 md:h-96 bg-cover bg-center"></div>
           </div>
 
           <!-- HTML Content Body -->
-          <div id="modal-article-content" class="prose prose-invert max-w-none text-zinc-300 text-base leading-relaxed space-y-6">
+          <div id="modal-article-content" class="prose-custom max-w-none text-zinc-700 text-base leading-relaxed space-y-6">
             <!-- Article Body Content loaded via JS -->
           </div>
         </div>
@@ -423,25 +567,48 @@
     </div>
   </div>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-zinc-950 border-t border-zinc-900/60 pt-16 pb-8 text-zinc-400 relative z-20">
+  <!-- ===================== FOOTER (Hackability Navy) ===================== -->
+  <footer class="bg-navy border-t border-white/10 pt-16 pb-8 text-white relative z-20">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <!-- Brand column -->
-        <div class="md:col-span-2">
-          <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" class="mb-6 opacity-90" />
-          <p class="text-sm text-zinc-500 max-w-sm mb-6 leading-relaxed">
-            Empowering the next generation of innovators through custom university incubation design, mentorship pathways, and hands-on school entrepreneurship programs.
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" />
+          </div>
+          <p class="text-sm mb-6" style="color:rgba(255,255,255,0.5);line-height:1.7;">
+            Building innovation-driven talent at scale through strategic partnerships and ecosystem-driven initiatives.
           </p>
+          <div class="flex items-center gap-4">
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
+              <i class="ph-bold ph-linkedin-logo" style="font-size:18px;"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
+              <i class="ph-bold ph-twitter-logo" style="font-size:18px;"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Links column -->
+        <!-- Links column 1: Navigation -->
         <div>
-          <h4 class="font-display font-semibold text-white mb-6">Program Ecosystem</h4>
-          <ul class="flex flex-col gap-3 list-none p-0 m-0 text-sm">
-            <li><a href="hackability.html" class="hover:text-white transition-colors">Hackability (Colleges)</a></li>
-            <li><a href="hatch.html" class="hover:text-yellow transition-colors">Hatch (Schools)</a></li>
-            <li><a href="index.html#products" class="hover:text-white transition-colors">inCamp</a></li>
+          <h4 class="font-display font-semibold text-white mb-6">Navigation</h4>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            <li><a href="about.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
+            <li><a href="hackability.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
+            <li><a href="hatch.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
+            <li><a href="index.html#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
+            <li><a href="blog.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Blog</a></li>
+            <li><a href="index.html#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Links column 2: Focus Domains -->
+        <div>
+          <h4 class="font-display font-semibold text-white mb-6">Focus Domains</h4>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            <li><span class="text-sm text-white/60">Innovation</span></li>
+            <li><span class="text-sm text-white/60">Entrepreneurship</span></li>
+            <li><span class="text-sm text-white/60">Emerging Technologies</span></li>
           </ul>
         </div>
 
@@ -449,27 +616,27 @@
         <div>
           <h4 class="font-display font-semibold text-white mb-6">Contact</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="mailto:thehackability@gmail.com" class="text-sm text-zinc-400 hover:text-white no-underline transition-colors flex items-center gap-2">
+            <li><a href="mailto:thehackability@gmail.com" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
               <i class="ph-bold ph-envelope-simple"></i> thehackability@gmail.com
             </a></li>
-            <li><a href="tel:+917993662605" class="text-sm text-zinc-400 hover:text-white no-underline transition-colors flex items-center gap-2">
+            <li><a href="tel:+917993662605" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
               <i class="ph-bold ph-phone"></i> +91 79936 62605
             </a></li>
           </ul>
         </div>
       </div>
 
-      <div class="border-t border-zinc-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-zinc-600 m-0">
-          © 2026 Hackability. All Rights Reserved.
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-white/40 m-0">
+          © Hackability. All Rights Reserved.
         </p>
         <div class="flex items-center gap-6">
           <a href="/admin/" class="text-xs text-yellow/80 hover:text-yellow no-underline transition-colors flex items-center gap-1 font-medium">
             <i class="ph-bold ph-lock-key"></i> Super Admin
           </a>
-          <div class="w-px h-3 bg-zinc-800"></div>
-          <a href="#" class="text-xs text-zinc-600 hover:text-white no-underline transition-colors">Privacy Policy</a>
-          <a href="#" class="text-xs text-zinc-600 hover:text-white no-underline transition-colors">Terms of Service</a>
+          <div class="w-px h-3 bg-white/20"></div>
+          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Privacy Policy</a>
+          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -627,10 +794,45 @@
     let currentCategory = 'all';
     let searchQuery = '';
 
-    // Render Cards in Grid (exact layout matching Aceternity UI blog grid)
+    // Calculate category counts and render swiper categories dynamically
+    function calculateCategoryCounts() {
+      const counts = { 'LEAD': 0, 'UG': 0, 'Seed': 0, 'Career Insights': 0, 'Startup Stories': 0, 'News & Announcements': 0 };
+      blogPosts.forEach(post => {
+        const cat = post.category;
+        if (counts.hasOwnProperty(cat)) {
+          counts[cat]++;
+        }
+      });
+
+      const swiperWrapper = document.getElementById('categories-swiper-wrapper');
+      if (swiperWrapper) {
+        swiperWrapper.innerHTML = Object.entries(counts).map(([cat, count]) => {
+          let gradient = 'linear-gradient(135deg, #b73400 10%, #1e2e68 100%)';
+          if (cat === 'UG') gradient = 'linear-gradient(135deg, #10b981 10%, #065f46 100%)';
+          if (cat === 'Seed') gradient = 'linear-gradient(135deg, #f59e0b 10%, #b45309 100%)';
+          if (cat === 'Career Insights') gradient = 'linear-gradient(135deg, #6366f1 10%, #3730a3 100%)';
+          if (cat === 'Startup Stories') gradient = 'linear-gradient(135deg, #ec4899 10%, #9d174d 100%)';
+          
+          return `
+            <div class="swiper-slide !w-auto">
+              <a href="javascript:void(0)" onclick="selectCategory('${cat}')" class="text-decoration-none block">
+                <div class="glossy-category-card" style="background: ${gradient};">
+                  <div class="glossy-category-content flex flex-col justify-between h-full p-4 text-white">
+                    <h5 class="font-bold text-sm font-inter m-0 leading-tight">${cat}</h5>
+                    <span class="category-count inline-block bg-white/20 px-3 py-1 rounded-full text-[10px] font-semibold backdrop-blur-sm self-start mt-2">${count} Post${count !== 1 ? 's' : ''}</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Render Cards in Grid (exact layout matching Bower School blog cards layout)
     function renderGrid() {
       const filtered = blogPosts.filter(post => {
-        const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+        const matchesCategory = currentCategory === 'all' || post.category.toLowerCase() === currentCategory.toLowerCase();
         const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                               post.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
                               post.category.toLowerCase().includes(searchQuery.toLowerCase());
@@ -643,33 +845,61 @@
       } else {
         noPostsWarning.classList.add('hidden');
         postsGrid.innerHTML = filtered.map(post => `
-          <div class="blog-card flex flex-col h-full cursor-pointer overflow-hidden p-5" onclick="openArticle(${post.id})">
+          <div class="blog-card flex flex-col h-full bg-white border border-zinc-200/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer" onclick="openArticle(${post.id})">
             
             <!-- Image Wrapper -->
-            <div class="h-60 rounded-2xl overflow-hidden mb-5 relative bg-zinc-900 border border-zinc-800">
+            <div class="h-56 overflow-hidden relative bg-zinc-100 border-b border-zinc-100">
               <div class="w-full h-full bg-cover bg-center transition-transform duration-500 hover:scale-105" 
                    style="background-image: url('${post.coverImage}');"></div>
             </div>
             
             <!-- Card Details -->
-            <div class="flex flex-col flex-grow">
+            <div class="p-6 flex flex-col flex-grow">
               
               <!-- Author Row (above title) -->
               <div class="flex items-center gap-2 mb-3">
-                <div class="w-6 h-6 rounded-full bg-zinc-800 text-white font-bold text-[10px] flex items-center justify-center">${post.author[0]}</div>
-                <span class="text-xs font-medium text-zinc-400">${post.author}</span>
+                <div class="w-6 h-6 rounded-full bg-[#1e2e68] text-white font-bold text-[10px] flex items-center justify-center">${post.author[0]}</div>
+                <span class="text-xs font-semibold text-zinc-500">${post.author}</span>
               </div>
               
               <!-- Title -->
-              <h3 class="text-white text-xl font-bold font-display mb-3 leading-snug group-hover:text-yellow transition-colors">${post.title}</h3>
+              <h3 class="text-[#1e2e68] text-lg font-bold font-inter mb-3 leading-snug group-hover:text-[#fb6900] transition-colors line-clamp-2">${post.title}</h3>
               
               <!-- Description -->
-              <p class="text-zinc-500 text-sm leading-relaxed line-clamp-3">${post.abstract}</p>
+              <p class="text-zinc-500 text-xs leading-relaxed line-clamp-3 mb-4">${post.abstract}</p>
+
+              <!-- Category & Date Row -->
+              <div class="flex items-center justify-between mt-auto pt-3 border-t border-zinc-100">
+                <span class="inline-block bg-[#1e2e68]/10 text-[#1e2e68] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">${post.category}</span>
+                <span class="text-[10px] text-zinc-400 font-medium">${post.date}</span>
+              </div>
             </div>
           </div>
         `).join('');
       }
     }
+
+    // selectCategory handler for swiper click
+    window.selectCategory = function(cat) {
+      currentCategory = cat;
+      
+      // Update filter pills styling
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        if (btn.dataset.category.toLowerCase() === cat.toLowerCase()) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      renderGrid();
+      
+      // Smooth scroll to latest articles section
+      const targetEl = document.getElementById('latest-posts');
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
 
     // Open Reader Modal
     window.openArticle = function(id) {
@@ -734,6 +964,15 @@
       renderGrid();
     });
 
+    // Hook search button
+    const searchBtn = document.getElementById('blog-search-btn');
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        searchQuery = searchInput.value;
+        renderGrid();
+      });
+    }
+
     // Handle Category Filter Clicks
     filterContainer.addEventListener('click', (e) => {
       const pill = e.target.closest('.filter-pill');
@@ -755,7 +994,32 @@
 
     // Initialize Layout (with simulated database fetch latency)
     setTimeout(() => {
+      calculateCategoryCounts();
       renderGrid();
+      
+      // Initialize Swiper after DOM render
+      new Swiper('.category-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        grabCursor: true,
+        centeredSlides: false,
+        loop: false,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          480: { slidesPerView: 2, spaceBetween: 15 },
+          768: { slidesPerView: 3, spaceBetween: 20 },
+          1024: { slidesPerView: 4, spaceBetween: 25 },
+          1280: { slidesPerView: 5, spaceBetween: 30 }
+        }
+      });
+
       window.hidePreloader();
     }, 1200);
   </script>

@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Hackability Journal — Insights on Innovation & Education</title>
-  <meta name="description" content="Read articles, guides, and stories on K-12 entrepreneurship, university innovation labs, and emerging technology." />
+  <title>Blog — Hackability</title>
+  <meta name="description" content="Discover insightful resources and expert advice from our seasoned team to elevate your knowledge." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/design-system.css?v=13" />
   <link rel="stylesheet" href="css/logoloop.css" />
 
@@ -39,7 +39,6 @@
             display: ['Sora', 'sans-serif'],
             body:    ['DM Sans', 'sans-serif'],
             data:    ['Space Grotesk', 'sans-serif'],
-            serif:   ['Lora', 'Georgia', 'serif'],
           },
         }
       }
@@ -56,20 +55,24 @@
       scrollbar-width: none;
     }
 
-    /* Premium Dark Theme Blog Page Styles */
-    .font-serif {
-      font-family: 'Lora', 'Georgia', serif;
+    /* Faint Grid Background Pattern */
+    .bg-grid-pattern {
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
     
-    .archive-card {
-      background: #0e0e11;
+    .blog-card {
+      background: #0c0c0e;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 1.5rem;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .archive-card:hover {
+    .blog-card:hover {
       transform: translateY(-6px);
       border-color: rgba(255, 255, 255, 0.15);
+      background: #121215;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
     
@@ -110,11 +113,6 @@
     .modal-open .modal-box {
       transform: translateY(0);
     }
-    
-    /* Floating Header Grid */
-    .hero-glow {
-      background: radial-gradient(circle at 50% 50%, rgba(245, 194, 0, 0.06) 0%, rgba(9, 9, 11, 0) 70%);
-    }
 
     body.loading {
       overflow: hidden;
@@ -126,7 +124,7 @@
     /* Typographic updates for dark mode prose */
     .prose-invert h3 {
       color: #ffffff !important;
-      font-family: 'Lora', 'Georgia', serif;
+      font-family: 'Sora', 'sans-serif';
     }
     .prose-invert p {
       color: #d4d4d8 !important;
@@ -141,7 +139,7 @@
   <!-- ===================== GLOSSY PRELOADER ===================== -->
   <div id="page-preloader" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
     <div class="relative flex flex-col items-center justify-center gap-2 transform translate-y-[-20px] opacity-0" style="animation: preloaderFadeInDown 0.6s ease-out forwards 0.1s;">
-      <h1 class="text-5xl md:text-7xl font-serif font-bold text-white text-center mb-2">The Journal</h1>
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-white text-center mb-2">Blog</h1>
       <svg width="300" height="20" viewBox="0 0 300 20" class="absolute -bottom-6 left-1/2 -translate-x-1/2 overflow-visible">
         <path
           d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
@@ -182,7 +180,7 @@
       <!-- Logo -->
       <div class="flex-1 flex justify-start">
         <a href="index.html" class="flex items-center" id="logo-link">
-          <img src="assets/logo-dark.png" alt="Hackability" style="height:36px; filter: brightness(0) invert(1);" />
+          <img src="assets/logo-white.png" alt="Hackability" style="height:36px;" />
         </a>
       </div>
 
@@ -280,61 +278,42 @@
     </div>
   </nav>
 
-  <main class="flex-grow">
-    <!-- ===================== HERO SECTION ===================== -->
-    <section class="bg-zinc-950 pt-36 pb-12 relative overflow-hidden z-20">
-      <!-- Glow effect -->
-      <div class="absolute inset-0 z-0 hero-glow"></div>
-      
-      <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-start">
-        <span class="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-3 font-display">Editorial</span>
-        <h1 class="font-serif font-medium text-white text-5xl md:text-6xl mb-6 tracking-tight">
-          The journal
-        </h1>
-        <p class="text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-          Long-form notes on product, engineering, and design. Search the archive or start with this week's cover story.
-        </p>
-      </div>
+  <!-- Main Content Container with Faint Grid Pattern Background -->
+  <main class="flex-grow bg-zinc-950 bg-grid-pattern relative">
+    
+    <!-- Top Header Title/Description -->
+    <section class="max-w-7xl mx-auto px-6 pt-36 pb-8 relative z-10">
+      <h1 class="font-display font-extrabold text-white text-5xl md:text-6xl mb-4 tracking-tight">Blog</h1>
+      <p class="text-zinc-500 text-base md:text-lg max-w-2xl leading-relaxed">
+        Discover insightful resources and expert advice from our seasoned team to elevate your knowledge.
+      </p>
     </section>
 
-    <!-- ===================== BENTO HERO CONTAINER ===================== -->
-    <section class="pb-16 bg-zinc-950 relative z-20">
-      <div class="max-w-7xl mx-auto px-6">
-        <div id="featured-post-container" class="bg-gradient-to-b from-white to-zinc-100 rounded-[2.5rem] p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200/50">
-          <!-- Loaded dynamically via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== ARCHIVE HEADER & SEARCH BAR ===================== -->
-    <section class="py-12 bg-zinc-950 sticky top-0 z-30 border-y border-zinc-900/80 backdrop-blur-lg bg-zinc-950/95">
-      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <h2 class="font-serif text-white text-3xl font-medium tracking-tight">From the archive</h2>
-        
-        <!-- Search bar -->
-        <div class="relative w-full md:max-w-md">
-          <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 text-lg"></i>
-          <input 
-            type="text" 
-            id="blog-search" 
-            class="w-full pl-12 pr-5 py-3.5 rounded-full border border-zinc-800 bg-zinc-900 text-white placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-zinc-950 focus:ring-2 focus:ring-white/5 transition-all text-sm"
-            placeholder="Search by title or topic..."
-          />
-        </div>
-      </div>
-      
+    <!-- Search bar & Category Filters -->
+    <section class="max-w-7xl mx-auto px-6 py-6 sticky top-0 z-30 bg-zinc-950/80 backdrop-blur-lg border-y border-zinc-900/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
       <!-- Category Pills -->
-      <div class="max-w-7xl mx-auto px-6 mt-6 flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
+      <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
         <button class="filter-pill active" data-category="all">All</button>
         <button class="filter-pill" data-category="Hatch (K-12)">Hatch (K-12)</button>
         <button class="filter-pill" data-category="Higher Ed">Higher Ed</button>
         <button class="filter-pill" data-category="Innovation">Innovation</button>
         <button class="filter-pill" data-category="Ecosystem">Ecosystem</button>
       </div>
+
+      <!-- Search bar -->
+      <div class="relative w-full md:max-w-md">
+        <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 text-lg"></i>
+        <input 
+          type="text" 
+          id="blog-search" 
+          class="w-full pl-12 pr-5 py-3 rounded-full border border-zinc-800 bg-zinc-900/50 text-white placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-zinc-950 focus:ring-1 focus:ring-white/20 transition-all text-sm"
+          placeholder="Search by title or topic..."
+        />
+      </div>
     </section>
 
-    <!-- ===================== POST GRID ===================== -->
-    <section class="py-16 bg-zinc-950 min-h-[400px]">
+    <!-- Post Cards Grid Section -->
+    <section class="py-12 relative z-10 min-h-[400px]">
       <div class="max-w-7xl mx-auto px-6">
         <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Loaded dynamically via JS -->
@@ -344,19 +323,19 @@
         <div id="no-posts-found" class="hidden flex flex-col items-center justify-center py-20 text-center">
           <i class="ph-bold ph-smiley-sad text-6xl text-zinc-600 mb-4"></i>
           <h3 class="text-xl font-bold text-white mb-2">No Articles Found</h3>
-          <p class="text-zinc-400 max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
+          <p class="text-zinc-500 max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
         </div>
       </div>
     </section>
 
     <!-- ===================== NEWSLETTER SECTION ===================== -->
-    <section class="py-20 bg-zinc-950 border-t border-zinc-900">
+    <section class="py-20 border-t border-zinc-900/60 relative z-10">
       <div class="max-w-4xl mx-auto px-6">
         <div class="bg-zinc-900 border border-zinc-800 text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
           <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-yellow/5 blur-3xl pointer-events-none"></div>
           <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-zinc-700/5 blur-3xl pointer-events-none"></div>
           
-          <h2 class="font-serif font-medium text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
+          <h2 class="font-display font-bold text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
           <p class="text-zinc-400 text-base max-w-lg mb-8 leading-relaxed">
             Get the latest insights on education frameworks, ecosystem-led innovations, and entrepreneurship toolkits sent straight to your inbox.
           </p>
@@ -400,7 +379,7 @@
       <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
         <div class="max-w-2xl mx-auto">
           <!-- Article Title -->
-          <h1 id="modal-article-title" class="font-serif font-medium text-white text-3xl md:text-5xl leading-tight mb-6">
+          <h1 id="modal-article-title" class="font-display font-bold text-white text-3xl md:text-5xl leading-tight mb-6">
             Article Title
           </h1>
 
@@ -498,7 +477,6 @@
         author: "Puneet",
         abstract: "Why introducing innovation and opportunity discovery in Grades 3-12 is essential to nurture resilience, creativity, and future readiness.",
         coverImage: "assets/images/blog_hatch.png",
-        isFeatured: true,
         content: `
           <p class="text-lg font-semibold text-zinc-200 mb-6">Education is no longer just about memorizing facts; it is about building the capability to navigate uncertainty and solve real-world problems. Introducing kids to design thinking, risk-assessment, and value creation early on transforms their perspective.</p>
           
@@ -521,7 +499,6 @@
         author: "Puneet",
         abstract: "How academic institutions can partner with industry leaders to design experiential learning pathways and bridge the talent-employability gap.",
         coverImage: "assets/images/blog_college.png",
-        isFeatured: false,
         content: `
           <p class="text-lg font-semibold text-zinc-200 mb-6">As industry requirements evolve at supersonic speed, universities must pivot from siloed academic instructions to ecosystem-driven experiential learning.</p>
           
@@ -544,7 +521,6 @@
         author: "Ananya Sharma",
         abstract: "Practical strategies and safeguards for incorporating Generative AI tools into student research, ideation, and rapid prototyping workflows.",
         coverImage: "assets/images/blog_ai.png",
-        isFeatured: false,
         content: `
           <p class="text-lg font-semibold text-zinc-200 mb-6">Generative AI tools are reshaping how knowledge is processed. Instead of restricting access, educators should provide structured frameworks to guide creative and ethical AI usage.</p>
           
@@ -567,7 +543,6 @@
         author: "Vikram Malhotra",
         abstract: "Highlighting the critical role of corporate mentors and industry experts in providing feedback, credibility, and real-world networks to student teams.",
         coverImage: "assets/images/blog_mentorship.png",
-        isFeatured: false,
         content: `
           <p class="text-lg font-semibold text-zinc-200 mb-6">A student startup or innovation project cannot grow in a vacuum. To turn ideas into viable solutions, young creators need guidance from those who have built before them.</p>
           
@@ -580,11 +555,45 @@
           <h3 class="text-2xl font-bold text-white mt-8 mb-4">Creating a Culture of Pay-It-Forward</h3>
           <p>A thriving innovation ecosystem relies on a cycle of mentorship. Successful alumni returning to campus to judge hackathons and mentor current students creates a legacy of shared progress that sustains the ecosystem for decades.</p>
         `
+      },
+      {
+        id: 5,
+        title: "Designing Student Incubators: A Campus Guide",
+        category: "Higher Ed",
+        date: "May 15, 2026",
+        readTime: "6 min read",
+        author: "Puneet",
+        abstract: "How to set up, resource, and run an active student incubator on campus that drives entrepreneurship and co-creation.",
+        coverImage: "assets/images/blog_incubator.png",
+        content: `
+          <p class="text-lg font-semibold text-zinc-200 mb-6">A student incubator is more than just desk space; it is a catalyst for venture creation, interdisciplinary team-building, and ecosystem integration.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Incubation Blueprint</h3>
+          <p>Setting up a campus incubator requires three pillars: workspace, mentor networks, and validation pathways. Students should have access to 3D printers, coding resources, and a safe sandbox environment where failure is treated as data.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Facilitating Co-Creation</h3>
+          <p>Incubators thrive when business, engineering, and design students work together. We outline frameworks for cross-campus mixers, micro-grants, and sprint challenges that break down departmental silos.</p>
+        `
+      },
+      {
+        id: 6,
+        title: "The Future of Work: Skillsets for 2026 and Beyond",
+        category: "Innovation",
+        date: "April 30, 2026",
+        readTime: "5 min read",
+        author: "Ananya Sharma",
+        abstract: "Why adaptability, low-code building, and prompt engineering are becoming core requirements for the future workforce.",
+        coverImage: "assets/images/blog_future_work.png",
+        content: `
+          <p class="text-lg font-semibold text-zinc-200 mb-6">The career pathways of the next decade belong to builders, synthesizers, and adaptive learners who navigate technology changes fluidly.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Shift from Specialization to Synthesis</h3>
+          <p>With AI handling rote coding and basic layout design, the value of developers and creators moves upstream. Success belongs to those who synthesize ideas, validate user demands, and coordinate low-code tools to ship MVPs in days rather than months.</p>
+        `
       }
     ];
 
     // DOM Elements
-    const featuredContainer = document.getElementById('featured-post-container');
     const postsGrid = document.getElementById('posts-grid');
     const noPostsWarning = document.getElementById('no-posts-found');
     const searchInput = document.getElementById('blog-search');
@@ -598,110 +607,7 @@
     let currentCategory = 'all';
     let searchQuery = '';
 
-    // Render Featured Post in Bento Grid format matching Aceternity UI Hero
-    function renderFeatured() {
-      const featured = blogPosts.find(p => p.isFeatured);
-      if (!featured) return;
-
-      featuredContainer.innerHTML = `
-        <!-- Left Column: Key Pillars + Cover Story -->
-        <div class="col-span-12 lg:col-span-4 flex flex-col justify-between h-full text-zinc-800">
-          
-          <!-- Pillars List -->
-          <div class="flex flex-col gap-8">
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
-                <i class="ph-fill ph-sparkle text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-sans font-bold text-zinc-900 text-base">Experiential Learning</h3>
-                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Students build real-world products to solve actual local community problems.</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
-                <i class="ph-fill ph-baby text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-sans font-bold text-zinc-900 text-base">Young Minds (K-12)</h3>
-                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Nurturing entrepreneurial thinking and grit right from the school level.</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Cover Story Dark Card -->
-          <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl shadow-xl text-white mt-8 flex flex-col justify-between">
-            <div>
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-yellow/10 border border-yellow/20 text-yellow uppercase tracking-widest">Cover story</span>
-              <h3 onclick="openArticle(${featured.id})" class="font-serif font-medium text-white text-2xl mt-4 leading-snug hover:text-yellow transition-colors cursor-pointer">${featured.title}</h3>
-              <p class="text-zinc-400 text-xs mt-2 leading-relaxed line-clamp-2">${featured.abstract}</p>
-            </div>
-            
-            <div class="flex items-center justify-between mt-6 pt-4 border-t border-zinc-900">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-full bg-yellow text-navy font-bold text-xs flex items-center justify-center">${featured.author[0]}</div>
-                <div>
-                  <div class="text-xs font-bold text-white leading-none">${featured.author}</div>
-                  <div class="text-[10px] text-zinc-500 mt-1">${featured.date}</div>
-                </div>
-              </div>
-              <button onclick="openArticle(${featured.id})" class="text-yellow hover:text-white font-bold text-xs flex items-center gap-1 transition-colors">
-                Read Story <i class="ph-bold ph-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-          
-        </div>
-        
-        <!-- Center Column: Portrait Split Image -->
-        <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
-          <div class="relative w-full h-[320px] lg:h-full min-h-[350px] rounded-[2rem] overflow-hidden border border-zinc-300/60 bg-zinc-200 shadow-md">
-            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/blog_featured_portrait.png');"></div>
-            <!-- Dynamic overlay border -->
-            <div class="absolute inset-4 border border-white/20 rounded-[1.5rem] pointer-events-none"></div>
-          </div>
-        </div>
-        
-        <!-- Right Column: Mentorship + Ecosystem Pillars -->
-        <div class="col-span-12 lg:col-span-4 flex flex-col justify-start lg:justify-between h-full text-zinc-800">
-          
-          <div class="flex flex-col gap-8 lg:mt-4">
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
-                <i class="ph-fill ph-users-three text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-sans font-bold text-zinc-900 text-base">Industry Mentorship</h3>
-                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Connecting student teams with corporate leaders and design specialists.</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
-                <i class="ph-fill ph-globe text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-sans font-bold text-zinc-900 text-base">Ecosystem Scaling</h3>
-                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Fostering active collaboration between colleges, corporates, and startups.</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Quote Card inside Bento Grid -->
-          <div class="border border-zinc-200 bg-white/40 p-6 rounded-2xl mt-8">
-            <i class="ph-fill ph-quotes text-zinc-300 text-3xl leading-none"></i>
-            <p class="text-zinc-600 text-xs italic mt-2 leading-relaxed">
-              "An innovation ecosystem isn't built on infrastructure; it is built on mentorship, grit, and opportunity."
-            </p>
-            <div class="text-[10px] font-bold text-zinc-400 mt-3 uppercase tracking-wider">— Hackability Team</div>
-          </div>
-          
-        </div>
-      `;
-    }
-
-    // Render Cards in Grid
+    // Render Cards in Grid (exact layout matching Aceternity UI blog grid)
     function renderGrid() {
       const filtered = blogPosts.filter(post => {
         const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
@@ -717,28 +623,28 @@
       } else {
         noPostsWarning.classList.add('hidden');
         postsGrid.innerHTML = filtered.map(post => `
-          <div class="archive-card flex flex-col h-full cursor-pointer overflow-hidden p-5" onclick="openArticle(${post.id})">
+          <div class="blog-card flex flex-col h-full cursor-pointer overflow-hidden p-5" onclick="openArticle(${post.id})">
             
             <!-- Image Wrapper -->
-            <div class="h-56 rounded-2xl overflow-hidden mb-5 relative bg-zinc-900 border border-zinc-800">
+            <div class="h-60 rounded-2xl overflow-hidden mb-5 relative bg-zinc-900 border border-zinc-800">
               <div class="w-full h-full bg-cover bg-center transition-transform duration-500 hover:scale-105" 
                    style="background-image: url('${post.coverImage}');"></div>
             </div>
             
             <!-- Card Details -->
             <div class="flex flex-col flex-grow">
-              <span class="text-xs font-bold text-yellow uppercase tracking-widest mb-3">${post.category}</span>
-              <h3 class="font-serif text-white text-xl lg:text-2xl font-semibold mb-3 leading-snug hover:text-yellow transition-colors flex-grow">${post.title}</h3>
-              <p class="text-zinc-400 text-sm leading-relaxed mb-6 line-clamp-3">${post.abstract}</p>
               
-              <!-- Footer Meta -->
-              <div class="flex items-center gap-3 border-t border-zinc-900 pt-4 mt-auto">
-                <div class="w-8 h-8 rounded-full bg-zinc-800 text-white flex items-center justify-center font-bold text-xs">${post.author[0]}</div>
-                <div>
-                  <div class="font-bold text-zinc-300 text-xs">${post.author}</div>
-                  <div class="text-[10px] text-zinc-500 font-medium">${post.date} • ${post.readTime}</div>
-                </div>
+              <!-- Author Row (above title) -->
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-6 h-6 rounded-full bg-zinc-800 text-white font-bold text-[10px] flex items-center justify-center">${post.author[0]}</div>
+                <span class="text-xs font-medium text-zinc-400">${post.author}</span>
               </div>
+              
+              <!-- Title -->
+              <h3 class="text-white text-xl font-bold font-display mb-3 leading-snug group-hover:text-yellow transition-colors">${post.title}</h3>
+              
+              <!-- Description -->
+              <p class="text-zinc-500 text-sm leading-relaxed line-clamp-3">${post.abstract}</p>
             </div>
           </div>
         `).join('');
@@ -828,7 +734,6 @@
     });
 
     // Initialize Layout
-    renderFeatured();
     renderGrid();
   </script>
 

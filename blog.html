@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: #0D1B8E;">
+<html lang="en" style="background-color: #09090b;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Hackability Blog — Insights on Innovation & Education</title>
+  <title>The Hackability Journal — Insights on Innovation & Education</title>
   <meta name="description" content="Read articles, guides, and stories on K-12 entrepreneurship, university innovation labs, and emerging technology." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/design-system.css?v=13" />
   <link rel="stylesheet" href="css/logoloop.css" />
 
@@ -39,6 +39,7 @@
             display: ['Sora', 'sans-serif'],
             body:    ['DM Sans', 'sans-serif'],
             data:    ['Space Grotesk', 'sans-serif'],
+            serif:   ['Lora', 'Georgia', 'serif'],
           },
         }
       }
@@ -46,30 +47,32 @@
   </script>
 
   <style>
-    /* Premium Blog Page Styles */
-    .blog-card {
-      background: white;
-      border: 1px solid rgba(13, 27, 142, 0.08);
+    /* Custom Scrollbar hide */
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Premium Dark Theme Blog Page Styles */
+    .font-serif {
+      font-family: 'Lora', 'Georgia', serif;
+    }
+    
+    .archive-card {
+      background: #0e0e11;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 1.5rem;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .blog-card:hover {
+    .archive-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(13, 27, 142, 0.08);
-      border-color: rgba(13, 27, 142, 0.2);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
-    .blog-card-img-wrap {
-      overflow: hidden;
-      border-top-left-radius: 1.5rem;
-      border-top-right-radius: 1.5rem;
-      position: relative;
-    }
-    .blog-card-img {
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .blog-card:hover .blog-card-img {
-      transform: scale(1.05);
-    }
+    
     .filter-pill {
       font-weight: 600;
       font-size: 0.875rem;
@@ -79,21 +82,23 @@
       cursor: pointer;
     }
     .filter-pill.active {
-      background: #0D1B8E;
-      color: white;
-      box-shadow: 0 4px 12px rgba(13, 27, 142, 0.2);
+      background: #ffffff;
+      color: #09090b;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
     }
     .filter-pill:not(.active) {
-      background: #F4F4F6;
-      color: #374151;
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: #a1a1aa;
     }
     .filter-pill:not(.active):hover {
-      background: #E2E8F0;
+      background: #27272a;
+      color: #ffffff;
     }
     
     /* Reader Modal Animation */
     .modal-overlay {
-      background-color: rgba(10, 21, 112, 0.5);
+      background-color: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       transition: opacity 0.4s ease-out;
@@ -108,7 +113,7 @@
     
     /* Floating Header Grid */
     .hero-glow {
-      background: radial-gradient(circle at 50% 50%, rgba(245, 194, 0, 0.15) 0%, rgba(13, 27, 142, 0) 70%);
+      background: radial-gradient(circle at 50% 50%, rgba(245, 194, 0, 0.06) 0%, rgba(9, 9, 11, 0) 70%);
     }
 
     body.loading {
@@ -117,16 +122,26 @@
     body.modal-active {
       overflow: hidden;
     }
+
+    /* Typographic updates for dark mode prose */
+    .prose-invert h3 {
+      color: #ffffff !important;
+      font-family: 'Lora', 'Georgia', serif;
+    }
+    .prose-invert p {
+      color: #d4d4d8 !important;
+      line-height: 1.8;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
 </head>
-<body class="font-body bg-white text-grey-dark flex flex-col min-h-screen">
+<body class="font-body bg-zinc-950 text-white flex flex-col min-h-screen">
 
   <!-- ===================== GLOSSY PRELOADER ===================== -->
-  <div id="page-preloader" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/40 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
+  <div id="page-preloader" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
     <div class="relative flex flex-col items-center justify-center gap-2 transform translate-y-[-20px] opacity-0" style="animation: preloaderFadeInDown 0.6s ease-out forwards 0.1s;">
-      <h1 class="text-5xl md:text-7xl font-display font-bold text-white text-center mb-2">Insights</h1>
+      <h1 class="text-5xl md:text-7xl font-serif font-bold text-white text-center mb-2">The Journal</h1>
       <svg width="300" height="20" viewBox="0 0 300 20" class="absolute -bottom-6 left-1/2 -translate-x-1/2 overflow-visible">
         <path
           d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
@@ -173,86 +188,15 @@
 
       <!-- Desktop Nav -->
       <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2 z-[60]">
-        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 rounded-full text-white/90">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 rounded-full text-white/90" style="background-color: rgba(9, 9, 11, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08);">
           <li class="flex items-center">
             <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
           </li>
-          
-          <!-- Our Ecosystem Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <div class="grid grid-cols-2 gap-4">
-                <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
-                  <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
-                    <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
-                  </div>
-                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                </a>
-                <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg animate-card-glow-slow">
-                  <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
-                    <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
-                  </div>
-                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                </a>
-              </div>
-            </div>
+          <li class="flex items-center">
+            <a href="index.html#products" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Products</a>
           </li>
-
-          <!-- Products Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Products <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
-                <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">inCamp</span>
-                  <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-            </div>
-          </li>
-
-          <!-- Our Network Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Network <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
-                <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Colleges</span>
-                  <span class="text-xs text-grey-dark block">Partner institutions.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-              <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
-                <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Organizations</span>
-                  <span class="text-xs text-grey-dark block">Corporate partners.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-              <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
-                <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Mentors</span>
-                  <span class="text-xs text-grey-dark block">Our expert mentors.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-            </div>
+          <li class="flex items-center">
+            <a href="partners.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">Network</a>
           </li>
           <li class="flex items-center">
             <a href="blog.html" class="text-base font-semibold text-yellow hover:text-white transition-colors cursor-pointer">Blog</a>
@@ -338,66 +282,59 @@
 
   <main class="flex-grow">
     <!-- ===================== HERO SECTION ===================== -->
-    <section class="bg-black py-32 md:py-48 relative overflow-hidden z-20">
+    <section class="bg-zinc-950 pt-36 pb-12 relative overflow-hidden z-20">
       <!-- Glow effect -->
       <div class="absolute inset-0 z-0 hero-glow"></div>
-      <!-- Background pattern -->
-      <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #0A1570 0, #0A1570 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
-
-      <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-6">
-          <i class="ph-bold ph-article text-yellow" style="font-size:18px;"></i>
-          <span class="text-white text-sm font-bold tracking-wide uppercase">Articles & Insights</span>
-        </div>
-        <h1 class="font-display font-extrabold text-white text-5xl md:text-7xl leading-tight mb-6 tracking-tight">
-          The Hackability <span class="text-yellow">Blog</span>
+      
+      <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-start">
+        <span class="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-3 font-display">Editorial</span>
+        <h1 class="font-serif font-medium text-white text-5xl md:text-6xl mb-6 tracking-tight">
+          The journal
         </h1>
-        <p class="text-zinc-300 text-lg md:text-xl max-w-2xl leading-relaxed">
-          Stories, frameworks, and guides at the intersection of K-12 education, higher academic institutions, and ecosystem-wide innovation.
+        <p class="text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+          Long-form notes on product, engineering, and design. Search the archive or start with this week's cover story.
         </p>
       </div>
     </section>
 
-    <!-- ===================== FEATURED POST ===================== -->
-    <section class="py-16 bg-grey-light relative z-20">
+    <!-- ===================== BENTO HERO CONTAINER ===================== -->
+    <section class="pb-16 bg-zinc-950 relative z-20">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="font-display font-bold text-navy text-2xl md:text-3xl mb-8 flex items-center gap-3">
-          <i class="ph-bold ph-star text-yellow-dark"></i> Featured Article
-        </h2>
-        
-        <div id="featured-post-container" class="bg-white rounded-3xl border border-hk-border p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-sm">
+        <div id="featured-post-container" class="bg-gradient-to-b from-white to-zinc-100 rounded-[2.5rem] p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200/50">
           <!-- Loaded dynamically via JS -->
         </div>
       </div>
     </section>
 
-    <!-- ===================== SEARCH & FILTER BAR ===================== -->
-    <section class="py-12 bg-white sticky top-0 z-30 border-y border-hk-border/80 backdrop-blur-lg bg-white/95">
+    <!-- ===================== ARCHIVE HEADER & SEARCH BAR ===================== -->
+    <section class="py-12 bg-zinc-950 sticky top-0 z-30 border-y border-zinc-900/80 backdrop-blur-lg bg-zinc-950/95">
       <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <h2 class="font-serif text-white text-3xl font-medium tracking-tight">From the archive</h2>
+        
         <!-- Search bar -->
         <div class="relative w-full md:max-w-md">
-          <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-grey-mid text-lg"></i>
+          <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 text-lg"></i>
           <input 
             type="text" 
             id="blog-search" 
-            class="w-full pl-12 pr-4 py-3 rounded-full border border-hk-border bg-grey-light focus:outline-none focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/5 transition-all text-sm"
-            placeholder="Search articles, topics, authors..."
+            class="w-full pl-12 pr-5 py-3.5 rounded-full border border-zinc-800 bg-zinc-900 text-white placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-zinc-950 focus:ring-2 focus:ring-white/5 transition-all text-sm"
+            placeholder="Search by title or topic..."
           />
         </div>
-        
-        <!-- Category Pills -->
-        <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-          <button class="filter-pill active" data-category="all">All</button>
-          <button class="filter-pill" data-category="Hatch (K-12)">Hatch (K-12)</button>
-          <button class="filter-pill" data-category="Higher Ed">Higher Ed</button>
-          <button class="filter-pill" data-category="Innovation">Innovation</button>
-          <button class="filter-pill" data-category="Ecosystem">Ecosystem</button>
-        </div>
+      </div>
+      
+      <!-- Category Pills -->
+      <div class="max-w-7xl mx-auto px-6 mt-6 flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
+        <button class="filter-pill active" data-category="all">All</button>
+        <button class="filter-pill" data-category="Hatch (K-12)">Hatch (K-12)</button>
+        <button class="filter-pill" data-category="Higher Ed">Higher Ed</button>
+        <button class="filter-pill" data-category="Innovation">Innovation</button>
+        <button class="filter-pill" data-category="Ecosystem">Ecosystem</button>
       </div>
     </section>
 
     <!-- ===================== POST GRID ===================== -->
-    <section class="py-16 bg-grey-light min-h-[400px]">
+    <section class="py-16 bg-zinc-950 min-h-[400px]">
       <div class="max-w-7xl mx-auto px-6">
         <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Loaded dynamically via JS -->
@@ -405,28 +342,28 @@
         
         <!-- No posts warning -->
         <div id="no-posts-found" class="hidden flex flex-col items-center justify-center py-20 text-center">
-          <i class="ph-bold ph-smiley-sad text-6xl text-grey-mid mb-4"></i>
-          <h3 class="text-xl font-bold text-navy mb-2">No Articles Found</h3>
-          <p class="text-grey-dark max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
+          <i class="ph-bold ph-smiley-sad text-6xl text-zinc-600 mb-4"></i>
+          <h3 class="text-xl font-bold text-white mb-2">No Articles Found</h3>
+          <p class="text-zinc-400 max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
         </div>
       </div>
     </section>
 
     <!-- ===================== NEWSLETTER SECTION ===================== -->
-    <section class="py-20 bg-white border-t border-hk-border">
+    <section class="py-20 bg-zinc-950 border-t border-zinc-900">
       <div class="max-w-4xl mx-auto px-6">
-        <div class="bg-gradient-to-br from-[#0D1B8E] to-[#0A1570] text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
-          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-yellow/10 blur-3xl pointer-events-none"></div>
-          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+        <div class="bg-zinc-900 border border-zinc-800 text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
+          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-yellow/5 blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-zinc-700/5 blur-3xl pointer-events-none"></div>
           
-          <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
-          <p class="text-white/80 text-base max-w-lg mb-8">
+          <h2 class="font-serif font-medium text-3xl md:text-4xl mb-4 tracking-tight">Stay ahead of the curve</h2>
+          <p class="text-zinc-400 text-base max-w-lg mb-8 leading-relaxed">
             Get the latest insights on education frameworks, ecosystem-led innovations, and entrepreneurship toolkits sent straight to your inbox.
           </p>
           <form id="newsletter-form" class="w-full max-w-md flex flex-col sm:flex-row gap-3">
             <input 
               type="email" 
-              class="w-full px-5 py-3.5 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:bg-white focus:text-navy focus:placeholder-grey-mid transition-all text-sm" 
+              class="w-full px-5 py-3.5 rounded-full bg-zinc-950 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-yellow focus:ring-1 focus:ring-yellow/20 transition-all text-sm" 
               placeholder="Enter your email address" 
               required
             />
@@ -446,15 +383,15 @@
   <div id="reader-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
     <div id="modal-overlay" class="absolute inset-0 modal-overlay opacity-0"></div>
     
-    <div class="modal-box bg-white w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto">
+    <div class="modal-box bg-zinc-950 border border-zinc-800/80 w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto text-white">
       
       <!-- Read progress indicator -->
       <div id="read-progress" class="h-1 bg-yellow w-0 absolute top-0 left-0 transition-all duration-100 z-50"></div>
 
       <!-- Modal Header controls -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-hk-border bg-grey-light shrink-0">
-        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-navy-tint text-navy uppercase tracking-wider">Category</span>
-        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-grey-mid/20 flex items-center justify-center text-grey-dark hover:text-black transition-all">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-900 bg-zinc-900/60 backdrop-blur-md shrink-0">
+        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-yellow/10 border border-yellow/25 text-yellow uppercase tracking-wider">Category</span>
+        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
           <i class="ph-bold ph-x text-xl"></i>
         </button>
       </div>
@@ -463,18 +400,18 @@
       <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
         <div class="max-w-2xl mx-auto">
           <!-- Article Title -->
-          <h1 id="modal-article-title" class="font-display font-extrabold text-navy text-3xl md:text-5xl leading-tight mb-6">
+          <h1 id="modal-article-title" class="font-serif font-medium text-white text-3xl md:text-5xl leading-tight mb-6">
             Article Title
           </h1>
 
           <!-- Article Meta -->
-          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-hk-border">
+          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-900">
             <div class="w-12 h-12 rounded-full bg-yellow text-navy flex items-center justify-center font-bold font-display text-lg shadow-sm" id="modal-author-avatar">
               P
             </div>
             <div>
-              <div class="font-bold text-navy" id="modal-article-author">Author Name</div>
-              <div class="text-xs text-grey-mid font-medium flex items-center gap-2">
+              <div class="font-bold text-white" id="modal-article-author">Author Name</div>
+              <div class="text-xs text-zinc-500 font-medium flex items-center gap-2">
                 <span id="modal-article-date">Date</span>
                 <span>•</span>
                 <span id="modal-article-readtime">Read Time</span>
@@ -483,12 +420,12 @@
           </div>
 
           <!-- Featured Image -->
-          <div class="rounded-3xl overflow-hidden mb-8 shadow-sm">
+          <div class="rounded-3xl overflow-hidden mb-8 shadow-sm border border-zinc-900">
             <div id="modal-article-image" class="w-full h-64 md:h-96 bg-cover bg-center"></div>
           </div>
 
           <!-- HTML Content Body -->
-          <div id="modal-article-content" class="prose max-w-none text-grey-dark text-base leading-relaxed space-y-6">
+          <div id="modal-article-content" class="prose prose-invert max-w-none text-zinc-300 text-base leading-relaxed space-y-6">
             <!-- Article Body Content loaded via JS -->
           </div>
         </div>
@@ -497,57 +434,52 @@
   </div>
 
   <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-navy border-t border-white/10 pt-16 pb-8 text-white relative z-20">
+  <footer class="bg-zinc-950 border-t border-zinc-900/60 pt-16 pb-8 text-zinc-400 relative z-20">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-        <div class="col-span-1 md:col-span-2">
-          <div class="flex items-center gap-2 mb-6">
-            <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" />
-          </div>
-          <p class="text-sm mb-6 text-white/50 leading-relaxed max-w-sm">
-            Building innovation-driven talent at scale through strategic partnerships and ecosystem-driven initiatives.
+        <!-- Brand column -->
+        <div class="md:col-span-2">
+          <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" class="mb-6 opacity-90" />
+          <p class="text-sm text-zinc-500 max-w-sm mb-6 leading-relaxed">
+            Empowering the next generation of innovators through custom university incubation design, mentorship pathways, and hands-on school entrepreneurship programs.
           </p>
-          <div class="flex items-center gap-4">
-            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
-              <i class="ph-bold ph-linkedin-logo" style="font-size:18px;"></i>
-            </a>
-            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-white hover:bg-white hover:text-navy transition-colors">
-              <i class="ph-bold ph-twitter-logo" style="font-size:18px;"></i>
-            </a>
-          </div>
         </div>
 
+        <!-- Links column -->
         <div>
-          <h4 class="font-display font-semibold text-white mb-6">Navigation</h4>
-          <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="about.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
-            <li><a href="index.html#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
-            <li><a href="hatch.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
-            <li><a href="index.html#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
-            <li><a href="index.html#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
+          <h4 class="font-display font-semibold text-white mb-6">Program Ecosystem</h4>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0 text-sm">
+            <li><a href="hackability.html" class="hover:text-white transition-colors">Hackability (Colleges)</a></li>
+            <li><a href="hatch.html" class="hover:text-yellow transition-colors">Hatch (Schools)</a></li>
+            <li><a href="index.html#products" class="hover:text-white transition-colors">inCamp</a></li>
           </ul>
         </div>
 
+        <!-- Contact column -->
         <div>
           <h4 class="font-display font-semibold text-white mb-6">Contact</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            <li><a href="mailto:thehackability@gmail.com" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+            <li><a href="mailto:thehackability@gmail.com" class="text-sm text-zinc-400 hover:text-white no-underline transition-colors flex items-center gap-2">
               <i class="ph-bold ph-envelope-simple"></i> thehackability@gmail.com
             </a></li>
-            <li><a href="tel:+917993662605" class="text-sm text-white/60 hover:text-white no-underline transition-colors flex items-center gap-2">
+            <li><a href="tel:+917993662605" class="text-sm text-zinc-400 hover:text-white no-underline transition-colors flex items-center gap-2">
               <i class="ph-bold ph-phone"></i> +91 79936 62605
             </a></li>
           </ul>
         </div>
       </div>
 
-      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-white/40 m-0">
-          © Hackability. All Rights Reserved.
+      <div class="border-t border-zinc-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-zinc-600 m-0">
+          © 2026 Hackability. All Rights Reserved.
         </p>
         <div class="flex items-center gap-6">
-          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Privacy Policy</a>
-          <a href="#" class="text-xs text-white/40 hover:text-white no-underline transition-colors">Terms of Service</a>
+          <a href="/admin/" class="text-xs text-yellow/80 hover:text-yellow no-underline transition-colors flex items-center gap-1 font-medium">
+            <i class="ph-bold ph-lock-key"></i> Super Admin
+          </a>
+          <div class="w-px h-3 bg-zinc-800"></div>
+          <a href="#" class="text-xs text-zinc-600 hover:text-white no-underline transition-colors">Privacy Policy</a>
+          <a href="#" class="text-xs text-zinc-600 hover:text-white no-underline transition-colors">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -565,18 +497,18 @@
         readTime: "5 min read",
         author: "Puneet",
         abstract: "Why introducing innovation and opportunity discovery in Grades 3-12 is essential to nurture resilience, creativity, and future readiness.",
-        coverImage: "linear-gradient(135deg, #FFE3E3 0%, #FFB6C1 100%)",
+        coverImage: "assets/images/blog_hatch.png",
         isFeatured: true,
         content: `
-          <p class="text-lg font-semibold text-navy mb-6">Education is no longer just about memorizing facts; it is about building the capability to navigate uncertainty and solve real-world problems. Introducing kids to design thinking, risk-assessment, and value creation early on transforms their perspective.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">Education is no longer just about memorizing facts; it is about building the capability to navigate uncertainty and solve real-world problems. Introducing kids to design thinking, risk-assessment, and value creation early on transforms their perspective.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Why Early Stage Opportunity Identification Matters</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Why Early Stage Opportunity Identification Matters</h3>
           <p>Children possess an innate curiosity that is often filtered out by traditional educational paths. In the Hatch program, we leverage this natural curiosity. By asking questions like "What problems do people face around you every day?" we teach students to recognize opportunity where others see inconvenience.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Building Resilience Through Experiential Learning</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Building Resilience Through Experiential Learning</h3>
           <p>Entrepreneurship is a practice of resilience. When a student builds a prototype and it fails, it is not a grade penalty; it is feedback. Through miniature innovation challenges, students learn to test, iterate, and adapt. This mindset shifts failure from a dead-end to a learning step.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Practical Integration in Schools</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Practical Integration in Schools</h3>
           <p>Integrating entrepreneurship education doesn't mean adding a heavy curriculum burden. It fits directly into science, technology, mathematics, and social studies projects, enabling students to apply theoretical knowledge to solve community problems.</p>
         `
       },
@@ -588,18 +520,18 @@
         readTime: "7 min read",
         author: "Puneet",
         abstract: "How academic institutions can partner with industry leaders to design experiential learning pathways and bridge the talent-employability gap.",
-        coverImage: "linear-gradient(135deg, #E8F0FF 0%, #C8D6FF 100%)",
+        coverImage: "assets/images/blog_college.png",
         isFeatured: false,
         content: `
-          <p class="text-lg font-semibold text-navy mb-6">As industry requirements evolve at supersonic speed, universities must pivot from siloed academic instructions to ecosystem-driven experiential learning.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">As industry requirements evolve at supersonic speed, universities must pivot from siloed academic instructions to ecosystem-driven experiential learning.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Talent-Employability Gap</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Talent-Employability Gap</h3>
           <p>Traditional learning systems often fall short of preparing graduates for the ambiguity of modern startup and corporate environments. While students understand theoretical computer science or business strategies, they lack the opportunity to apply them in cross-functional, real-world teams.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Campus Labs as Co-Creation Spaces</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Campus Labs as Co-Creation Spaces</h3>
           <p>By building dedicated Campus Labs and collaborative innovation frameworks, academic institutions can bring mentors, corporations, and technology tools directly to the students. This enables them to work on industry-defined challenges, validate products, and build startup ventures before graduation.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Future is Collaborative</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Future is Collaborative</h3>
           <p>A thriving university is one that opens its borders to the ecosystem. Through structured talent development programs like Hackability, colleges not only increase student placement and startup rates, but they also become engines of regional economic growth.</p>
         `
       },
@@ -611,18 +543,18 @@
         readTime: "6 min read",
         author: "Ananya Sharma",
         abstract: "Practical strategies and safeguards for incorporating Generative AI tools into student research, ideation, and rapid prototyping workflows.",
-        coverImage: "linear-gradient(135deg, #F5F0FF 0%, #D8C7FF 100%)",
+        coverImage: "assets/images/blog_ai.png",
         isFeatured: false,
         content: `
-          <p class="text-lg font-semibold text-navy mb-6">Generative AI tools are reshaping how knowledge is processed. Instead of restricting access, educators should provide structured frameworks to guide creative and ethical AI usage.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">Generative AI tools are reshaping how knowledge is processed. Instead of restricting access, educators should provide structured frameworks to guide creative and ethical AI usage.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">AI as an Ideation Partner</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">AI as an Ideation Partner</h3>
           <p>AI is an incredibly powerful brainstorming partner. Students can query large language models to explore alternative angles for their project ideas, draft user interview questions, or understand highly complex technological concepts in simple terms.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">The Critical Thinking Safeguard</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Critical Thinking Safeguard</h3>
           <p>A critical mindset is essential. We teach students that AI is often prone to hallucinations and generalizations. Every AI-generated output must be verified, researched, and customized. The core values—originality, user empathy, and real-world validation—must come from the human designer.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Enhancing Code and CAD Prototyping</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Enhancing Code and CAD Prototyping</h3>
           <p>For innovation labs, AI accelerates the technical barrier. Students can generate basic boilerplate code for microcontrollers, write web app frontends, or get layout recommendations for 3D printing. This shifts the focus from tedious syntax coding to user experience and architecture design.</p>
         `
       },
@@ -634,18 +566,18 @@
         readTime: "4 min read",
         author: "Vikram Malhotra",
         abstract: "Highlighting the critical role of corporate mentors and industry experts in providing feedback, credibility, and real-world networks to student teams.",
-        coverImage: "linear-gradient(135deg, #E6FFFA 0%, #B2F5EA 100%)",
+        coverImage: "assets/images/blog_mentorship.png",
         isFeatured: false,
         content: `
-          <p class="text-lg font-semibold text-navy mb-6">A student startup or innovation project cannot grow in a vacuum. To turn ideas into viable solutions, young creators need guidance from those who have built before them.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">A student startup or innovation project cannot grow in a vacuum. To turn ideas into viable solutions, young creators need guidance from those who have built before them.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Breaking the Academic Bubble</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Breaking the Academic Bubble</h3>
           <p>Educators provide essential academic foundations, but corporate mentors and startup founders offer practical truth. A mentor can look at a student product and say, "The market does not buy this features set," or "Your pricing model ignores key operations cost." This raw, constructive feedback is invaluable.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Network Access and Social Capital</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Network Access and Social Capital</h3>
           <p>Industry mentors bring networks. By introducing student teams to suppliers, prospective pilot customers, or legal specialists, mentors provide the social capital necessary to launch ideas. This accelerates validation and turns conceptual student projects into actual business entities.</p>
           
-          <h3 class="text-2xl font-bold text-navy mt-8 mb-4">Creating a Culture of Pay-It-Forward</h3>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Creating a Culture of Pay-It-Forward</h3>
           <p>A thriving innovation ecosystem relies on a cycle of mentorship. Successful alumni returning to campus to judge hackathons and mentor current students creates a legacy of shared progress that sustains the ecosystem for decades.</p>
         `
       }
@@ -666,32 +598,105 @@
     let currentCategory = 'all';
     let searchQuery = '';
 
-    // Render Featured Post
+    // Render Featured Post in Bento Grid format matching Aceternity UI Hero
     function renderFeatured() {
       const featured = blogPosts.find(p => p.isFeatured);
       if (!featured) return;
 
       featuredContainer.innerHTML = `
-        <div class="lg:col-span-6 rounded-2xl h-64 lg:h-96 shadow-sm overflow-hidden flex items-center justify-center" style="background: ${featured.coverImage};">
-          <i class="ph-bold ph-newspaper text-navy/20 text-8xl"></i>
-        </div>
-        <div class="lg:col-span-6 flex flex-col justify-center items-start">
-          <span class="px-3 py-1 rounded-full text-xs font-bold bg-navy-tint text-navy uppercase tracking-wider mb-4">${featured.category}</span>
-          <h3 class="font-display font-extrabold text-navy text-2xl md:text-4xl mb-4 leading-tight">${featured.title}</h3>
-          <p class="text-grey-dark text-base mb-6 leading-relaxed">${featured.abstract}</p>
+        <!-- Left Column: Key Pillars + Cover Story -->
+        <div class="col-span-12 lg:col-span-4 flex flex-col justify-between h-full text-zinc-800">
           
-          <div class="flex items-center justify-between w-full border-t border-hk-border pt-6 mt-2">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center font-bold font-display text-sm">${featured.author[0]}</div>
+          <!-- Pillars List -->
+          <div class="flex flex-col gap-8">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
+                <i class="ph-fill ph-sparkle text-lg"></i>
+              </div>
               <div>
-                <div class="font-bold text-navy text-sm">${featured.author}</div>
-                <div class="text-xs text-grey-mid font-medium">${featured.date} • ${featured.readTime}</div>
+                <h3 class="font-sans font-bold text-zinc-900 text-base">Experiential Learning</h3>
+                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Students build real-world products to solve actual local community problems.</p>
               </div>
             </div>
-            <button onclick="openArticle(${featured.id})" class="px-6 py-2.5 bg-navy text-white font-bold text-sm rounded-full hover:bg-yellow hover:text-navy transition-all shadow-sm">
-              Read Article
-            </button>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
+                <i class="ph-fill ph-baby text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-sans font-bold text-zinc-900 text-base">Young Minds (K-12)</h3>
+                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Nurturing entrepreneurial thinking and grit right from the school level.</p>
+              </div>
+            </div>
           </div>
+          
+          <!-- Cover Story Dark Card -->
+          <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl shadow-xl text-white mt-8 flex flex-col justify-between">
+            <div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-yellow/10 border border-yellow/20 text-yellow uppercase tracking-widest">Cover story</span>
+              <h3 onclick="openArticle(${featured.id})" class="font-serif font-medium text-white text-2xl mt-4 leading-snug hover:text-yellow transition-colors cursor-pointer">${featured.title}</h3>
+              <p class="text-zinc-400 text-xs mt-2 leading-relaxed line-clamp-2">${featured.abstract}</p>
+            </div>
+            
+            <div class="flex items-center justify-between mt-6 pt-4 border-t border-zinc-900">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full bg-yellow text-navy font-bold text-xs flex items-center justify-center">${featured.author[0]}</div>
+                <div>
+                  <div class="text-xs font-bold text-white leading-none">${featured.author}</div>
+                  <div class="text-[10px] text-zinc-500 mt-1">${featured.date}</div>
+                </div>
+              </div>
+              <button onclick="openArticle(${featured.id})" class="text-yellow hover:text-white font-bold text-xs flex items-center gap-1 transition-colors">
+                Read Story <i class="ph-bold ph-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- Center Column: Portrait Split Image -->
+        <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+          <div class="relative w-full h-[320px] lg:h-full min-h-[350px] rounded-[2rem] overflow-hidden border border-zinc-300/60 bg-zinc-200 shadow-md">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/blog_featured_portrait.png');"></div>
+            <!-- Dynamic overlay border -->
+            <div class="absolute inset-4 border border-white/20 rounded-[1.5rem] pointer-events-none"></div>
+          </div>
+        </div>
+        
+        <!-- Right Column: Mentorship + Ecosystem Pillars -->
+        <div class="col-span-12 lg:col-span-4 flex flex-col justify-start lg:justify-between h-full text-zinc-800">
+          
+          <div class="flex flex-col gap-8 lg:mt-4">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
+                <i class="ph-fill ph-users-three text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-sans font-bold text-zinc-900 text-base">Industry Mentorship</h3>
+                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Connecting student teams with corporate leaders and design specialists.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy shrink-0">
+                <i class="ph-fill ph-globe text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-sans font-bold text-zinc-900 text-base">Ecosystem Scaling</h3>
+                <p class="text-zinc-500 text-xs mt-1 leading-relaxed">Fostering active collaboration between colleges, corporates, and startups.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quote Card inside Bento Grid -->
+          <div class="border border-zinc-200 bg-white/40 p-6 rounded-2xl mt-8">
+            <i class="ph-fill ph-quotes text-zinc-300 text-3xl leading-none"></i>
+            <p class="text-zinc-600 text-xs italic mt-2 leading-relaxed">
+              "An innovation ecosystem isn't built on infrastructure; it is built on mentorship, grit, and opportunity."
+            </p>
+            <div class="text-[10px] font-bold text-zinc-400 mt-3 uppercase tracking-wider">— Hackability Team</div>
+          </div>
+          
         </div>
       `;
     }
@@ -712,20 +717,26 @@
       } else {
         noPostsWarning.classList.add('hidden');
         postsGrid.innerHTML = filtered.map(post => `
-          <div class="blog-card flex flex-col h-full cursor-pointer overflow-hidden shadow-sm" onclick="openArticle(${post.id})">
-            <div class="blog-card-img-wrap h-48 flex items-center justify-center" style="background: ${post.coverImage};">
-              <i class="ph-bold ph-article text-navy/15 text-6xl"></i>
+          <div class="archive-card flex flex-col h-full cursor-pointer overflow-hidden p-5" onclick="openArticle(${post.id})">
+            
+            <!-- Image Wrapper -->
+            <div class="h-56 rounded-2xl overflow-hidden mb-5 relative bg-zinc-900 border border-zinc-800">
+              <div class="w-full h-full bg-cover bg-center transition-transform duration-500 hover:scale-105" 
+                   style="background-image: url('${post.coverImage}');"></div>
             </div>
-            <div class="p-6 flex flex-col flex-grow">
-              <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-navy-tint text-navy uppercase tracking-wider mb-3 w-fit">${post.category}</span>
-              <h3 class="font-display font-bold text-navy text-xl mb-3 leading-snug hover:text-yellow-dark transition-colors flex-grow">${post.title}</h3>
-              <p class="text-grey-dark text-sm leading-relaxed mb-6 line-clamp-3">${post.abstract}</p>
+            
+            <!-- Card Details -->
+            <div class="flex flex-col flex-grow">
+              <span class="text-xs font-bold text-yellow uppercase tracking-widest mb-3">${post.category}</span>
+              <h3 class="font-serif text-white text-xl lg:text-2xl font-semibold mb-3 leading-snug hover:text-yellow transition-colors flex-grow">${post.title}</h3>
+              <p class="text-zinc-400 text-sm leading-relaxed mb-6 line-clamp-3">${post.abstract}</p>
               
-              <div class="flex items-center gap-3 border-t border-hk-border pt-4 mt-auto">
-                <div class="w-8 h-8 rounded-full bg-grey-dark text-white flex items-center justify-center font-bold text-xs">${post.author[0]}</div>
+              <!-- Footer Meta -->
+              <div class="flex items-center gap-3 border-t border-zinc-900 pt-4 mt-auto">
+                <div class="w-8 h-8 rounded-full bg-zinc-800 text-white flex items-center justify-center font-bold text-xs">${post.author[0]}</div>
                 <div>
-                  <div class="font-bold text-navy text-xs">${post.author}</div>
-                  <div class="text-[10px] text-grey-mid font-medium">${post.date} • ${post.readTime}</div>
+                  <div class="font-bold text-zinc-300 text-xs">${post.author}</div>
+                  <div class="text-[10px] text-zinc-500 font-medium">${post.date} • ${post.readTime}</div>
                 </div>
               </div>
             </div>
@@ -747,7 +758,7 @@
       document.getElementById('modal-author-avatar').textContent = post.author[0];
       
       const modalImg = document.getElementById('modal-article-image');
-      modalImg.style.background = post.coverImage;
+      modalImg.style.backgroundImage = `url('${post.coverImage}')`;
       modalImg.style.backgroundSize = 'cover';
       modalImg.style.backgroundPosition = 'center';
       

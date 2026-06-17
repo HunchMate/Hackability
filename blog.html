@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/design-system.css?v=13" />
   <link rel="stylesheet" href="css/logoloop.css" />
 
@@ -54,6 +54,8 @@
             data:    ['Space Grotesk', 'sans-serif'],
             playfair: ['Playfair Display', 'serif'],
             inter:    ['Inter', 'sans-serif'],
+            cormorant: ['Cormorant Garamond', 'serif'],
+            jakarta:   ['Plus Jakarta Sans', 'sans-serif'],
           },
         }
       }
@@ -467,39 +469,65 @@
   <!-- Main Content Container with Faint Grid Pattern Background -->
   <main class="flex-grow bg-[#f8f9fa] bg-grid-pattern-light relative text-[#2d3436]">
     
-    <!-- Hero Section with First Post (Bower School Style) -->
-    <section class="max-w-7xl mx-auto px-6 pt-36 pb-12 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" data-aos="fade-up">
-        <div class="space-y-6">
-          <div class="inline-flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-[#1e2e68] text-white uppercase tracking-wider">LEAD</span>
-            <span class="text-xs text-zinc-500 font-semibold">June 14, 2026</span>
+    <!-- Hero Section with First Post (Premium Redesigned Layout) -->
+    <section class="max-w-7xl mx-auto px-6 pt-36 pb-16 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center" data-aos="fade-up">
+        
+        <!-- Left Column: Content Block with custom soft glow background -->
+        <div class="space-y-8 relative">
+          <!-- Soft radial decorative glow -->
+          <div class="absolute -left-10 -top-10 w-72 h-72 rounded-full bg-[#fb6900]/5 blur-3xl pointer-events-none"></div>
+          
+          <!-- Metadata Pill & Date -->
+          <div class="flex items-center gap-4 relative z-10">
+            <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold font-jakarta bg-[#1e2e68]/5 border border-[#1e2e68]/15 text-[#1e2e68] tracking-wider uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#fb6900]"></span>
+              LEAD
+            </span>
+            <span class="text-xs font-jakarta font-semibold tracking-widest text-zinc-400 uppercase">June 14, 2026</span>
           </div>
-          <h1 class="text-4xl md:text-5xl font-playfair font-bold text-[#1e2e68] italic leading-tight">
-            From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar
+          
+          <!-- Editorial Headline -->
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-cormorant font-light text-[#0D1B8E] leading-[1.15] tracking-tight relative z-10">
+            From <span class="italic font-medium text-[#fb6900]">Weekend Hackathons</span> to Building Alto: The <span class="italic font-medium">Entrepreneurial Journey</span> of J. Manojkumar
           </h1>
-          <p class="text-zinc-600 text-base md:text-lg leading-relaxed font-inter">
+          
+          <!-- Excerpt -->
+          <p class="text-zinc-600 text-base md:text-lg leading-relaxed font-inter font-light max-w-xl relative z-10">
             For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.
           </p>
-          <div class="flex flex-wrap gap-4">
-            <button onclick="openArticle(1)" class="px-6 py-3 bg-[#1e2e68] hover:bg-[#fb6900] text-white rounded-full font-semibold transition-all shadow-md flex items-center gap-2">
-              <i class="ph-bold ph-book-open text-lg"></i> Explore Post
+          
+          <!-- Actions -->
+          <div class="flex flex-wrap gap-4 relative z-10 pt-2">
+            <button onclick="openArticle(1)" class="px-8 py-4 bg-gradient-to-r from-[#0D1B8E] to-[#1A2FA8] hover:from-[#fb6900] hover:to-[#ff8138] text-white rounded-full font-semibold font-jakarta text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.03] flex items-center gap-2 group">
+              <i class="ph-bold ph-book-open text-base group-hover:rotate-6 transition-transform"></i> 
+              Explore Post
             </button>
-            <a href="#latest-posts" class="px-6 py-3 border border-zinc-300 text-zinc-600 rounded-full font-semibold hover:bg-zinc-100 transition-all flex items-center gap-2 no-underline">
-              <i class="ph-bold ph-arrow-down text-lg"></i> More Articles
+            <a href="#latest-posts" class="px-8 py-4 border border-zinc-300/80 text-zinc-700 rounded-full font-semibold font-jakarta text-sm hover:bg-zinc-100/60 transition-all duration-300 flex items-center gap-2 no-underline hover:border-zinc-400 group">
+              <i class="ph-bold ph-arrow-down text-base group-hover:translate-y-0.5 transition-transform"></i> 
+              More Articles
             </a>
           </div>
         </div>
-        <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200">
-          <img src="https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg" alt="From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar" class="w-full h-[350px] object-cover transition-transform duration-500 hover:scale-105" />
+        
+        <!-- Right Column: Premium Image Card -->
+        <div class="relative group" data-aos="fade-left" data-aos-delay="100">
+          <!-- Decorative backing card/shadow shadow -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-[#fb6900]/10 to-[#1e2e68]/10 rounded-[2.5rem] transform translate-x-3 translate-y-3 -z-10 transition-transform duration-500 group-hover:translate-x-5 group-hover:translate-y-5"></div>
+          
+          <!-- Image frame -->
+          <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-zinc-200/60 bg-white p-3 aspect-[4/3] flex items-center justify-center">
+            <img src="https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg" alt="From Weekend Hackathons to Building Alto" class="w-full h-full object-cover rounded-[1.8rem] transition-transform duration-700 group-hover:scale-105" />
+          </div>
         </div>
+
       </div>
     </section>
 
     <!-- Categories Section (Bower School Peach Banner & Carousel) -->
-    <section class="w-full py-10 bg-[#FEE5D9] relative z-10 mb-12">
+    <section class="w-full py-12 bg-[#FEE5D9] relative z-10 mb-12">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-[#fb6900] italic mb-6">Categories</h2>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-cormorant font-light text-[#fb6900] leading-tight mb-8">Explore by <span class="italic font-medium text-[#1e2e68]">Category</span></h2>
         
         <!-- Swiper Carousel -->
         <div class="swiper category-swiper overflow-visible pb-8">
@@ -545,7 +573,7 @@
     <!-- Post Cards Grid Section -->
     <section class="py-12 relative z-10 min-h-[400px]">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 id="latest-posts" class="text-3xl md:text-4xl font-playfair font-bold text-[#fb6900] italic mb-8">Latest Articles</h2>
+        <h2 id="latest-posts" class="text-3xl md:text-4xl lg:text-5xl font-cormorant font-light text-[#fb6900] leading-tight mb-8">Latest <span class="italic font-medium text-[#1e2e68]">Articles</span></h2>
         <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Loaded dynamically via JS -->
         </div>
@@ -566,8 +594,8 @@
           <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-[#fb6900]/10 blur-3xl pointer-events-none"></div>
           <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-[#f5c344]/10 blur-3xl pointer-events-none"></div>
           
-          <h2 class="font-playfair font-bold text-3xl md:text-4xl mb-4 italic">Subscribe to Our Newsletter</h2>
-          <p class="text-white/80 text-base max-w-lg mb-8 leading-relaxed font-inter">
+          <h2 class="font-cormorant font-light text-3xl md:text-4xl lg:text-5xl mb-4 italic text-white">Subscribe to Our <span class="italic font-medium text-[#fb6900]">Newsletter</span></h2>
+          <p class="text-white/80 text-base max-w-lg mb-8 leading-relaxed font-inter font-light">
             Stay updated with our latest articles, events, and entrepreneurial insights delivered directly to your inbox.
           </p>
           <form id="newsletter-form" class="w-full max-w-md flex flex-col sm:flex-row gap-3">
@@ -610,7 +638,7 @@
       <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
         <div class="max-w-2xl mx-auto">
           <!-- Article Title -->
-          <h1 id="modal-article-title" class="font-playfair font-bold text-[#1e2e68] italic text-3xl md:text-5xl leading-tight mb-6">
+          <h1 id="modal-article-title" class="font-cormorant font-light text-[#1e2e68] italic text-3xl md:text-5xl leading-tight mb-6">
             Article Title
           </h1>
 

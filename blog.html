@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog — Hackability</title>
-  <meta name="description" content="Discover insightful resources and expert advice from our seasoned team to elevate your knowledge." />
+  <meta name="description" content="Discover the entrepreneurial journeys, startup stories, and insights from the Bower community." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -172,9 +172,9 @@
   <script>
     document.body.classList.add('loading');
     const _preloaderStart = Date.now();
-    window.addEventListener('load', () => {
+    window.hidePreloader = function() {
       const elapsed = Date.now() - _preloaderStart;
-      const remain = Math.max(0, 1500 - elapsed);
+      const remain = Math.max(0, 1000 - elapsed);
       setTimeout(() => {
         const p = document.getElementById('page-preloader');
         if(p) {
@@ -182,7 +182,7 @@
           setTimeout(() => { p.remove(); document.body.classList.remove('loading'); }, 1000);
         }
       }, remain);
-    });
+    };
   </script>
 
   <!-- ===================== NAVBAR ===================== -->
@@ -306,10 +306,9 @@
       <!-- Category Pills -->
       <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
         <button class="filter-pill active" data-category="all">All</button>
-        <button class="filter-pill" data-category="Hatch (K-12)">Hatch (K-12)</button>
-        <button class="filter-pill" data-category="Higher Ed">Higher Ed</button>
-        <button class="filter-pill" data-category="Innovation">Innovation</button>
-        <button class="filter-pill" data-category="Ecosystem">Ecosystem</button>
+        <button class="filter-pill" data-category="LEAD">LEAD</button>
+        <button class="filter-pill" data-category="UG">UG</button>
+        <button class="filter-pill" data-category="Seed">Seed</button>
       </div>
 
       <!-- Search bar -->
@@ -478,129 +477,138 @@
 
   <!-- Interactive JavaScript Logic -->
   <script>
-    // Sample Blog Post Data
+    // Sample Blog Post Data from Bower School of Entrepreneurship
     const blogPosts = [
       {
         id: 1,
-        title: "The Power of Entrepreneurial Thinking in Schools",
-        category: "Hatch (K-12)",
-        date: "June 15, 2026",
-        readTime: "5 min read",
-        author: "Puneet",
-        abstract: "Why introducing innovation and opportunity discovery in Grades 3-12 is essential to nurture resilience, creativity, and future readiness.",
-        coverImage: "assets/images/blog_hatch.png",
+        title: "From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar",
+        category: "LEAD",
+        date: "June 14, 2026",
+        readTime: "6 min read",
+        author: "J. Manojkumar",
+        abstract: "For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">Education is no longer just about memorizing facts; it is about building the capability to navigate uncertainty and solve real-world problems. Introducing kids to design thinking, risk-assessment, and value creation early on transforms their perspective.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Why Early Stage Opportunity Identification Matters</h3>
-          <p>Children possess an innate curiosity that is often filtered out by traditional educational paths. In the Hatch program, we leverage this natural curiosity. By asking questions like "What problems do people face around you every day?" we teach students to recognize opportunity where others see inconvenience.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Restless Corporate Developer</h3>
+          <p>Manojkumar started his career in core software engineering. But he soon realized that the corporate framework restricted his ability to prototype quickly and solve open-ended problems. He spent his weekends attending hackathons, building MVP codebases, and exploring developer ecosystems.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Building Resilience Through Experiential Learning</h3>
-          <p>Entrepreneurship is a practice of resilience. When a student builds a prototype and it fails, it is not a grade penalty; it is feedback. Through miniature innovation challenges, students learn to test, iterate, and adapt. This mindset shifts failure from a dead-end to a learning step.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Building Alto: From Idea to Venture</h3>
+          <p>The transition from a coder to a builder was triggered by a simple observation: modern dev teams struggle to manage local environment configurations, leading to weeks of onboarding delays. Manojkumar set out to automate local developer workspace orchestrations. This led to the creation of Alto, a developer tool designed to spin up cloud environments instantly.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Practical Integration in Schools</h3>
-          <p>Integrating entrepreneurship education doesn't mean adding a heavy curriculum burden. It fits directly into science, technology, mathematics, and social studies projects, enabling students to apply theoretical knowledge to solve community problems.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Core Takeaways for Founders</h3>
+          <p>Manojkumar emphasizes that founders shouldn't wait for "perfect validation." Launching a minimal product, gathering raw developer feedback, and iterating in public is the most powerful path to product-market fit.</p>
         `
       },
       {
         id: 2,
-        title: "Redefining College Partnerships for the Future Workforce",
-        category: "Higher Ed",
-        date: "June 10, 2026",
+        title: "Against the Odds: How Dilshaan Basha Momin Is Building Lumenar on Self-Belief",
+        category: "LEAD",
+        date: "June 06, 2026",
         readTime: "7 min read",
-        author: "Puneet",
-        abstract: "How academic institutions can partner with industry leaders to design experiential learning pathways and bridge the talent-employability gap.",
-        coverImage: "assets/images/blog_college.png",
+        author: "Dilshaan Basha Momin",
+        abstract: "In October 2025, Dilshaan Basha Momin did something that made almost no sense on paper. Armed only with self-belief, he took a leap to build Lumenar.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o2055Dilshaan-Blog-thumbnail.jpg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">As industry requirements evolve at supersonic speed, universities must pivot from siloed academic instructions to ecosystem-driven experiential learning.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">In October 2025, Dilshaan Basha Momin did something that made almost no sense on paper. He resigned from a stable position to build Lumenar on sheer self-belief and vision.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Talent-Employability Gap</h3>
-          <p>Traditional learning systems often fall short of preparing graduates for the ambiguity of modern startup and corporate environments. While students understand theoretical computer science or business strategies, they lack the opportunity to apply them in cross-functional, real-world teams.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Genesis of Lumenar</h3>
+          <p>Lumenar was born out of a critical gap in industrial safety operations. Real-time hazard notifications were either too late or completely missed on factory floors. Dilshaan envisioned a smart IoT safety grid that uses high-frequency visual arrays to warn operators of malfunctions instantly.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Campus Labs as Co-Creation Spaces</h3>
-          <p>By building dedicated Campus Labs and collaborative innovation frameworks, academic institutions can bring mentors, corporations, and technology tools directly to the students. This enables them to work on industry-defined challenges, validate products, and build startup ventures before graduation.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Navigating the Skepticism</h3>
+          <p>Building hardware in India is notoriously difficult due to supply chain friction and investor skepticism. Dilshaan spent months sourcing components locally, prototyping in tiny workshops, and refining the sensor grids. His belief in the utility of the product kept him going through dozens of failed hardware iterations.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Future is Collaborative</h3>
-          <p>A thriving university is one that opens its borders to the ecosystem. Through structured talent development programs like Hackability, colleges not only increase student placement and startup rates, but they also become engines of regional economic growth.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Impact of Hardware Innovation</h3>
+          <p>Lumenar has since run active pilot tests across manufacturing plants, proving a 40% reduction in warning response times. Dilshaan's journey proves that deep-tech startups can thrive when founders remain relentlessly focused on user utility and safety compliance.</p>
         `
       },
       {
         id: 3,
-        title: "Gen AI in Education: A Framework for Creative Classroom Tech",
-        category: "Innovation",
-        date: "June 05, 2026",
-        readTime: "6 min read",
-        author: "Ananya Sharma",
-        abstract: "Practical strategies and safeguards for incorporating Generative AI tools into student research, ideation, and rapid prototyping workflows.",
-        coverImage: "assets/images/blog_ai.png",
+        title: "Avani Mekala: Growing NutriViva Through Science, Tradition, & Sustainable Solutions",
+        category: "LEAD",
+        date: "May 30, 2026",
+        readTime: "5 min read",
+        author: "Avani Mekala",
+        abstract: "Today, health and wellness information is everywhere: from diet trends to nutrition routines. Avani Mekala is building NutriViva to offer evidence-based food transparency.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o7322Blog thumbnail.jpg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">Generative AI tools are reshaping how knowledge is processed. Instead of restricting access, educators should provide structured frameworks to guide creative and ethical AI usage.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">Today, health and wellness information is everywhere. Avani Mekala is building NutriViva to bridge the gap between traditional food wisdom, modern science, and sustainable sourcing.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">AI as an Ideation Partner</h3>
-          <p>AI is an incredibly powerful brainstorming partner. Students can query large language models to explore alternative angles for their project ideas, draft user interview questions, or understand highly complex technological concepts in simple terms.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Chemistry of Clean Eating</h3>
+          <p>As a food scientist, Avani realized that the commercial food supply is saturated with micro-preservatives and chemical stabilizers that damage gut health. NutriViva was established to develop clean-label, bio-available health supplements using local grain chemistry and traditional fermentation techniques.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Critical Thinking Safeguard</h3>
-          <p>A critical mindset is essential. We teach students that AI is often prone to hallucinations and generalizations. Every AI-generated output must be verified, researched, and customized. The core values—originality, user empathy, and real-world validation—must come from the human designer.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Establishing a Sustainable Supply Chain</h3>
+          <p>NutriViva partners directly with local farmer cooperatives in Andhra Pradesh to source organic millet and traditional herbs. This not only guarantees purity for the consumer but also provides sustainable fair-wage income streams for regional farming families.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Enhancing Code and CAD Prototyping</h3>
-          <p>For innovation labs, AI accelerates the technical barrier. Students can generate basic boilerplate code for microcontrollers, write web app frontends, or get layout recommendations for 3D printing. This shifts the focus from tedious syntax coding to user experience and architecture design.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Scaling NutriViva</h3>
+          <p>NutriViva is expanding its digital direct-to-consumer footprint, leveraging educational content to teach buyers how to read ingredient labels and select foods based on actual chemical transparency rather than marketing buzzwords.</p>
         `
       },
       {
         id: 4,
-        title: "Building Innovation Ecosystems: Why Mentorship Matters",
-        category: "Ecosystem",
-        date: "May 28, 2026",
-        readTime: "4 min read",
-        author: "Vikram Malhotra",
-        abstract: "Highlighting the critical role of corporate mentors and industry experts in providing feedback, credibility, and real-world networks to student teams.",
-        coverImage: "assets/images/blog_mentorship.png",
+        title: "A Conventional Guy on an Unconventional Path: Lavakumar Kondipati On Building NatBolt",
+        category: "LEAD",
+        date: "May 23, 2026",
+        readTime: "5 min read",
+        author: "Lavakumar Kondipati",
+        abstract: "Entrepreneurship stories often begin with a dramatic leap. For Lavakumar Kondipati, building NatBolt meant stepping off the traditional path into the unknown.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o7157Blog thumbnail copy.jpg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">A student startup or innovation project cannot grow in a vacuum. To turn ideas into viable solutions, young creators need guidance from those who have built before them.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">Entrepreneurship stories often begin with a dramatic leap. For Lavakumar Kondipati, building NatBolt meant stepping off the conventional academic path to pioneer hardware automation.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Breaking the Academic Bubble</h3>
-          <p>Educators provide essential academic foundations, but corporate mentors and startup founders offer practical truth. A mentor can look at a student product and say, "The market does not buy this features set," or "Your pricing model ignores key operations cost." This raw, constructive feedback is invaluable.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Hardware Assembly Bottleneck</h3>
+          <p>In manufacturing assemblies, the insertion of microscopic bolts and fasteners is still performed manually, causing massive factory-line bottlenecks. Lavakumar founded NatBolt to design high-speed automated fastener feeds that utilize computer vision to align bolts in milliseconds.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Network Access and Social Capital</h3>
-          <p>Industry mentors bring networks. By introducing student teams to suppliers, prospective pilot customers, or legal specialists, mentors provide the social capital necessary to launch ideas. This accelerates validation and turns conceptual student projects into actual business entities.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Unconventional Pivot</h3>
+          <p>Lavakumar's family expected him to take a stable software engineering job. Deciding to build high-precision industrial hardware in a tiny garage was a significant risk. However, his focus on resolving assembly bottlenecks won NatBolt a series of local innovation grants and corporate pilots.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Creating a Culture of Pay-It-Forward</h3>
-          <p>A thriving innovation ecosystem relies on a cycle of mentorship. Successful alumni returning to campus to judge hackathons and mentor current students creates a legacy of shared progress that sustains the ecosystem for decades.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Scaling Fastener Automation</h3>
+          <p>NatBolt's smart feeds are now being integrated into automotive assembly lines, accelerating production speed and proving that industrial automation is a fertile space for young innovators.</p>
         `
       },
       {
         id: 5,
-        title: "Designing Student Incubators: A Campus Guide",
-        category: "Higher Ed",
-        date: "May 15, 2026",
-        readTime: "6 min read",
-        author: "Puneet",
-        abstract: "How to set up, resource, and run an active student incubator on campus that drives entrepreneurship and co-creation.",
-        coverImage: "assets/images/blog_incubator.png",
+        title: "A ‘Cinematic Start’: Sugavignesh and Trovo at Bower",
+        category: "UG",
+        date: "May 16, 2026",
+        readTime: "4 min read",
+        author: "Sugavignesh VS",
+        abstract: "At 20, most students are still figuring out what they want to become. Sugavignesh VS has already abandoned three futures to build Trovo.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o18911Blog-design-thumbnail.jpg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">A student incubator is more than just desk space; it is a catalyst for venture creation, interdisciplinary team-building, and ecosystem integration.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">At 20, most students are still figuring out what they want to become. Sugavignesh VS has already abandoned three traditional career paths to build Trovo.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Incubation Blueprint</h3>
-          <p>Setting up a campus incubator requires three pillars: workspace, mentor networks, and validation pathways. Students should have access to 3D printers, coding resources, and a safe sandbox environment where failure is treated as data.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Spark of Trovo</h3>
+          <p>Trovo is a micro-mobility solution designed to streamline intra-campus transit. Using app-enabled electric kick scooters, Trovo allows students to scan, unlock, and navigate large university estates in minutes, reducing tardiness and carbon footprint.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Facilitating Co-Creation</h3>
-          <p>Incubators thrive when business, engineering, and design students work together. We outline frameworks for cross-campus mixers, micro-grants, and sprint challenges that break down departmental silos.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Launching on Campus</h3>
+          <p>Sugavignesh launched Trovo directly on the Bower campus as part of the UG entrepreneurship curriculum. Working with university operations, he established charging ports, safety parameters, and software geo-fencing to run a successful pilot program that has logged over 5,000 campus rides.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Future Horizons</h3>
+          <p>Trovo is currently preparing to scale to three neighboring universities in Hyderabad, demonstrating how student-led campus experiments can evolve into sustainable local transit businesses.</p>
         `
       },
       {
         id: 6,
-        title: "The Future of Work: Skillsets for 2026 and Beyond",
-        category: "Innovation",
-        date: "April 30, 2026",
-        readTime: "5 min read",
-        author: "Ananya Sharma",
-        abstract: "Why adaptability, low-code building, and prompt engineering are becoming core requirements for the future workforce.",
-        coverImage: "assets/images/blog_future_work.png",
+        title: "From UPSC Aspirant to Startup Founder: How Gadikota Siva Shankar Reddy Is Building Jolly Junction Bookings",
+        category: "LEAD",
+        date: "May 10, 2026",
+        readTime: "6 min read",
+        author: "G. Siva Shankar Reddy",
+        abstract: "After years of preparing for UPSC, Gadikota Siva Shankar Reddy shifted to entrepreneurship to build Jolly Junction Bookings and solve event booking complexity.",
+        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o182321741118846944.jpeg",
         content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">The career pathways of the next decade belong to builders, synthesizers, and adaptive learners who navigate technology changes fluidly.</p>
+          <p class="text-lg font-semibold text-zinc-200 mb-6">After years of preparing for UPSC, Gadikota Siva Shankar Reddy shifted to entrepreneurship when the civil service path no longer aligned with his goals.</p>
           
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Shift from Specialization to Synthesis</h3>
-          <p>With AI handling rote coding and basic layout design, the value of developers and creators moves upstream. Success belongs to those who synthesize ideas, validate user demands, and coordinate low-code tools to ship MVPs in days rather than months.</p>
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Booking Paradox</h3>
+          <p>Organizing corporate functions and local celebrations is famously chaotic, involving dozens of calls to venues, caterers, and decorators. Siva Shankar founded Jolly Junction Bookings to aggregate local event services into a unified, transparent digital booking platform.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Leveraging UPSC Grit</h3>
+          <p>Siva Shankar credits his years of civil services preparation for his stamina and system-level thinking. Building a platform that matches caterers, decorators, and venues requires enormous logistics coordination. His grit helped him onboard 150+ regional vendors within their first year.</p>
+          
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Event Operations Made Simple</h3>
+          <p>Jolly Junction Bookings is now active across Hyderabad, reducing customer booking times from weeks to minutes, illustrating that public-service discipline is a powerful founder superpower.</p>
         `
       }
     ];
@@ -745,8 +753,11 @@
       document.getElementById('newsletter-success').classList.remove('hidden');
     });
 
-    // Initialize Layout
-    renderGrid();
+    // Initialize Layout (with simulated database fetch latency)
+    setTimeout(() => {
+      renderGrid();
+      window.hidePreloader();
+    }, 1200);
   </script>
 
   <!-- Navbar and Mobile Menu Behaviors -->

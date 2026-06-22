@@ -117,49 +117,49 @@ document.addEventListener('DOMContentLoaded', async () => {
       const readTime = post.read_time || '5 min read';
       
       // Determine link (for real posts, it would route to a dynamic page, for now just #)
-      const postUrl = post.slug ? \`/blog/\${post.slug}\` : '#';
+      const postUrl = post.slug ? `/blog/${post.slug}` : '#';
 
-      const cardHTML = \`
+      const cardHTML = `
         <article class="bg-white rounded-2xl border border-hk-border overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
           <!-- Image -->
-          <a href="\${postUrl}" class="block overflow-hidden relative h-56">
-            <img src="\${imageUrl}" alt="\${title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
+          <a href="${postUrl}" class="block overflow-hidden relative h-56">
+            <img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-navy shadow-sm">
-              \${category}
+              ${category}
             </div>
           </a>
           
           <!-- Content -->
           <div class="p-6 flex flex-col flex-grow">
             <div class="flex items-center text-xs text-grey-mid font-medium mb-3 gap-2">
-              <span class="flex items-center gap-1"><i class="ph-bold ph-calendar-blank"></i> \${date}</span>
+              <span class="flex items-center gap-1"><i class="ph-bold ph-calendar-blank"></i> ${date}</span>
               <span>•</span>
-              <span class="flex items-center gap-1"><i class="ph-bold ph-clock"></i> \${readTime}</span>
+              <span class="flex items-center gap-1"><i class="ph-bold ph-clock"></i> ${readTime}</span>
             </div>
             
-            <a href="\${postUrl}" class="block group-hover:text-navy transition-colors">
-              <h3 class="font-display font-bold text-xl text-grey-dark mb-3 line-clamp-2">\${title}</h3>
+            <a href="${postUrl}" class="block group-hover:text-navy transition-colors">
+              <h3 class="font-display font-bold text-xl text-grey-dark mb-3 line-clamp-2">${title}</h3>
             </a>
             
             <p class="text-grey-dark/80 text-sm mb-6 line-clamp-3 font-body flex-grow">
-              \${excerpt}
+              ${excerpt}
             </p>
             
             <!-- Author / Footer -->
             <div class="mt-auto pt-4 border-t border-hk-border/50 flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-full bg-navy-tint text-navy flex items-center justify-center font-bold text-xs uppercase">
-                  \${author.charAt(0)}
+                  ${author.charAt(0)}
                 </div>
-                <span class="text-sm font-semibold text-navy">\${author}</span>
+                <span class="text-sm font-semibold text-navy">${author}</span>
               </div>
-              <a href="\${postUrl}" class="text-navy hover:text-navy-mid transition-colors text-sm font-semibold flex items-center gap-1">
+              <a href="${postUrl}" class="text-navy hover:text-navy-mid transition-colors text-sm font-semibold flex items-center gap-1">
                 Read <i class="ph-bold ph-arrow-right"></i>
               </a>
             </div>
           </div>
         </article>
-      \`;
+      `;
       
       blogGrid.insertAdjacentHTML('beforeend', cardHTML);
     });

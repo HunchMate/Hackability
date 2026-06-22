@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hackability — Building innovation driven talent ecosystems</title>
   <meta name="description" content="Hackability helps institutions build innovation culture, strengthen industry engagement, and develop future-ready talent." />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.hackability.in/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.hackability.in/" />
+  <meta property="og:title" content="Hackability — Building innovation driven talent ecosystems" />
+  <meta property="og:description" content="Hackability helps institutions build innovation culture, strengthen industry engagement, and develop future-ready talent." />
+  <meta property="og:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://www.hackability.in/" />
+  <meta property="twitter:title" content="Hackability — Building innovation driven talent ecosystems" />
+  <meta property="twitter:description" content="Hackability helps institutions build innovation culture, strengthen industry engagement, and develop future-ready talent." />
+  <meta property="twitter:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,6 +68,44 @@
   <!-- design-system.css loaded above -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
+  <!-- Schema.org JSON-LD (AEO & GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Hackability",
+    "url": "https://www.hackability.in/",
+    "logo": "https://www.hackability.in/assets/logo-dark.png",
+    "description": "Hackability helps institutions build innovation culture, strengthen industry engagement, and develop future-ready talent.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "thehackability@gmail.com",
+      "telephone": "+91-79936-62605",
+      "contactType": "customer support"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is Hackability?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hackability is a talent ecosystem platform that partners with educational institutions to build innovation culture, strengthen industry engagement, and develop future-ready talent."
+      }
+    }, {
+      "@type": "Question",
+      "name": "What programs does Hackability offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hackability offers two main programs: 'Hatch' for K-12 students focusing on early entrepreneurship, and 'Hackability for Higher Education' focused on talent development, hackathons, and industry readiness for college students."
+      }
+    }]
+  }
+  </script>
 </head>
 <body class="font-body bg-white text-grey-dark" data-page="parent">
 
@@ -235,7 +290,7 @@
   </nav>
 
   <!-- ===================== HERO ===================== -->
-  <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden">
+  <section id="hero" class="bg-black min-h-screen flex flex-col justify-center lg:justify-end relative overflow-hidden">
 
     <!-- Background Carousel -->
     <div id="hero-carousel-bg" class="absolute inset-0 z-[0] pointer-events-none">
@@ -403,17 +458,17 @@
     <!-- Stable yellow gradient from bottom reaching higher -->
     <div class="absolute inset-0 bg-gradient-to-t from-yellow/40 via-yellow/10 to-transparent pointer-events-none z-0"></div>
     
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="max-w-[100rem] mx-auto px-6 relative z-10">
       <div class="text-center mb-10 reveal flex flex-col items-center">
         <h2 class="font-display font-bold text-yellow text-4xl md:text-5xl lg:text-6xl mb-3">Products</h2>
         <p class="font-display font-medium text-white text-xl md:text-2xl max-w-3xl">Digital Innovation Infrastructure for Educational Institutions</p>
       </div>
 
-      <div class="rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center reveal bg-white text-navy shadow-[0_20px_50px_rgba(245,194,0,0.15)] relative overflow-hidden">
+      <div class="rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center reveal bg-white text-navy shadow-[0_20px_50px_rgba(245,194,0,0.15)] relative overflow-hidden">
         <!-- Background accent -->
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-navy-tint rounded-full blur-[150px] opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
         
-        <div class="relative z-10">
+        <div class="relative z-10 lg:col-span-4">
           <div class="inline-flex flex-col md:flex-row items-start md:items-center gap-2 px-3 py-2 md:px-4 rounded-xl md:rounded-full mb-4" style="background:rgba(13,27,142,0.05); border: 1px solid rgba(13,27,142,0.1);">
             <i class="ph-bold ph-desktop-tower" style="font-size:16px;color:#0D1B8E;"></i>
             <span class="font-data font-semibold text-[10px] md:text-xs uppercase tracking-widest leading-snug" style="color:#0D1B8E;">Campus Innovation Management Platform</span>
@@ -424,7 +479,7 @@
             inCamp is an internal innovation management platform designed for educational institutions. It enables campuses to manage in-house innovation, entrepreneurship, project-based learning initiatives through a centralized digital platform, end-to-end.
           </p>
 
-          <a href="#contact" class="btn-flow btn-flow-navy mt-2">
+          <a href="https://www.incamp.in/" target="_blank" rel="noopener noreferrer" class="btn-flow btn-flow-navy mt-2">
             <i class="ph-bold ph-arrow-right flow-arrow-left"></i>
             <span class="flow-text">Explore inCamp</span>
             <span class="flow-circle"></span>
@@ -432,17 +487,20 @@
           </a>
         </div>
 
-        <div class="relative z-10 w-full rounded-2xl overflow-hidden shadow-xl border border-hk-border" id="incamp-carousel">
-          <!-- Slide 1 (relative to provide container height) -->
-          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 1" class="carousel-slide relative w-full h-auto object-cover transition-opacity duration-1000 opacity-100" />
+        <div class="relative z-10 w-full aspect-video lg:col-span-8 bg-white rounded-2xl overflow-hidden shadow-xl border border-hk-border" id="incamp-carousel">
+          <!-- Slide 1 -->
+          <img src="assets/images/incamp-slide-1.png" alt="inCamp Dashboard 1" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" />
           <!-- Slide 2 -->
-          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 2" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+          <img src="assets/images/incamp-slide-2.png" alt="inCamp Dashboard 2" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
           <!-- Slide 3 -->
-          <img src="assets/images/incamp-mockup.png" alt="inCamp Dashboard 3" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+          <img src="assets/images/incamp-slide-3.png" alt="inCamp Dashboard 3" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+          <!-- Slide 4 -->
+          <img src="assets/images/incamp-slide-4.png" alt="inCamp Dashboard 4" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
           
           <!-- Indicators -->
           <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20 bg-black/30 px-3 py-2 rounded-full backdrop-blur-sm">
             <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-100 transition-opacity duration-500"></span>
+            <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-40 transition-opacity duration-500"></span>
             <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-40 transition-opacity duration-500"></span>
             <span class="carousel-dot w-2 h-2 rounded-full bg-white shadow-sm opacity-40 transition-opacity duration-500"></span>
           </div>

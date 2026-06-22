@@ -621,3 +621,12 @@ input:focus,textarea:focus,select:focus{border-color:var(--color-blue-900);box-s
   z-index: 0;
   pointer-events: none;
 }
+
+/* Utility for hiding scrollbars */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

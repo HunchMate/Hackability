@@ -278,3 +278,12 @@ html { scroll-behavior: smooth; }
 .portal-card:hover {
   box-shadow: 0 0 30px rgba(245, 194, 0, 0.1);
 }
+
+/* Utility for hiding scrollbars */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

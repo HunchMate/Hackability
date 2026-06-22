@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /migrate.html
+Disallow: /seed.html
+
+Sitemap: https://www.hackability.in/sitemap.xml

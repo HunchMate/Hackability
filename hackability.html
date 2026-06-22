@@ -6,6 +6,23 @@
   <title>Hackability — Developing Talent for What's Next</title>
   <meta name="description" content="Hackability partners with colleges and universities to strengthen innovation, entrepreneurship, and industry engagement." />
 
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.hackability.in/hackability" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.hackability.in/hackability" />
+  <meta property="og:title" content="Hackability — Developing Talent for What's Next" />
+  <meta property="og:description" content="Hackability partners with colleges and universities to strengthen innovation, entrepreneurship, and industry engagement." />
+  <meta property="og:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://www.hackability.in/hackability" />
+  <meta property="twitter:title" content="Hackability — Developing Talent for What's Next" />
+  <meta property="twitter:description" content="Hackability partners with colleges and universities to strengthen innovation, entrepreneurship, and industry engagement." />
+  <meta property="twitter:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -159,6 +176,21 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
+  <!-- Schema.org JSON-LD (AEO & GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Hackability for Higher Education",
+    "url": "https://www.hackability.in/hackability",
+    "description": "Talent development program for higher education, focusing on innovation, hackathons, and industry readiness.",
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "Hackability",
+      "url": "https://www.hackability.in/"
+    }
+  }
+  </script>
 </head>
 <body class="font-body bg-white text-grey-dark flex flex-col min-h-screen">
 
@@ -379,7 +411,7 @@
 
   <main class="flex-grow">
   <!-- ===================== HERO SECTION ===================== -->
-  <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
+  <section id="hero" class="bg-black min-h-screen flex flex-col justify-center lg:justify-end relative overflow-hidden z-20">
     <!-- Background Carousel -->
     <div id="hackability-hero-carousel" class="absolute inset-0 z-[0] pointer-events-none">
       <div class="slide active absolute inset-0 opacity-100 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_1.jpg');"></div>

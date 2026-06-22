@@ -72,64 +72,64 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Mock data so the user can see the new mentor cards even if the database is empty
         filtered = [
           {
+            title: "Mr. Govil Alok",
+            description: "CEO, Geenovate Foundation",
+            logo: "assets/images/mentors/alok.jpeg",
+            url: "#",
+            category: "Mentors"
+          },
+          {
             title: "Mr. Madhu Vadlamani",
-            description: "Enterprise Leader, Enterprise Minds, Inc. Ex-Practice Manager, Miracle Software Systems, Inc. Sr. Consultant Ex-Deloitte, Ex-Cognizant.",
+            description: "Enterprise Leader, Enterprise Minds, Inc.",
             logo: "assets/images/mentors/madhu.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Baradwaj Arvapally",
-            description: "Founder, ABTechVille. Serial Entrepreneur, Experienced in Mentoring 10,000+ Students on IoT & other Technologies.",
+            description: "Founder, ABTechVille.",
             logo: "assets/images/mentors/baradwaj.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Amarnath J.",
-            description: "Founder & CEO, Buchuk Robo Chef. Prominent Mentor & TiE Hyderabad Speaker. 12+ yrs experience in Robotics & Manufacturing.",
+            description: "Founder & CEO, Buchuk Robo Chef.",
             logo: "assets/images/mentors/amarnath.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Prithvi Raj",
-            description: "Sr. Software Architect, Worthit Consultancy Services. Ex-Godrej, Ex-General Electric. 7+ Yrs Experience in Corporate Consulting, Alumni IIM-Trichy.",
+            description: "Sr. Software Architect, Worthit Consultancy Services.",
             logo: "assets/images/mentors/prithvi.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Nikhil",
-            description: "AI Strategy Architect, Techolution. Alumni IITM. 10x Hackathon Winner, Award-Winning Author.",
+            description: "AI Strategy Architect, Techolution.",
             logo: "assets/images/mentors/nikhil.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Swaminathan Jerra",
-            description: "Founder & CEO, AquaHT Labs. Recognized by Prominent IITs, IIMs, STPI, T-Hub, Google and Microsoft for Startups. 2X Startup Founder.",
+            description: "Founder & CEO, AquaHT Labs.",
             logo: "assets/images/mentors/jeera.png",
             url: "#",
             category: "Mentors"
           },
           {
-            title: "Mr. M. Sai Kiran",
-            description: "Incubation Manager, VIBA. 5+ Years In Incubation & Innovation, Academic Mentor & Trainer.",
-            logo: "assets/images/mentors/sai.png",
-            url: "#",
-            category: "Mentors"
-          },
-          {
             title: "Mr. Mukesh Sankhla",
-            description: "Founder, MakerBrains. Technical Mentor & Gen AI Trainer. 6+ yrs of Experience in STEM Technologies Training.",
+            description: "Founder, MakerBrains.",
             logo: "assets/images/mentors/mukesh.png",
             url: "#",
             category: "Mentors"
           },
           {
             title: "Mr. Nalamilli Venkat Reddy",
-            description: "Founder & CEO, Teckybot. 10+ yrs of experience in STEM Innovation Domain, Serial Entrepreneur, Hardware & MVP Expert.",
+            description: "Founder & CEO, Teckybot.",
             logo: "assets/images/mentors/venkat.png",
             url: "#",
             category: "Mentors"
@@ -156,6 +156,62 @@ document.addEventListener('DOMContentLoaded', async () => {
             description: "We are India's largest Prototyping Centre and Manufacturing Knowledge Partner, supported by the Government of Telangana.",
             logo: "assets/images/organizations/tworks.png",
             url: "https://tworks.telangana.gov.in/",
+            category: "Organizations"
+          },
+          {
+            title: "AICTE",
+            description: "All India Council for Technical Education, ensuring quality in technical education across the country.",
+            logo: "assets/images/organizations/aicte.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "TGIC",
+            description: "Telangana State Innovation Cell, promoting a culture of innovation and entrepreneurship.",
+            logo: "assets/images/organizations/TGIC.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "Axibator",
+            description: "An ecosystem partner driving technology, innovation, and startup acceleration.",
+            logo: "assets/images/organizations/axibator.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "Draper",
+            description: "Draper University, a leading program for entrepreneurs and innovators globally.",
+            logo: "assets/images/organizations/draper.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "Geenovate",
+            description: "Fostering the next generation of deep-tech and innovative enterprises.",
+            logo: "assets/images/organizations/geenovate.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "TG10X",
+            description: "A launchpad initiative scaling startups and driving 10x growth in the ecosystem.",
+            logo: "assets/images/organizations/tg10x.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "Viakasa",
+            description: "Empowering businesses through cutting-edge strategies and ecosystem partnerships.",
+            logo: "assets/images/organizations/viakasa.png",
+            url: "#",
+            category: "Organizations"
+          },
+          {
+            title: "Vishva",
+            description: "Building resilient networks and driving value across global innovation communities.",
+            logo: "assets/images/organizations/vishva.png",
+            url: "#",
             category: "Organizations"
           }
         ];

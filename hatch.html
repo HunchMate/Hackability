@@ -6,6 +6,23 @@
   <title>HATCH — Where Young Minds Hatch Big Ideas</title>
   <meta name="description" content="HATCH partners with schools to provide entrepreneurship and innovation education for students in Grades 3–12." />
 
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.hackability.in/hatch" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.hackability.in/hatch" />
+  <meta property="og:title" content="HATCH — Where Young Minds Hatch Big Ideas" />
+  <meta property="og:description" content="HATCH partners with schools to provide entrepreneurship and innovation education for students in Grades 3–12." />
+  <meta property="og:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://www.hackability.in/hatch" />
+  <meta property="twitter:title" content="HATCH — Where Young Minds Hatch Big Ideas" />
+  <meta property="twitter:description" content="HATCH partners with schools to provide entrepreneurship and innovation education for students in Grades 3–12." />
+  <meta property="twitter:image" content="https://www.hackability.in/assets/images/og-image.jpg" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -262,6 +279,21 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="css/card-nav.css" />
+  <!-- Schema.org JSON-LD (AEO & GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Hatch (K-12)",
+    "url": "https://www.hackability.in/hatch",
+    "description": "Entrepreneurship and innovation education program tailored for students in Grades 3 to 12.",
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "Hackability",
+      "url": "https://www.hackability.in/"
+    }
+  }
+  </script>
 </head>
 <body class="font-body bg-navy text-grey-dark flex flex-col min-h-screen" style="margin:0;padding:0;">
 
@@ -484,7 +516,7 @@
 
 <main class="flex-grow">
   <!-- ===================== HERO SECTION ===================== -->
-  <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
+  <section id="hero" class="bg-black min-h-screen flex flex-col justify-center lg:justify-end relative overflow-hidden z-20">
     <!-- Background Carousel -->
     <div id="hatch-hero-carousel" class="absolute inset-0 z-[0] pointer-events-none">
       <div class="slide active absolute inset-0 opacity-100 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_1.jpg');"></div>
@@ -748,15 +780,15 @@
           <div class="track-tabs-container flex-col md:flex-row w-full md:w-auto mx-4 md:mx-0">
             <button class="track-tab active" data-target="track-spark">
               <div class="grade-text">Grade 3–6</div>
-              Spark Track
+              Exploration Track
             </button>
             <button class="track-tab" data-target="track-solve">
               <div class="grade-text">Grade 7–9</div>
-              Solve Track
+              Experimentation Track
             </button>
             <button class="track-tab" data-target="track-elevate">
               <div class="grade-text">Grade 10–12</div>
-              Elevate Track
+              Elevation Track
             </button>
           </div>
         </div>
@@ -764,7 +796,7 @@
         <!-- Tab Content Container -->
         <div class="p-6 md:px-12 md:py-6 relative">
           
-          <!-- Spark Track -->
+          <!-- Exploration Track -->
           <div id="track-spark" class="track-content active">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div class="col-span-1 md:col-span-1 bg-white/5 p-6 rounded-2xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] hover:border-sky-400/30 transition-all duration-300 group/card">
@@ -800,7 +832,7 @@
             </div>
           </div>
 
-          <!-- Solve Track -->
+          <!-- Experimentation Track -->
           <div id="track-solve" class="track-content">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div class="col-span-1 md:col-span-1 bg-white/5 p-6 rounded-2xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] hover:border-sky-400/30 transition-all duration-300 group/card">
@@ -836,7 +868,7 @@
             </div>
           </div>
 
-          <!-- Elevate Track -->
+          <!-- Elevation Track -->
           <div id="track-elevate" class="track-content">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div class="col-span-1 md:col-span-1 bg-white/5 p-6 rounded-2xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] hover:border-sky-400/30 transition-all duration-300 group/card">
@@ -1071,60 +1103,83 @@
       
       <!-- Logos Section (Sparkles Carousel) -->
       <div class="mb-12 w-screen relative left-[50%] right-[50%] ml-[-50vw] mr-[-50vw] bg-slate-50 py-12 overflow-hidden flex flex-col items-center">
-        <div class="w-full relative z-20">
+        <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
           <h2 class="mb-12 text-center font-display font-medium text-xl text-grey-dark tracking-tight md:text-3xl">
             Companies we <span class="font-semibold text-purple-600">collaborate</span> with.
           </h2>
 
-          <div class="relative mx-auto w-full py-8">
-            <style>
-              @keyframes slide-logos {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-100%); }
-              }
-              .animate-slide-logos {
-                animation: slide-logos 30s linear infinite;
-              }
-            </style>
-            <!-- Slider -->
-            <div class="overflow-hidden flex w-full relative" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
-              
-              <!-- Group 1 -->
-              <div class="flex animate-slide-logos w-max shrink-0 items-center">
-                <div class="flex gap-16 md:gap-32 px-8 md:px-16 items-center justify-center">
-                  <img src="assets/images/hatch_logo_1.png" alt="Hatch Logo 1" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_2.png" alt="Hatch Logo 2" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_3.png" alt="Hatch Logo 3" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_4.png" alt="Hatch Logo 4" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_5.png" alt="Hatch Logo 5" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_6.png" alt="Hatch Logo 6" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_7.png" alt="Hatch Logo 7" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_8.png" alt="Hatch Logo 8" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_9.png" alt="Hatch Logo 9" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_10.png" alt="Hatch Logo 10" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_11.png" alt="Hatch Logo 11" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_12.png" alt="Hatch Logo 12" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                </div>
-              </div>
-     
-              <!-- Group 2 (Duplicate for seamless loop) -->
-              <div class="flex animate-slide-logos w-max shrink-0 items-center" aria-hidden="true">
-                <div class="flex gap-16 md:gap-32 px-8 md:px-16 items-center justify-center">
-                  <img src="assets/images/hatch_logo_1.png" alt="Hatch Logo 1" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_2.png" alt="Hatch Logo 2" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_3.png" alt="Hatch Logo 3" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_4.png" alt="Hatch Logo 4" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_5.png" alt="Hatch Logo 5" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_6.png" alt="Hatch Logo 6" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_7.png" alt="Hatch Logo 7" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_8.png" alt="Hatch Logo 8" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_9.png" alt="Hatch Logo 9" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_10.png" alt="Hatch Logo 10" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_11.png" alt="Hatch Logo 11" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                  <img src="assets/images/hatch_logo_12.png" alt="Hatch Logo 12" class="h-16 md:h-24 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
-                </div>
-              </div>
+          <div class="relative grid grid-cols-3 border-x border-gray-200 md:grid-cols-6">
+            <div class="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t border-gray-200"></div>
+
+            <!-- Logo 1 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
+
+            <!-- Logo 2 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 3 -->
+            <div class="relative border-b md:border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 4 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 5 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 6 -->
+            <div class="relative border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+            </div>
+
+            <!-- Logo 7 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 8 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 9 -->
+            <div class="relative border-b md:border-b-0 md:border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 10 -->
+            <div class="relative border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+            </div>
+
+            <!-- Logo 11 -->
+            <div class="relative border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+            </div>
+
+            <!-- Logo 12 -->
+            <div class="relative bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+            </div>
+
+            <div class="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b border-gray-200"></div>
           </div>
         </div>
 
@@ -1195,6 +1250,8 @@
             const muteIcon = document.getElementById('impact-mute-icon');
             const unmuteIcon = document.getElementById('impact-unmute-icon');
             
+            let userToggledAudio = false;
+
             if (video) {
               video.volume = 0.3; // Set default volume to 30% (softer)
             }
@@ -1202,6 +1259,7 @@
             if (video && unmuteBtn) {
               unmuteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                userToggledAudio = true; // Track that user took manual control
                 if (video.muted) {
                   video.muted = false;
                   muteIcon.classList.add('hidden');
@@ -1212,6 +1270,38 @@
                   muteIcon.classList.remove('hidden');
                 }
               });
+            }
+
+            // Auto-play audio when scrolling to the video
+            if (video) {
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                  if (userToggledAudio) return; // Don't override user's manual choice
+
+                  if (entry.isIntersecting) {
+                    video.muted = false;
+                    let playPromise = video.play();
+                    if (playPromise !== undefined) {
+                      playPromise.then(_ => {
+                        // Autoplay with audio succeeded!
+                        muteIcon.classList.add('hidden');
+                        unmuteIcon.classList.remove('hidden');
+                      }).catch(error => {
+                        // Browser prevented audio autoplay, fallback to muted
+                        video.muted = true;
+                        video.play();
+                      });
+                    }
+                  } else {
+                    // Mute it again when it leaves the viewport
+                    video.muted = true;
+                    unmuteIcon.classList.add('hidden');
+                    muteIcon.classList.remove('hidden');
+                  }
+                });
+              }, { threshold: 0.5 }); // Trigger when 50% visible
+
+              observer.observe(video);
             }
           });
         </script>

@@ -87,6 +87,18 @@
   border-radius: 8px; /* For clean UI */
 }
 
+/* Make Sarvam, MongoDB, and Zoho logos visually larger */
+.logoloop__item img[src*="homepage_logo_8"],
+.logoloop__item img[src*="homepage_logo_9"],
+.logoloop__item img[src*="homepage_logo_10"] {
+  height: calc(var(--logoloop-logoHeight) * 1.25);
+}
+
+/* Make the very wide Vishva logo smaller so it doesn't dominate the row */
+.logoloop__item img[src*="homepage_logo_7"] {
+  height: calc(var(--logoloop-logoHeight) * 0.65);
+}
+
 .logoloop--scale-hover .logoloop__item {
   overflow: visible;
 }

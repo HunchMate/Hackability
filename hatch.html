@@ -485,13 +485,35 @@
 <main class="flex-grow">
   <!-- ===================== HERO SECTION ===================== -->
   <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
-    <!-- Background -->
-    <div class="absolute inset-0 z-[0] pointer-events-none">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/hatch_hero_bg.png');"></div>
+    <!-- Background Carousel -->
+    <div id="hatch-hero-carousel" class="absolute inset-0 z-[0] pointer-events-none">
+      <div class="slide active absolute inset-0 opacity-100 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_1.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_2.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_3.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_4.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hatch_hero_bg_5.jpg');"></div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const carousel = document.getElementById('hatch-hero-carousel');
+        if (carousel) {
+          const slides = carousel.querySelectorAll('.slide');
+          let current = 0;
+          if (slides.length > 1) {
+            setInterval(() => {
+              slides[current].classList.remove('opacity-100');
+              slides[current].classList.add('opacity-0');
+              current = (current + 1) % slides.length;
+              slides[current].classList.remove('opacity-0');
+              slides[current].classList.add('opacity-100');
+            }, 5000);
+          }
+        }
+      });
+    </script>
     
     <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-[1] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-[1] pointer-events-none"></div>
 
     <div class="w-full px-4 lg:px-6 pt-32 md:pt-48 pb-20 md:pb-32 flex flex-col items-start relative z-[10]">
       <!-- Text column -->
@@ -547,10 +569,61 @@
             HATCH combines creativity, innovation, technology, and hands-on application to create meaningful learning experiences beyond traditional classrooms.
           </p>
         </div>
-        <div class="relative">
-          <div class="absolute inset-0 bg-yellow-tint rounded-3xl transform rotate-3 scale-105 -z-10"></div>
-          <img src="assets/images/hatch_illustration.png" alt="Students collaborating on tech" class="w-full h-auto rounded-3xl shadow-xl object-cover" style="aspect-ratio: 4/3;" />
+        <div class="relative group">
+          <div class="relative rounded-3xl overflow-hidden shadow-xl bg-black" style="aspect-ratio: 4/3;">
+            <video 
+              id="hatch-promo-video"
+              class="w-full h-full object-cover" 
+              autoplay
+              loop
+              muted
+              playsinline
+              poster="assets/images/hatch_illustration.png">
+              <source src="assets/videos/bring_life_to_this_image.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            
+            <!-- Unmute Button Overlay -->
+            <button id="video-unmute-btn" class="absolute bottom-4 right-4 z-20 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 backdrop-blur-md border border-white/20 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105" title="Toggle audio">
+              <!-- Muted Speaker Icon -->
+              <svg id="mute-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V3.75z"/>
+              </svg>
+              <!-- Unmuted Speaker Icon (hidden by default) -->
+              <svg id="unmute-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/>
+              </svg>
+            </button>
+          </div>
         </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('hatch-promo-video');
+            const unmuteBtn = document.getElementById('video-unmute-btn');
+            const muteIcon = document.getElementById('mute-icon');
+            const unmuteIcon = document.getElementById('unmute-icon');
+            
+            if (video) {
+              video.volume = 0.3; // Set default volume to 30% (softer)
+            }
+            
+            if (video && unmuteBtn) {
+              unmuteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (video.muted) {
+                  video.muted = false;
+                  muteIcon.classList.add('hidden');
+                  unmuteIcon.classList.remove('hidden');
+                } else {
+                  video.muted = true;
+                  unmuteIcon.classList.add('hidden');
+                  muteIcon.classList.remove('hidden');
+                }
+              });
+            }
+          });
+        </script>
       </div>
     </div>
   </section>
@@ -1003,51 +1076,75 @@
             Companies we <span class="font-semibold text-purple-600">collaborate</span> with.
           </h2>
 
-          <div class="relative grid grid-cols-2 border-x border-gray-200 md:grid-cols-4">
+          <div class="relative grid grid-cols-3 border-x border-gray-200 md:grid-cols-6">
             <div class="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t border-gray-200"></div>
 
-            <!-- Nvidia -->
-            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 1 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
               <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- Supabase -->
-            <div class="relative border-b border-gray-200 md:border-r bg-white flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 2 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- GitHub -->
-            <div class="relative border-r border-b border-gray-200 md:bg-slate-50 bg-white flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 3 -->
+            <div class="relative border-b md:border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 4 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 5 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
               <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-              <svg class="-bottom-[12.5px] -left-[12.5px] absolute z-10 hidden size-6 md:block text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- OpenAI -->
-            <div class="relative border-b border-gray-200 bg-slate-50 md:bg-white flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 6 -->
+            <div class="relative border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
             </div>
 
-            <!-- Turso -->
-            <div class="relative border-r border-b border-gray-200 bg-slate-50 md:border-b-0 md:bg-white flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="pointer-events-none h-4 md:h-5 select-none" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] md:-left-[12.5px] absolute z-10 size-6 md:hidden text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            <!-- Logo 7 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- Clerk -->
-            <div class="relative border-b md:border-r md:border-b-0 border-gray-200 bg-white md:bg-slate-50 flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 8 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- Claude AI -->
-            <div class="relative border-r border-gray-200 bg-white flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 9 -->
+            <div class="relative border-b md:border-b-0 md:border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- Vercel -->
-            <div class="relative bg-slate-50 flex items-center justify-center px-4 py-8 md:p-8">
-              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="pointer-events-none h-4 md:h-5 select-none" />
+            <!-- Logo 10 -->
+            <div class="relative border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <!-- Logo 11 -->
+            <div class="relative border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <!-- Logo 12 -->
+            <div class="relative bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
             </div>
 
             <div class="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b border-gray-200"></div>
@@ -1076,26 +1173,71 @@
         
         <div class="flex justify-center">
           <!-- 9:16 Vertical Video Container -->
-          <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-navy w-full max-w-sm" style="aspect-ratio: 9/16; background: #000;">
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-navy w-full max-w-sm group" style="aspect-ratio: 9/16; background: #000;">
             <video 
+              id="hatch-impact-video"
               class="absolute inset-0 w-full h-full object-cover" 
               poster="assets/images/video_placeholder.png" 
-              controls 
-              muted 
+              autoplay
               loop
+              muted 
+              playsinline
             >
               <!-- Dummy video source, can be replaced -->
-              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+              <source src="assets/videos/my_impact_video.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <!-- Custom Play Button Overlay (Optional, if you don't use 'controls') -->
-            <!-- <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <i class="ph-fill ph-play text-white text-3xl ml-1"></i>
-              </div>
-            </div> -->
+            
+            <!-- Unmute Button Overlay (Moved to top-right to prevent overlap with info card) -->
+            <button id="impact-video-unmute-btn" class="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 backdrop-blur-md border border-white/20 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105" title="Toggle audio">
+              <!-- Muted Speaker Icon -->
+              <svg id="impact-mute-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V3.75z"/>
+              </svg>
+              <!-- Unmuted Speaker Icon (hidden by default) -->
+              <svg id="impact-unmute-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/>
+              </svg>
+            </button>
+
+            <!-- Info Card Overlay (Always Visible) -->
+            <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/95 via-black/70 to-transparent z-10 pointer-events-none">
+              <span class="text-yellow font-display text-xs font-semibold tracking-wider uppercase mb-1 block">Student Showcase</span>
+              <h3 class="text-white font-display font-bold text-lg mb-2">Kiran International School, Boduppal</h3>
+              <p class="text-white/80 text-sm leading-relaxed">
+                Watch students collaborate to brainstorm, build prototypes, and pitch creative solutions to real-world challenges.
+              </p>
+            </div>
           </div>
-        </div>
+        </div>      </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('hatch-impact-video');
+            const unmuteBtn = document.getElementById('impact-video-unmute-btn');
+            const muteIcon = document.getElementById('impact-mute-icon');
+            const unmuteIcon = document.getElementById('impact-unmute-icon');
+            
+            if (video) {
+              video.volume = 0.3; // Set default volume to 30% (softer)
+            }
+            
+            if (video && unmuteBtn) {
+              unmuteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (video.muted) {
+                  video.muted = false;
+                  muteIcon.classList.add('hidden');
+                  unmuteIcon.classList.remove('hidden');
+                } else {
+                  video.muted = true;
+                  unmuteIcon.classList.add('hidden');
+                  muteIcon.classList.remove('hidden');
+                }
+              });
+            }
+          });
+        </script>
       </div>
 
     </div>

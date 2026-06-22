@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" style="background-color: #f8f9fa;">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog — Hackability</title>
-  <meta name="description" content="Discover the entrepreneurial journeys, startup stories, and insights from the Bower community." />
+  <title>Blog | Hackability Ecosystem Insights</title>
+  <meta name="description" content="Discover the entrepreneurial journeys, startup stories, and insights from the Hackability community." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Sora, DM Sans, Space Grotesk -->
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <!-- Cormorant Garamond -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-  <!-- Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/design-system.css?v=13" />
-  <link rel="stylesheet" href="css/logoloop.css" />
-
-  <!-- Phosphor Icons -->
+  
+  <link rel="stylesheet" href="css/design-system.css?v=14" />
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-  <!-- Tailwind CDN (dev only) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -41,385 +25,139 @@
             'navy-tint': '#E8F0FF',
             yellow:      '#F5C200',
             'yellow-dark':'#D4A800',
-            'yellow-tint':'#FFF8D6',
             'grey-light': '#F4F4F6',
             'grey-mid':   '#9CA3AF',
             'grey-dark':  '#374151',
             'hk-border':  '#E2E8F0',
-            
-            // Bower Blog Colors
-            'bower-primary': '#fb6900',
-            'bower-secondary': '#1e2e68',
-            'bower-accent': '#f5c344',
-            'bower-dark': '#2d3436',
-            'bower-muted': '#6c757d',
-            'bower-peach': '#FEE5D9'
           },
           fontFamily: {
             display: ['Sora', 'sans-serif'],
             body:    ['DM Sans', 'sans-serif'],
-            data:    ['Space Grotesk', 'sans-serif'],
-            playfair: ['Playfair Display', 'serif'],
-            inter:    ['Inter', 'sans-serif'],
-            cormorant: ['Cormorant Garamond', 'serif'],
-            jakarta:   ['Plus Jakarta Sans', 'sans-serif'],
           },
         }
       }
     }
   </script>
-
-  <style>
-    /* Custom Scrollbar hide */
-    .scrollbar-none::-webkit-scrollbar {
-      display: none;
-    }
-    .scrollbar-none {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* Faint Grid Background Pattern */
-    .bg-grid-pattern-light {
-      background-size: 50px 50px;
-      background-image: 
-        linear-gradient(to right, rgba(13, 27, 142, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(13, 27, 142, 0.02) 1px, transparent 1px);
-    }
-    
-    .blog-card {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .blog-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(13, 27, 142, 0.08);
-    }
-    
-    .filter-pill {
-      font-weight: 600;
-      font-size: 0.875rem;
-      padding: 0.5rem 1.25rem;
-      border-radius: 9999px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .filter-pill.active {
-      background: #1e2e68;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(30, 46, 104, 0.2);
-    }
-    .filter-pill:not(.active) {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      color: #6c757d;
-    }
-    .filter-pill:not(.active):hover {
-      background: #f3f4f6;
-      color: #1e2e68;
-    }
-    
-    /* Glossy Category Cards with Glowing Animation */
-    .glossy-category-card {
-      height: 100px;
-      width: 200px;
-      border-radius: 15px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(30, 46, 104, 0.2);
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 1;
-      background: linear-gradient(135deg, #b73400 10%, #1e2e68 100%);
-      margin: 0 auto;
-    }
-
-    /* Glossy effect overlay */
-    .glossy-category-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60%;
-      background: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0.15) 30%,
-        rgba(255, 255, 255, 0.05) 60%,
-        rgba(255, 255, 255, 0) 100%);
-      border-radius: 15px 15px 100px 100px;
-      z-index: 1;
-    }
-
-    /* Animated glowing border */
-    .glossy-category-card::after {
-      content: '';
-      position: absolute;
-      top: -3px;
-      left: -3px;
-      right: -3px;
-      bottom: -3px;
-      background: linear-gradient(45deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.8) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      border-radius: 18px;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      animation: glow 4s infinite linear;
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        opacity: 0.3;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      }
-      25% {
-        opacity: 0.5;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      }
-      50% {
-        opacity: 0.8;
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-      }
-      75% {
-        opacity: 0.5;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      }
-    }
-
-    .glossy-category-card:hover {
-      transform: translateY(-6px) scale(1.04);
-      box-shadow: 0 15px 30px rgba(30, 46, 104, 0.4);
-    }
-    
-    .glossy-category-card:hover::after {
-      opacity: 1;
-    }
-
-    /* Swiper Custom Styling */
-    .category-swiper {
-      padding: 10px 40px;
-    }
-
-    /* Reader Modal Animation */
-    .modal-overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: opacity 0.4s ease-out;
-    }
-    .modal-box {
-      transform: translateY(30px);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .modal-open .modal-box {
-      transform: translateY(0);
-    }
-
-    body.loading {
-      overflow: hidden;
-    }
-    body.modal-active {
-      overflow: hidden;
-    }
-
-    /* Typographic updates for light mode prose */
-    .prose-custom h3 {
-      color: #1e2e68 !important;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 700;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-    .prose-custom p {
-      color: #374151 !important;
-      line-height: 1.8;
-      margin-bottom: 1.25rem;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .font-cormorant {
-      font-family: 'Cormorant Garamond', serif !important;
-    }
-    .font-jakarta {
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
-    }
-    .font-inter {
-      font-family: 'Inter', sans-serif !important;
-    }
-
-    /* Preloader Animation Keyframes */
-    @keyframes preloaderFadeInDown {
-      to { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes preloaderDrawLine {
-      to { stroke-dashoffset: 0; }
-    }
-    @keyframes preloaderStarPop {
-      0% { opacity: 0; transform: scale(0) rotate(-45deg); }
-      100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link rel="stylesheet" href="css/card-nav.css" />
 </head>
-<body class="font-body bg-zinc-950 text-white flex flex-col min-h-screen">
+<body class="font-body bg-grey-light text-grey-dark flex flex-col min-h-screen">
 
-  <!-- ===================== GLOSSY PRELOADER ===================== -->
-  <div id="page-preloader" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-2xl transition-opacity duration-1000 ease-in-out">
-    <div class="relative flex flex-col items-center justify-center gap-2 transform translate-y-[-20px] opacity-0" style="animation: preloaderFadeInDown 0.6s ease-out forwards 0.1s;">
-      <h1 class="text-5xl md:text-7xl font-display font-bold text-white text-center mb-2">Blog</h1>
-      <svg width="300" height="20" viewBox="0 0 300 20" class="absolute -bottom-6 left-1/2 -translate-x-1/2 overflow-visible">
-        <path
-          d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
-          stroke="currentColor"
-          stroke-width="3"
-          fill="none"
-          class="text-white"
-          stroke-linecap="round"
-          style="stroke-dasharray: 310; stroke-dashoffset: 310; animation: preloaderDrawLine 1.5s ease-in-out forwards 0.4s;"
-        />
-        <g style="transform: translate(288px, -2px);" class="text-white">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" style="opacity: 0; transform-box: fill-box; transform-origin: center; animation: preloaderStarPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.8s;" />
-        </g>
-      </svg>
-    </div>
-  </div>
-
-  <script>
-    document.body.classList.add('loading');
-    const _preloaderStart = Date.now();
-    window.hidePreloader = function() {
-      const elapsed = Date.now() - _preloaderStart;
-      const remain = Math.max(0, 1000 - elapsed);
-      setTimeout(() => {
-        const p = document.getElementById('page-preloader');
-        if(p) {
-          p.style.opacity = '0';
-          setTimeout(() => { p.remove(); document.body.classList.remove('loading'); }, 1000);
-        }
-      }, remain);
-    };
-  </script>
-
-  <!-- ===================== NAVBAR ===================== -->
+<!-- ===================== NAVBAR ===================== -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 pt-6">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
       
       <!-- Logo -->
       <div class="flex-1 flex justify-start">
-        <a href="index.html" class="flex items-center" id="logo-link">
-          <img src="assets/logo-white.png" alt="Hackability" style="height:36px;" />
+        <a href="/" class="flex items-center" id="logo-link">
+          <img src="assets/logo-dark.png" alt="Hackability" style="height:36px; " />
         </a>
       </div>
 
       <!-- Desktop Nav (Mega Menu) -->
       <div class="hidden lg:flex justify-center absolute left-1/2 -translate-x-1/2 z-[60]">
-        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 rounded-full text-white/90" style="background-color: rgba(9, 9, 11, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08);">
+        <ul class="nav-pill flex items-center gap-8 list-none m-0 px-10 py-4 rounded-full text-grey-dark bg-black/5 backdrop-blur-md border border-black/5">
           <li class="flex items-center">
-            <a href="about.html" class="text-base font-medium hover:text-white transition-colors cursor-pointer">About us</a>
-          </li>
+            <a href="about.html" class="text-base font-medium hover:text-navy transition-colors cursor-pointer">About us</a>
+        </li>
         
-          <!-- Our Ecosystem Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            
-            <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <div class="grid grid-cols-2 gap-4">
-                <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg no-underline">
-                  <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
-                    <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
-                  </div>
-                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-                </a>
-                <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg no-underline">
-                  <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
-                    <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
-                  </div>
-                  <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-                </a>
+        <!-- Our Ecosystem Dropdown -->
+        <li class="mega-menu-item flex items-center">
+          <button class="text-base font-medium hover:text-navy transition-colors cursor-pointer flex items-center gap-1">
+            Our Ecosystem <i class="ph-bold ph-caret-down text-sm"></i>
+          </button>
+          
+          <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <div class="grid grid-cols-2 gap-4">
+              <a href="hatch.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
+                <div class="pr-6">
+                  <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
+                  <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+              <a href="hackability.html" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+                <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
+                <div class="pr-6">
+                  <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
+                  <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
+                </div>
+                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Products Dropdown -->
+        <li class="mega-menu-item flex items-center">
+          <button class="text-base font-medium hover:text-navy transition-colors cursor-pointer flex items-center gap-1">
+            Products <i class="ph-bold ph-caret-down text-sm"></i>
+          </button>
+          
+          <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+              <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
+              <div class="flex-1 pr-4">
+                <span class="text-sm font-bold text-navy block">inCamp</span>
+                <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
               </div>
-            </div>
-          </li>
+              <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+            </a>
+          </div>
+        </li>
 
-          <!-- Products Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Products <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            
-            <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <a href="index.html#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg no-underline">
-                <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">inCamp</span>
-                  <span class="text-xs text-grey-dark block">Campus Innovation Management Platform</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-            </div>
-          </li>
-
-          <!-- Our Network Dropdown -->
-          <li class="mega-menu-item flex items-center">
-            <button class="text-base font-medium hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-              Our Network <i class="ph-bold ph-caret-down text-sm"></i>
-            </button>
-            
-            <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg no-underline">
-                <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Colleges</span>
-                  <span class="text-xs text-grey-dark block">Partner institutions.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-              <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2 no-underline">
-                <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Organizations</span>
-                  <span class="text-xs text-grey-dark block">Corporate partners.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-              <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2 no-underline">
-                <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
-                <div class="flex-1 pr-4">
-                  <span class="text-sm font-bold text-navy block">Mentors</span>
-                  <span class="text-xs text-grey-dark block">Our expert mentors.</span>
-                </div>
-                <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
-              </a>
-            </div>
-          </li>
+        <!-- Our Network Dropdown -->
+        <li class="mega-menu-item flex items-center">
+          <button class="text-base font-medium hover:text-navy transition-colors cursor-pointer flex items-center gap-1">
+            Our Network <i class="ph-bold ph-caret-down text-sm"></i>
+          </button>
+          
+          <div id="partners-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
+            <a href="partners.html?category=Colleges" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+              <i class="ph-fill ph-graduation-cap text-2xl text-yellow"></i>
+              <div class="flex-1 pr-4">
+                <span class="text-sm font-bold text-navy block">Colleges</span>
+                <span class="text-xs text-grey-dark block">Partner institutions.</span>
+              </div>
+              <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+            </a>
+            <a href="partners.html?category=Organizations" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+              <i class="ph-fill ph-buildings text-2xl text-yellow"></i>
+              <div class="flex-1 pr-4">
+                <span class="text-sm font-bold text-navy block">Organizations</span>
+                <span class="text-xs text-grey-dark block">Corporate partners.</span>
+              </div>
+              <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+            </a>
+            <a href="partners.html?category=Mentors" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg mt-2">
+              <i class="ph-fill ph-users-three text-2xl text-yellow"></i>
+              <div class="flex-1 pr-4">
+                <span class="text-sm font-bold text-navy block">Mentors</span>
+                <span class="text-xs text-grey-dark block">Our expert mentors.</span>
+              </div>
+              <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0"></i>
+            </a>
+          </div>
+        </li>
           <li class="flex items-center">
-            <a href="blog.html" class="text-base font-semibold text-yellow hover:text-white transition-colors cursor-pointer no-underline">Blog</a>
+            <a href="blog.html" class="text-base font-medium hover:text-navy transition-colors cursor-pointer">Blog</a>
           </li>
         </ul>
       </div>
 
-      <!-- Right aligned controls -->
+      <!-- Right aligned controls: Contact (Desktop) & Hamburger (Mobile) -->
       <div class="flex-1 flex justify-end items-center gap-4 z-50">
-        <a href="index.html#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-white/20 bg-white/10 text-base font-bold text-white hover:bg-white hover:text-navy transition-colors shadow-sm no-underline">
+        <a href="#contact" class="hidden lg:inline-flex px-8 py-3 rounded-full border border-black/5 bg-black/5 text-base font-bold text-navy hover:bg-black/10 transition-colors shadow-sm">
           Contact us
         </a>
-        <div class="hamburger-menu text-white lg:hidden" aria-label="Open menu" tabindex="0">
+        <!-- Mobile hamburger (CardNav style) -->
+        <div class="hamburger-menu text-navy lg:hidden" aria-label="Open menu" tabindex="0">
           <div class="hamburger-line bg-current"></div>
           <div class="hamburger-line bg-current"></div>
         </div>
       </div>
     </div>
   
-    <!-- Mobile Navigation Drawer -->
+    <!-- CardNav Mobile Dropdown Content -->
     <div class="card-nav-content lg:hidden">
       <!-- Card 1: Our Ecosystem -->
       <div class="nav-card" style="background-color: #0D1B8E; color: white;">
@@ -455,7 +193,7 @@
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             About Us
           </a>
-          <a class="nav-card-link text-navy font-bold" href="blog.html">
+          <a class="nav-card-link text-navy" href="blog.html">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             Blog
           </a>
@@ -483,213 +221,38 @@
     </div>
   </nav>
 
-  <!-- Main Content Container with Faint Grid Pattern Background -->
-  <main class="flex-grow bg-[#f8f9fa] bg-grid-pattern-light relative text-[#2d3436]">
-    
-    <!-- Hero Section with First Post (Premium Redesigned Layout) -->
-    <section class="max-w-7xl mx-auto px-6 pt-36 pb-16 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center" data-aos="fade-up">
-        
-        <!-- Left Column: Content Block with custom soft glow background -->
-        <div class="space-y-8 relative">
-          <!-- Soft radial decorative glow -->
-          <div class="absolute -left-10 -top-10 w-72 h-72 rounded-full bg-[#fb6900]/5 blur-3xl pointer-events-none"></div>
-          
-          <!-- Metadata Pill & Date -->
-          <div class="flex items-center gap-4 relative z-10">
-            <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold font-jakarta bg-[#1e2e68]/5 border border-[#1e2e68]/15 text-[#1e2e68] tracking-wider uppercase">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#fb6900]"></span>
-              LEAD
-            </span>
-            <span class="text-xs font-jakarta font-semibold tracking-widest text-zinc-400 uppercase">June 14, 2026</span>
-          </div>
-          
-          <!-- Editorial Headline -->
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-cormorant font-light text-[#0D1B8E] leading-[1.15] tracking-tight relative z-10">
-            From <span class="italic font-medium text-[#fb6900]">Weekend Hackathons</span> to Building Alto: The <span class="italic font-medium">Entrepreneurial Journey</span> of J. Manojkumar
-          </h1>
-          
-          <!-- Excerpt -->
-          <p class="text-zinc-600 text-base md:text-lg leading-relaxed font-inter font-light max-w-xl relative z-10">
-            For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.
-          </p>
-          
-          <!-- Actions -->
-          <div class="flex flex-wrap gap-4 relative z-10 pt-2">
-            <button onclick="openArticle(1)" class="px-8 py-4 bg-gradient-to-r from-[#0D1B8E] to-[#1A2FA8] hover:from-[#fb6900] hover:to-[#ff8138] text-white rounded-full font-semibold font-jakarta text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.03] flex items-center gap-2 group">
-              <i class="ph-bold ph-book-open text-base group-hover:rotate-6 transition-transform"></i> 
-              Explore Post
-            </button>
-            <a href="#latest-posts" class="px-8 py-4 border border-zinc-300/80 text-zinc-700 rounded-full font-semibold font-jakarta text-sm hover:bg-zinc-100/60 transition-all duration-300 flex items-center gap-2 no-underline hover:border-zinc-400 group">
-              <i class="ph-bold ph-arrow-down text-base group-hover:translate-y-0.5 transition-transform"></i> 
-              More Articles
-            </a>
-          </div>
-        </div>
-        
-        <!-- Right Column: Premium Image Card -->
-        <div class="relative group" data-aos="fade-left" data-aos-delay="100">
-          <!-- Decorative backing card/shadow shadow -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-[#fb6900]/10 to-[#1e2e68]/10 rounded-[2.5rem] transform translate-x-3 translate-y-3 -z-10 transition-transform duration-500 group-hover:translate-x-5 group-hover:translate-y-5"></div>
-          
-          <!-- Image frame -->
-          <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-zinc-200/60 bg-white p-3 aspect-[4/3] flex items-center justify-center">
-            <img src="https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg" alt="From Weekend Hackathons to Building Alto" class="w-full h-full object-cover rounded-[1.8rem] transition-transform duration-700 group-hover:scale-105" />
-          </div>
-        </div>
-
+  <main class="flex-grow pt-32">
+    <!-- HERO -->
+    <header class="relative bg-transparent pb-16 text-center">
+      <div class="max-w-4xl mx-auto px-6 relative z-10 mt-12">
+        <h1 class="font-display font-bold text-5xl md:text-6xl mb-6 text-navy tracking-tight">Hackability Insights</h1>
+        <p class="text-grey-dark/80 text-xl md:text-2xl font-body font-medium max-w-2xl mx-auto leading-relaxed">
+          Stories, technical deep-dives, and ecosystem news from the brightest minds building the future.
+        </p>
       </div>
-    </section>
+    </header>
 
-    <!-- Categories Section (Bower School Peach Banner & Carousel) -->
-    <section class="w-full py-12 bg-[#FEE5D9] relative z-10 mb-12">
+    <!-- CONTENT -->
+    <section class="py-16">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-cormorant font-light text-[#fb6900] leading-tight mb-8">Explore by <span class="italic font-medium text-[#1e2e68]">Category</span></h2>
-        
-        <!-- Swiper Carousel -->
-        <div class="swiper category-swiper overflow-visible pb-8">
-          <div class="swiper-wrapper" id="categories-swiper-wrapper">
-            <!-- Populated dynamically via JS to count post numbers -->
-          </div>
-          
-          <!-- Swiper Navigation & Pagination -->
-          <div class="swiper-pagination !bottom-0"></div>
-          <div class="swiper-button-next !text-[#1e2e68] !w-9 !h-9 !bg-white/80 hover:!bg-white !rounded-full !shadow-sm after:!text-sm after:!font-bold"></div>
-          <div class="swiper-button-prev !text-[#1e2e68] !w-9 !h-9 !bg-white/80 hover:!bg-white !rounded-full !shadow-sm after:!text-sm after:!font-bold"></div>
+        <!-- Filters -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+          <button class="blog-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 shadow-md bg-navy text-white" data-category="All">All Posts</button>
+          <button class="blog-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 bg-white text-grey-dark hover:bg-grey-light" data-category="Program Updates">Program Updates</button>
+          <button class="blog-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 bg-white text-grey-dark hover:bg-grey-light" data-category="Education">Education</button>
+          <button class="blog-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 bg-white text-grey-dark hover:bg-grey-light" data-category="Tech & Development">Tech & Development</button>
+          <button class="blog-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 bg-white text-grey-dark hover:bg-grey-light" data-category="Startups">Startups</button>
         </div>
-      </div>
-    </section>
 
-    <!-- Search bar & Category Filters (Sticky Top-0 viewport snap) -->
-    <section class="max-w-7xl mx-auto px-6 py-4 sticky top-0 z-30 bg-[#f8f9fa]/90 backdrop-blur-md border-y border-zinc-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <!-- Category Pills -->
-      <div id="filter-container" class="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-        <button class="filter-pill active" data-category="all">All</button>
-        <button class="filter-pill" data-category="LEAD">LEAD</button>
-        <button class="filter-pill" data-category="UG">UG</button>
-        <button class="filter-pill" data-category="Seed">Seed</button>
-      </div>
-
-      <!-- Search bar & Button -->
-      <div class="flex items-center gap-2 w-full md:max-w-md">
-        <div class="relative flex-grow">
-          <i class="ph-bold ph-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"></i>
-          <input 
-            type="text" 
-            id="blog-search" 
-            class="w-full pl-12 pr-5 py-3 rounded-full border border-zinc-200 bg-white text-zinc-800 placeholder-zinc-400 focus:outline-none focus:border-[#1e2e68] transition-all text-sm shadow-sm"
-            placeholder="Search for blog posts..."
-          />
-        </div>
-        <button id="blog-search-btn" class="px-6 py-3 bg-[#1e2e68] hover:bg-[#fb6900] text-white rounded-full font-semibold transition-all text-sm shadow-sm shrink-0">
-          Search
-        </button>
-      </div>
-    </section>
-
-    <!-- Post Cards Grid Section -->
-    <section class="py-12 relative z-10 min-h-[400px]">
-      <div class="max-w-7xl mx-auto px-6">
-        <h2 id="latest-posts" class="text-3xl md:text-4xl lg:text-5xl font-cormorant font-light text-[#fb6900] leading-tight mb-8">Latest <span class="italic font-medium text-[#1e2e68]">Articles</span></h2>
-        <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Loaded dynamically via JS -->
-        </div>
-        
-        <!-- No posts warning -->
-        <div id="no-posts-found" class="hidden flex flex-col items-center justify-center py-20 text-center">
-          <i class="ph-bold ph-smiley-sad text-6xl text-zinc-400 mb-4"></i>
-          <h3 class="text-xl font-bold text-zinc-800 mb-2">No Articles Found</h3>
-          <p class="text-zinc-500 max-w-sm">We couldn't find any articles matching your criteria. Try adjusting your search query or filters.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== NEWSLETTER SECTION ===================== -->
-    <section class="py-20 border-t border-zinc-200 relative z-10 bg-[#f8f9fa]">
-      <div class="max-w-4xl mx-auto px-6">
-        <div class="bg-[#1e2e68] text-white p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
-          <div class="absolute -right-24 -top-24 w-64 h-64 rounded-full bg-[#fb6900]/10 blur-3xl pointer-events-none"></div>
-          <div class="absolute -left-24 -bottom-24 w-64 h-64 rounded-full bg-[#f5c344]/10 blur-3xl pointer-events-none"></div>
-          
-          <h2 class="font-cormorant font-light text-3xl md:text-4xl lg:text-5xl mb-4 italic text-white">Subscribe to Our <span class="italic font-medium text-[#fb6900]">Newsletter</span></h2>
-          <p class="text-white/80 text-base max-w-lg mb-8 leading-relaxed font-inter font-light">
-            Stay updated with our latest articles, events, and entrepreneurial insights delivered directly to your inbox.
-          </p>
-          <form id="newsletter-form" class="w-full max-w-md flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              class="w-full px-5 py-3.5 rounded-full bg-white border border-transparent text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#fb6900] transition-all text-sm" 
-              placeholder="Your email address" 
-              required
-            />
-            <button type="submit" class="px-8 py-3.5 bg-[#fb6900] hover:bg-white hover:text-[#fb6900] text-white font-bold text-sm rounded-full transition-all shadow-md shrink-0 flex items-center justify-center gap-2">
-              Subscribe
-            </button>
-          </form>
-          <div id="newsletter-success" class="hidden mt-4 text-[#f5c344] text-sm font-semibold flex items-center gap-2">
-            <i class="ph-bold ph-check-circle"></i> Thanks for subscribing!
-          </div>
+        <!-- Grid -->
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Posts injected by JS -->
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ===================== ARTICLE READ MODAL (Light Themed) ===================== -->
-  <div id="reader-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
-    <div id="modal-overlay" class="absolute inset-0 modal-overlay opacity-0"></div>
-    
-    <div class="modal-box bg-white border border-zinc-200 w-full max-w-4xl h-full md:h-[90vh] md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mx-auto text-zinc-800">
-      
-      <!-- Read progress indicator -->
-      <div id="read-progress" class="h-1 bg-[#fb6900] w-0 absolute top-0 left-0 transition-all duration-100 z-50"></div>
-
-      <!-- Modal Header controls -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-100 bg-[#f8f9fa] backdrop-blur-md shrink-0">
-        <span id="modal-article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-[#1e2e68]/10 border border-[#1e2e68]/20 text-[#1e2e68] uppercase tracking-wider">Category</span>
-        <button id="modal-close-btn" class="w-10 h-10 rounded-full hover:bg-zinc-200/50 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-all">
-          <i class="ph-bold ph-x text-xl"></i>
-        </button>
-      </div>
-
-      <!-- Scrollable article area -->
-      <div id="modal-body-scroll" class="flex-grow overflow-y-auto p-6 md:p-12">
-        <div class="max-w-2xl mx-auto">
-          <!-- Article Title -->
-          <h1 id="modal-article-title" class="font-cormorant font-light text-[#1e2e68] italic text-3xl md:text-5xl leading-tight mb-6">
-            Article Title
-          </h1>
-
-          <!-- Article Meta -->
-          <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-100">
-            <div class="w-12 h-12 rounded-full bg-[#1e2e68] text-white flex items-center justify-center font-bold font-inter text-lg shadow-sm" id="modal-author-avatar">
-              P
-            </div>
-            <div>
-              <div class="font-bold text-[#1e2e68]" id="modal-article-author">Author Name</div>
-              <div class="text-xs text-zinc-500 font-medium flex items-center gap-2">
-                <span id="modal-article-date">Date</span>
-                <span>•</span>
-                <span id="modal-article-readtime">Read Time</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Featured Image -->
-          <div class="rounded-3xl overflow-hidden mb-8 shadow-md border border-zinc-100">
-            <div id="modal-article-image" class="w-full h-64 md:h-96 bg-cover bg-center"></div>
-          </div>
-
-          <!-- HTML Content Body -->
-          <div id="modal-article-content" class="prose-custom max-w-none text-zinc-700 text-base leading-relaxed space-y-6">
-            <!-- Article Body Content loaded via JS -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== FOOTER (Hackability Navy) ===================== -->
-  <footer class="bg-navy border-t border-white/10 pt-16 pb-8 text-white relative z-20">
+<footer class="bg-navy border-t border-white/10 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <!-- Brand column -->
@@ -697,7 +260,7 @@
           <div class="flex items-center gap-2 mb-4">
             <img src="assets/logo-white.png" alt="Hackability" style="height:32px;" />
           </div>
-          <p class="text-sm mb-6" style="color:rgba(255,255,255,0.5);line-height:1.7;">
+          <p data-cms-id="footer.description" class="text-sm mb-6" style="color:rgba(255,255,255,0.5);line-height:1.7;">
             Building innovation-driven talent at scale through strategic partnerships and ecosystem-driven initiatives.
           </p>
           <div class="flex items-center gap-4">
@@ -715,11 +278,11 @@
           <h4 class="font-display font-semibold text-white mb-6">Navigation</h4>
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
             <li><a href="about.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
-            <li><a href="hackability.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
-            <li><a href="hatch.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
-            <li><a href="index.html#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
-            <li><a href="blog.html" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Blog</a></li>
-            <li><a href="index.html#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
+            <li><a href="#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
+            <li><a href="#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
+            <li><a href="#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
+            <li><a href="#media" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Media</a></li>
+            <li><a href="#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
           </ul>
         </div>
 
@@ -749,7 +312,7 @@
 
       <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-xs text-white/40 m-0">
-          © Hackability. All Rights Reserved.
+          Â© Hackability. All Rights Reserved.
         </p>
         <div class="flex items-center gap-6">
           <a href="/admin/" class="text-xs text-yellow/80 hover:text-yellow no-underline transition-colors flex items-center gap-1 font-medium">
@@ -763,390 +326,11 @@
     </div>
   </footer>
 
-  <!-- Interactive JavaScript Logic -->
-  <script>
-    // Sample Blog Post Data from Bower School of Entrepreneurship
-    const blogPosts = [
-      {
-        id: 1,
-        title: "From Weekend Hackathons to Building Alto: The Entrepreneurial Journey of J. Manojkumar",
-        category: "LEAD",
-        date: "June 14, 2026",
-        readTime: "6 min read",
-        author: "J. Manojkumar",
-        abstract: "For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o9708Manoj Blog thumbnail.jpg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">For J. Manojkumar, entrepreneurship didn't begin with a pitch deck or a business plan. It began with an idea discussed after work, weekends spent at hackathons, and a growing restlessness.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Restless Corporate Developer</h3>
-          <p>Manojkumar started his career in core software engineering. But he soon realized that the corporate framework restricted his ability to prototype quickly and solve open-ended problems. He spent his weekends attending hackathons, building MVP codebases, and exploring developer ecosystems.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Building Alto: From Idea to Venture</h3>
-          <p>The transition from a coder to a builder was triggered by a simple observation: modern dev teams struggle to manage local environment configurations, leading to weeks of onboarding delays. Manojkumar set out to automate local developer workspace orchestrations. This led to the creation of Alto, a developer tool designed to spin up cloud environments instantly.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Core Takeaways for Founders</h3>
-          <p>Manojkumar emphasizes that founders shouldn't wait for "perfect validation." Launching a minimal product, gathering raw developer feedback, and iterating in public is the most powerful path to product-market fit.</p>
-        `
-      },
-      {
-        id: 2,
-        title: "Against the Odds: How Dilshaan Basha Momin Is Building Lumenar on Self-Belief",
-        category: "LEAD",
-        date: "June 06, 2026",
-        readTime: "7 min read",
-        author: "Dilshaan Basha Momin",
-        abstract: "In October 2025, Dilshaan Basha Momin did something that made almost no sense on paper. Armed only with self-belief, he took a leap to build Lumenar.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o2055Dilshaan-Blog-thumbnail.jpg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">In October 2025, Dilshaan Basha Momin did something that made almost no sense on paper. He resigned from a stable position to build Lumenar on sheer self-belief and vision.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Genesis of Lumenar</h3>
-          <p>Lumenar was born out of a critical gap in industrial safety operations. Real-time hazard notifications were either too late or completely missed on factory floors. Dilshaan envisioned a smart IoT safety grid that uses high-frequency visual arrays to warn operators of malfunctions instantly.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Navigating the Skepticism</h3>
-          <p>Building hardware in India is notoriously difficult due to supply chain friction and investor skepticism. Dilshaan spent months sourcing components locally, prototyping in tiny workshops, and refining the sensor grids. His belief in the utility of the product kept him going through dozens of failed hardware iterations.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Impact of Hardware Innovation</h3>
-          <p>Lumenar has since run active pilot tests across manufacturing plants, proving a 40% reduction in warning response times. Dilshaan's journey proves that deep-tech startups can thrive when founders remain relentlessly focused on user utility and safety compliance.</p>
-        `
-      },
-      {
-        id: 3,
-        title: "Avani Mekala: Growing NutriViva Through Science, Tradition, & Sustainable Solutions",
-        category: "LEAD",
-        date: "May 30, 2026",
-        readTime: "5 min read",
-        author: "Avani Mekala",
-        abstract: "Today, health and wellness information is everywhere: from diet trends to nutrition routines. Avani Mekala is building NutriViva to offer evidence-based food transparency.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o7322Blog thumbnail.jpg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">Today, health and wellness information is everywhere. Avani Mekala is building NutriViva to bridge the gap between traditional food wisdom, modern science, and sustainable sourcing.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Chemistry of Clean Eating</h3>
-          <p>As a food scientist, Avani realized that the commercial food supply is saturated with micro-preservatives and chemical stabilizers that damage gut health. NutriViva was established to develop clean-label, bio-available health supplements using local grain chemistry and traditional fermentation techniques.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Establishing a Sustainable Supply Chain</h3>
-          <p>NutriViva partners directly with local farmer cooperatives in Andhra Pradesh to source organic millet and traditional herbs. This not only guarantees purity for the consumer but also provides sustainable fair-wage income streams for regional farming families.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Scaling NutriViva</h3>
-          <p>NutriViva is expanding its digital direct-to-consumer footprint, leveraging educational content to teach buyers how to read ingredient labels and select foods based on actual chemical transparency rather than marketing buzzwords.</p>
-        `
-      },
-      {
-        id: 4,
-        title: "A Conventional Guy on an Unconventional Path: Lavakumar Kondipati On Building NatBolt",
-        category: "LEAD",
-        date: "May 23, 2026",
-        readTime: "5 min read",
-        author: "Lavakumar Kondipati",
-        abstract: "Entrepreneurship stories often begin with a dramatic leap. For Lavakumar Kondipati, building NatBolt meant stepping off the traditional path into the unknown.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o7157Blog thumbnail copy.jpg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">Entrepreneurship stories often begin with a dramatic leap. For Lavakumar Kondipati, building NatBolt meant stepping off the conventional academic path to pioneer hardware automation.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Hardware Assembly Bottleneck</h3>
-          <p>In manufacturing assemblies, the insertion of microscopic bolts and fasteners is still performed manually, causing massive factory-line bottlenecks. Lavakumar founded NatBolt to design high-speed automated fastener feeds that utilize computer vision to align bolts in milliseconds.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Unconventional Pivot</h3>
-          <p>Lavakumar's family expected him to take a stable software engineering job. Deciding to build high-precision industrial hardware in a tiny garage was a significant risk. However, his focus on resolving assembly bottlenecks won NatBolt a series of local innovation grants and corporate pilots.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Scaling Fastener Automation</h3>
-          <p>NatBolt's smart feeds are now being integrated into automotive assembly lines, accelerating production speed and proving that industrial automation is a fertile space for young innovators.</p>
-        `
-      },
-      {
-        id: 5,
-        title: "A ‘Cinematic Start’: Sugavignesh and Trovo at Bower",
-        category: "UG",
-        date: "May 16, 2026",
-        readTime: "4 min read",
-        author: "Sugavignesh VS",
-        abstract: "At 20, most students are still figuring out what they want to become. Sugavignesh VS has already abandoned three futures to build Trovo.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o18911Blog-design-thumbnail.jpg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">At 20, most students are still figuring out what they want to become. Sugavignesh VS has already abandoned three traditional career paths to build Trovo.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Spark of Trovo</h3>
-          <p>Trovo is a micro-mobility solution designed to streamline intra-campus transit. Using app-enabled electric kick scooters, Trovo allows students to scan, unlock, and navigate large university estates in minutes, reducing tardiness and carbon footprint.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Launching on Campus</h3>
-          <p>Sugavignesh launched Trovo directly on the Bower campus as part of the UG entrepreneurship curriculum. Working with university operations, he established charging ports, safety parameters, and software geo-fencing to run a successful pilot program that has logged over 5,000 campus rides.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Future Horizons</h3>
-          <p>Trovo is currently preparing to scale to three neighboring universities in Hyderabad, demonstrating how student-led campus experiments can evolve into sustainable local transit businesses.</p>
-        `
-      },
-      {
-        id: 6,
-        title: "From UPSC Aspirant to Startup Founder: How Gadikota Siva Shankar Reddy Is Building Jolly Junction Bookings",
-        category: "LEAD",
-        date: "May 10, 2026",
-        readTime: "6 min read",
-        author: "G. Siva Shankar Reddy",
-        abstract: "After years of preparing for UPSC, Gadikota Siva Shankar Reddy shifted to entrepreneurship to build Jolly Junction Bookings and solve event booking complexity.",
-        coverImage: "https://bowerschool-blogs.blr1.digitaloceanspaces.com/media/blog_images/o182321741118846944.jpeg",
-        content: `
-          <p class="text-lg font-semibold text-zinc-200 mb-6">After years of preparing for UPSC, Gadikota Siva Shankar Reddy shifted to entrepreneurship when the civil service path no longer aligned with his goals.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">The Booking Paradox</h3>
-          <p>Organizing corporate functions and local celebrations is famously chaotic, involving dozens of calls to venues, caterers, and decorators. Siva Shankar founded Jolly Junction Bookings to aggregate local event services into a unified, transparent digital booking platform.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Leveraging UPSC Grit</h3>
-          <p>Siva Shankar credits his years of civil services preparation for his stamina and system-level thinking. Building a platform that matches caterers, decorators, and venues requires enormous logistics coordination. His grit helped him onboard 150+ regional vendors within their first year.</p>
-          
-          <h3 class="text-2xl font-bold text-white mt-8 mb-4">Event Operations Made Simple</h3>
-          <p>Jolly Junction Bookings is now active across Hyderabad, reducing customer booking times from weeks to minutes, illustrating that public-service discipline is a powerful founder superpower.</p>
-        `
-      }
-    ];
-
-    // DOM Elements
-    const postsGrid = document.getElementById('posts-grid');
-    const noPostsWarning = document.getElementById('no-posts-found');
-    const searchInput = document.getElementById('blog-search');
-    const filterContainer = document.getElementById('filter-container');
-    const readerModal = document.getElementById('reader-modal');
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-    const modalScrollArea = document.getElementById('modal-body-scroll');
-    const readProgressBar = document.getElementById('read-progress');
-
-    let currentCategory = 'all';
-    let searchQuery = '';
-
-    // Calculate category counts and render swiper categories dynamically
-    function calculateCategoryCounts() {
-      const counts = { 'LEAD': 0, 'UG': 0, 'Seed': 0, 'Career Insights': 0, 'Startup Stories': 0, 'News & Announcements': 0 };
-      blogPosts.forEach(post => {
-        const cat = post.category;
-        if (counts.hasOwnProperty(cat)) {
-          counts[cat]++;
-        }
-      });
-
-      const swiperWrapper = document.getElementById('categories-swiper-wrapper');
-      if (swiperWrapper) {
-        swiperWrapper.innerHTML = Object.entries(counts).map(([cat, count]) => {
-          let gradient = 'linear-gradient(135deg, #b73400 10%, #1e2e68 100%)';
-          if (cat === 'UG') gradient = 'linear-gradient(135deg, #10b981 10%, #065f46 100%)';
-          if (cat === 'Seed') gradient = 'linear-gradient(135deg, #f59e0b 10%, #b45309 100%)';
-          if (cat === 'Career Insights') gradient = 'linear-gradient(135deg, #6366f1 10%, #3730a3 100%)';
-          if (cat === 'Startup Stories') gradient = 'linear-gradient(135deg, #ec4899 10%, #9d174d 100%)';
-          
-          return `
-            <div class="swiper-slide !w-auto">
-              <a href="javascript:void(0)" onclick="selectCategory('${cat}')" class="text-decoration-none block">
-                <div class="glossy-category-card" style="background: ${gradient};">
-                  <div class="glossy-category-content flex flex-col justify-between h-full p-4 text-white">
-                    <h5 class="font-bold text-sm font-inter m-0 leading-tight">${cat}</h5>
-                    <span class="category-count inline-block bg-white/20 px-3 py-1 rounded-full text-[10px] font-semibold backdrop-blur-sm self-start mt-2">${count} Post${count !== 1 ? 's' : ''}</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          `;
-        }).join('');
-      }
-    }
-
-    // Render Cards in Grid (exact layout matching Bower School blog cards layout)
-    function renderGrid() {
-      const filtered = blogPosts.filter(post => {
-        const matchesCategory = currentCategory === 'all' || post.category.toLowerCase() === currentCategory.toLowerCase();
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              post.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              post.category.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        postsGrid.innerHTML = '';
-        noPostsWarning.classList.remove('hidden');
-      } else {
-        noPostsWarning.classList.add('hidden');
-        postsGrid.innerHTML = filtered.map(post => `
-          <div class="blog-card flex flex-col h-full bg-white border border-zinc-200/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer" onclick="openArticle(${post.id})">
-            
-            <!-- Image Wrapper -->
-            <div class="h-56 overflow-hidden relative bg-zinc-100 border-b border-zinc-100">
-              <div class="w-full h-full bg-cover bg-center transition-transform duration-500 hover:scale-105" 
-                   style="background-image: url('${post.coverImage}');"></div>
-            </div>
-            
-            <!-- Card Details -->
-            <div class="p-6 flex flex-col flex-grow">
-              
-              <!-- Author Row (above title) -->
-              <div class="flex items-center gap-2 mb-3">
-                <div class="w-6 h-6 rounded-full bg-[#1e2e68] text-white font-bold text-[10px] flex items-center justify-center">${post.author[0]}</div>
-                <span class="text-xs font-semibold text-zinc-500">${post.author}</span>
-              </div>
-              
-              <!-- Title -->
-              <h3 class="text-[#1e2e68] text-lg font-bold font-inter mb-3 leading-snug group-hover:text-[#fb6900] transition-colors line-clamp-2">${post.title}</h3>
-              
-              <!-- Description -->
-              <p class="text-zinc-500 text-xs leading-relaxed line-clamp-3 mb-4">${post.abstract}</p>
-
-              <!-- Category & Date Row -->
-              <div class="flex items-center justify-between mt-auto pt-3 border-t border-zinc-100">
-                <span class="inline-block bg-[#1e2e68]/10 text-[#1e2e68] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">${post.category}</span>
-                <span class="text-[10px] text-zinc-400 font-medium">${post.date}</span>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-
-    // selectCategory handler for swiper click
-    window.selectCategory = function(cat) {
-      currentCategory = cat;
-      
-      // Update filter pills styling
-      document.querySelectorAll('.filter-pill').forEach(btn => {
-        if (btn.dataset.category.toLowerCase() === cat.toLowerCase()) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-      
-      renderGrid();
-      
-      // Smooth scroll to latest articles section
-      const targetEl = document.getElementById('latest-posts');
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
-    // Open Reader Modal
-    window.openArticle = function(id) {
-      const post = blogPosts.find(p => p.id === id);
-      if (!post) return;
-
-      document.getElementById('modal-article-category').textContent = post.category;
-      document.getElementById('modal-article-title').textContent = post.title;
-      document.getElementById('modal-article-author').textContent = post.author;
-      document.getElementById('modal-article-date').textContent = post.date;
-      document.getElementById('modal-article-readtime').textContent = post.readTime;
-      document.getElementById('modal-author-avatar').textContent = post.author[0];
-      
-      const modalImg = document.getElementById('modal-article-image');
-      modalImg.style.backgroundImage = `url('${post.coverImage}')`;
-      modalImg.style.backgroundSize = 'cover';
-      modalImg.style.backgroundPosition = 'center';
-      
-      document.getElementById('modal-article-content').innerHTML = post.content;
-      
-      readerModal.classList.remove('hidden');
-      readerModal.classList.add('flex');
-      document.body.classList.add('modal-active');
-      
-      setTimeout(() => {
-        readerModal.classList.add('modal-open');
-        document.getElementById('modal-overlay').style.opacity = '1';
-      }, 50);
-
-      // Reset scroll position and progress bar
-      modalScrollArea.scrollTop = 0;
-      readProgressBar.style.width = '0%';
-    };
-
-    // Close Reader Modal
-    function closeModal() {
-      readerModal.classList.remove('modal-open');
-      document.getElementById('modal-overlay').style.opacity = '0';
-      document.body.classList.remove('modal-active');
-      
-      setTimeout(() => {
-        readerModal.classList.remove('flex');
-        readerModal.classList.add('hidden');
-      }, 400);
-    }
-
-    modalCloseBtn.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
-
-    // Track scroll progress inside modal to update progress indicator
-    modalScrollArea.addEventListener('scroll', () => {
-      const scrollHeight = modalScrollArea.scrollHeight - modalScrollArea.clientHeight;
-      if (scrollHeight > 0) {
-        const scrolled = (modalScrollArea.scrollTop / scrollHeight) * 100;
-        readProgressBar.style.width = `${scrolled}%`;
-      }
-    });
-
-    // Handle Search Input
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      renderGrid();
-    });
-
-    // Hook search button
-    const searchBtn = document.getElementById('blog-search-btn');
-    if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
-        searchQuery = searchInput.value;
-        renderGrid();
-      });
-    }
-
-    // Handle Category Filter Clicks
-    filterContainer.addEventListener('click', (e) => {
-      const pill = e.target.closest('.filter-pill');
-      if (!pill) return;
-
-      document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
-      pill.classList.add('active');
-
-      currentCategory = pill.dataset.category;
-      renderGrid();
-    });
-
-    // Handle Newsletter Submission
-    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      document.getElementById('newsletter-form').classList.add('hidden');
-      document.getElementById('newsletter-success').classList.remove('hidden');
-    });
-
-    // Initialize Layout (with simulated database fetch latency)
-    setTimeout(() => {
-      calculateCategoryCounts();
-      renderGrid();
-      
-      // Initialize Swiper after DOM render
-      new Swiper('.category-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        grabCursor: true,
-        centeredSlides: false,
-        loop: false,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        breakpoints: {
-          480: { slidesPerView: 2, spaceBetween: 15 },
-          768: { slidesPerView: 3, spaceBetween: 20 },
-          1024: { slidesPerView: 4, spaceBetween: 25 },
-          1280: { slidesPerView: 5, spaceBetween: 30 }
-        }
-      });
-
-      window.hidePreloader();
-    }, 1200);
-  </script>
-
-  <!-- Navbar and Mobile Menu Behaviors -->
-  <script src="js/main.js?v=17"></script>
-  <script src="js/card-nav.js" defer></script>
+  <!-- Scripts -->
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  
+  <script src="js/blog.js"></script>
 </body>
 </html>

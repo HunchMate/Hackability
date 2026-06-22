@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { data, error } = await sb.from('partners').select('*');
     if (error) throw error;
     partners = data || [];
+    
+    // TEMPORARY: Force empty array so the new mock data renders instead of Supabase test data
+    partners = [];
   } catch (err) {
     console.error('Error fetching partners from Supabase:', err);
   }
@@ -27,29 +30,133 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Render HTML
     if (filtered.length === 0) {
-      if (category === 'Mentors') {
+      if (category === 'Colleges') {
+        filtered = [
+          {
+            title: "Anurag University",
+            description: "Anurag University is a Private University located in Venkatapur, Medchal-Malkajgiri district, Hyderabad, Telangana, India. Established in 2020, and is one of the First Private Universities in the State of Telangana.",
+            logo: "assets/images/colleges/anurag.png",
+            url: "https://www.anurag.edu.in/",
+            category: "Colleges"
+          },
+          {
+            title: "Geethanjali College of Engineering",
+            description: "Geethanjali is equipped and geared up to take on the responsibility of providing exceptional quality technical education, assimilating the latest developments in an ambience committed to achieve academic excellence.",
+            logo: "assets/images/colleges/gcet.png",
+            url: "https://gcet.edu.in/",
+            category: "Colleges"
+          },
+          {
+            title: "Vaagdevi College of Engineering",
+            description: "Vaagdevi College of Engineering, Warangal, is an AICTE-approved, JNTUH-affiliated autonomous institution committed to excellence in technical education, research, and holistic student development since its founding.",
+            logo: "assets/images/colleges/vagdevi.png",
+            url: "https://www.vaagdevi.edu.in/",
+            category: "Colleges"
+          },
+          {
+            title: "B.V. Raju Institute of Technology",
+            description: "B.V. Raju Institute of Technology is an engineering college established in 1997 in Narsapur, Medak, Telangana State, India.",
+            logo: "assets/images/colleges/bvrit.png",
+            url: "https://bvrit.ac.in/",
+            category: "Colleges"
+          },
+          {
+            title: "TKR College of Engineering & Technology",
+            description: "The Institution endeavours towards imparting quality education with ethical values and strives to make students technically competent to reach heights and make our nation self-reliant and globally recognized.",
+            logo: "assets/images/colleges/tkr.png",
+            url: "https://tkrcet.ac.in/",
+            category: "Colleges"
+          }
+        ];
+      } else if (category === 'Mentors') {
         // Mock data so the user can see the new mentor cards even if the database is empty
         filtered = [
           {
-            title: "Dr. Sarah Chen",
-            description: "AI Researcher & Tech Entrepreneur. Former Lead Scientist at DeepMind.",
-            logo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop",
+            title: "Mr. Madhu Vadlamani",
+            description: "Enterprise Leader, Enterprise Minds, Inc. Ex-Practice Manager, Miracle Software Systems, Inc. Sr. Consultant Ex-Deloitte, Ex-Cognizant.",
+            logo: "assets/images/mentors/madhu.png",
             url: "#",
             category: "Mentors"
           },
           {
-            title: "James Miller",
-            description: "Product Design Leader. 15+ years experience building consumer apps.",
-            logo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop",
+            title: "Mr. Baradwaj Arvapally",
+            description: "Founder, ABTechVille. Serial Entrepreneur, Experienced in Mentoring 10,000+ Students on IoT & other Technologies.",
+            logo: "assets/images/mentors/baradwaj.png",
             url: "#",
             category: "Mentors"
           },
           {
-            title: "Elena Rodriguez",
-            description: "Startup Founder & Angel Investor. Featured in Forbes 30 Under 30.",
-            logo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&auto=format&fit=crop",
+            title: "Mr. Amarnath J.",
+            description: "Founder & CEO, Buchuk Robo Chef. Prominent Mentor & TiE Hyderabad Speaker. 12+ yrs experience in Robotics & Manufacturing.",
+            logo: "assets/images/mentors/amarnath.png",
             url: "#",
             category: "Mentors"
+          },
+          {
+            title: "Mr. Prithvi Raj",
+            description: "Sr. Software Architect, Worthit Consultancy Services. Ex-Godrej, Ex-General Electric. 7+ Yrs Experience in Corporate Consulting, Alumni IIM-Trichy.",
+            logo: "assets/images/mentors/prithvi.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. Nikhil",
+            description: "AI Strategy Architect, Techolution. Alumni IITM. 10x Hackathon Winner, Award-Winning Author.",
+            logo: "assets/images/mentors/nikhil.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. Swaminathan Jerra",
+            description: "Founder & CEO, AquaHT Labs. Recognized by Prominent IITs, IIMs, STPI, T-Hub, Google and Microsoft for Startups. 2X Startup Founder.",
+            logo: "assets/images/mentors/jeera.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. M. Sai Kiran",
+            description: "Incubation Manager, VIBA. 5+ Years In Incubation & Innovation, Academic Mentor & Trainer.",
+            logo: "assets/images/mentors/sai.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. Mukesh Sankhla",
+            description: "Founder, MakerBrains. Technical Mentor & Gen AI Trainer. 6+ yrs of Experience in STEM Technologies Training.",
+            logo: "assets/images/mentors/mukesh.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. Nalamilli Venkat Reddy",
+            description: "Founder & CEO, Teckybot. 10+ yrs of experience in STEM Innovation Domain, Serial Entrepreneur, Hardware & MVP Expert.",
+            logo: "assets/images/mentors/venkat.png",
+            url: "#",
+            category: "Mentors"
+          },
+          {
+            title: "Mr. Prasad Anumula",
+            description: "Founder & Director, Risk Guard Enterprise Solutions.",
+            logo: "assets/images/mentors/prasad.png",
+            url: "#",
+            category: "Mentors"
+          }
+        ];
+      } else if (category === 'Organizations') {
+        filtered = [
+          {
+            title: "T-Hub",
+            description: "T-Hub is the World's largest home for Startups, democratizing access for 10000+ startups. Join T-Hub. Come Build with Fellow Founders.",
+            logo: "assets/images/organizations/thub.png",
+            url: "https://www.t-hub.co/",
+            category: "Organizations"
+          },
+          {
+            title: "T-Works",
+            description: "We are India's largest Prototyping Centre and Manufacturing Knowledge Partner, supported by the Government of Telangana.",
+            logo: "assets/images/organizations/tworks.png",
+            url: "https://tworks.telangana.gov.in/",
+            category: "Organizations"
           }
         ];
       } else {
@@ -65,50 +172,58 @@ document.addEventListener('DOMContentLoaded', async () => {
         const themeColor = colors[partner.title.length % colors.length];
 
         return `
-        <div class="group w-full h-[400px]" style="--theme-color: ${themeColor};">
-          <a href="${partner.url || '#'}" target="_blank" rel="noopener noreferrer" 
-             class="relative block w-full h-full rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-[0_0_60px_-15px_hsl(var(--theme-color)/0.6)]"
-             style="box-shadow: 0 0 40px -15px hsl(var(--theme-color) / 0.5)">
-            
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-110" 
-                 style="background-image: url('${bgImg}')"></div>
+        <div class="group relative w-full h-[400px] rounded-[2rem] border border-white/10 overflow-hidden shadow-xl cursor-pointer bg-navy transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl">
+          
+          <!-- Full Cover Image (mix-blend-mode removed since images are now correctly cropped) -->
+          <img src="${bgImg}" alt="${partner.title}" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105" />
+          
+          <!-- Smooth Dark Overlay - Restricted to bottom 60% so faces are clearly visible -->
+          <div class="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-[#050b14] via-[#050b14]/80 to-transparent transition-opacity duration-500"></div>
 
-            <div class="absolute inset-0" 
-                 style="background: linear-gradient(to top, hsl(var(--theme-color) / 0.9), hsl(var(--theme-color) / 0.6) 30%, transparent 60%)"></div>
+          <!-- Content -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 space-y-3">
             
-            <div class="relative flex flex-col justify-end h-full p-6 text-white text-left">
-              <h3 class="text-3xl font-bold tracking-tight">${partner.title}</h3>
-              <p class="text-sm text-white/80 mt-1 font-medium">${partner.description || 'Mentor'}</p>
-
-              <div class="mt-8 flex items-center justify-end">
-                <div class="bg-[hsl(var(--theme-color)/0.2)] backdrop-blur-md border border-[hsl(var(--theme-color)/0.3)] rounded-full p-3 transition-all duration-300 group-hover:bg-[hsl(var(--theme-color)/0.4)] group-hover:border-[hsl(var(--theme-color)/0.5)]">
-                  <i class="ph-bold ph-arrow-up-right text-white"></i>
-                </div>
-              </div>
+            <!-- Name and Verification -->
+            <div class="flex items-center gap-2">
+              <h2 class="text-2xl font-bold text-white tracking-tight leading-tight">${partner.title}</h2>
             </div>
-          </a>
+
+            <!-- Description -->
+            <p class="text-white/80 text-sm leading-relaxed line-clamp-3">
+              ${partner.description}
+            </p>
+          </div>
         </div>
         `;
       }
 
       return `
-      <div class="bg-white rounded-xl shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-hk-border p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1">
-        <div class="w-24 h-24 mb-4 flex items-center justify-center">
+      <div class="group relative bg-white rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(13,27,142,0.1)] border border-hk-border hover:border-navy/20 overflow-hidden h-full">
+        <!-- Subtle background gradient on hover -->
+        <div class="absolute inset-0 bg-gradient-to-b from-navy-tint/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+        
+        <!-- Logo Container -->
+        <div class="relative w-36 h-36 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-[0_4px_20px_-5px_rgba(0,0,0,0.08)] border border-hk-border/50 p-2 transition-transform duration-500 group-hover:scale-105 z-10">
           ${partner.logo ? `
-            <img src="${partner.logo}" alt="${partner.title}" class="max-w-full max-h-full object-contain" />
+            <img src="${partner.logo}" alt="${partner.title}" class="max-w-full max-h-full object-contain drop-shadow-sm" />
           ` : `
-            <div class="w-full h-full rounded-full bg-navy-tint flex items-center justify-center text-navy font-bold text-2xl">
+            <div class="w-full h-full rounded-xl bg-gradient-to-br from-navy-tint to-white flex items-center justify-center text-navy font-display font-bold text-3xl">
               ${partner.title.charAt(0)}
             </div>
           `}
         </div>
-        <h3 class="font-bold text-navy text-lg mb-2">${partner.title}</h3>
-        ${partner.description ? `<p class="text-grey-dark text-sm mb-4">${partner.description}</p>` : ''}
-        ${partner.url ? `
-          <a href="${partner.url}" target="_blank" rel="noopener noreferrer" class="mt-auto text-navy hover:text-yellow font-semibold text-sm flex items-center gap-1 transition-colors">
-            Visit Website <i class="ph-bold ph-arrow-right"></i>
-          </a>
-        ` : ''}
+        
+        <!-- Text Content -->
+        <div class="relative z-10 flex flex-col flex-grow items-center w-full">
+          <h3 class="font-display font-bold text-navy text-xl mb-1.5 group-hover:text-blue-600 transition-colors">${partner.title}</h3>
+          ${partner.description ? `<p class="text-grey-dark text-sm leading-relaxed mb-4 flex-grow">${partner.description}</p>` : '<div class="flex-grow"></div>'}
+          
+          ${partner.url ? `
+            <a href="${partner.url}" target="_blank" rel="noopener noreferrer" class="mt-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-grey-light text-navy font-semibold text-sm transition-all duration-300 hover:bg-navy hover:text-white group-hover:shadow-md">
+              Visit Website <i class="ph-bold ph-arrow-up-right"></i>
+            </a>
+          ` : ''}
+        </div>
       </div>
       `;
     }).join('');
@@ -134,13 +249,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 4. Initial Load (Check URL query params for initial category)
   const urlParams = new URLSearchParams(window.location.search);
-  const initialCategory = urlParams.get('category') || 'All';
+  const initialCategory = urlParams.get('category') || 'Colleges';
   
   // Click the corresponding button to set active state and trigger render
   const targetBtn = Array.from(filterBtns).find(b => b.getAttribute('data-category') === initialCategory);
   if (targetBtn) {
     targetBtn.click();
   } else {
-    renderPartners('All');
+    renderPartners('Colleges');
   }
 });

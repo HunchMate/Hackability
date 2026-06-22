@@ -219,13 +219,58 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===========================
-  // CMS Content Hydration (from Supabase)
+  // CMS Content Hydration (from Supabase with Offline Fallbacks)
   // ===========================
+  function loadLocalFallback() {
+    const fallbackData = {
+      hero: {
+        parent: {
+          title: 'Building innovation driven <br><span style="color:#F5C200;">talent ecosystems</span>',
+          carousel_slides: [
+            { image: 'assets/images/homepage_hero_bg_1.jpg' },
+            { image: 'assets/images/homepage_hero_bg_2.jpg' },
+            { image: 'assets/images/homepage_hero_bg_3.jpg' },
+            { image: 'assets/images/homepage_hero_bg_4.jpg' },
+            { image: 'assets/images/homepage_hero_bg_5.jpg' },
+            { image: 'assets/images/homepage_hero_bg_6.jpg' },
+            { image: 'assets/images/homepage_hero_bg_7.jpg' }
+          ]
+        }
+      },
+      marquee: [
+        { logo: 'assets/images/homepage_logo_1.png', name: 'Partner 1', url: '#' },
+        { logo: 'assets/images/homepage_logo_2.png', name: 'Partner 2', url: '#' },
+        { logo: 'assets/images/homepage_logo_3.png', name: 'Partner 3', url: '#' },
+        { logo: 'assets/images/homepage_logo_4.png', name: 'Partner 4', url: '#' },
+        { logo: 'assets/images/homepage_logo_5.png', name: 'Partner 5', url: '#' },
+        { logo: 'assets/images/homepage_logo_6.png', name: 'Partner 6', url: '#' },
+        { logo: 'assets/images/homepage_logo_7.png', name: 'Partner 7', url: '#' },
+        { logo: 'assets/images/homepage_logo_8.png', name: 'Partner 8', url: '#' },
+        { logo: 'assets/images/homepage_logo_9.jpg', name: 'MongoDB', url: '#' },
+        { logo: 'assets/images/homepage_logo_10.png', name: 'Partner 10', url: '#' },
+        { logo: 'assets/images/homepage_logo_11.png', name: 'Partner 11', url: '#' },
+        { logo: 'assets/images/homepage_logo_12.png', name: 'Partner 12', url: '#' },
+        { logo: 'assets/images/homepage_logo_13.png', name: 'Partner 13', url: '#' },
+        { logo: 'assets/images/homepage_logo_14.png', name: 'Partner 14', url: '#' },
+        { logo: 'assets/images/homepage_logo_15.png', name: 'Partner 15', url: '#' },
+        { logo: 'assets/images/homepage_logo_16.png', name: 'Partner 16', url: '#' },
+        { logo: 'assets/images/homepage_logo_17.png', name: 'Partner 17', url: '#' },
+        { logo: 'assets/images/homepage_logo_18.png', name: 'Partner 18', url: '#' },
+        { logo: 'assets/images/homepage_logo_19.png', name: 'Partner 19', url: '#' }
+      ]
+    };
+    hydrateCMSData(fallbackData);
+    if (window.initPageSwitcher) {
+      window.initPageSwitcher(fallbackData);
+    }
+  }
+
   if (typeof sb !== 'undefined') {
     sb.from('site_content').select('*')
       .then(({ data, error }) => {
         if (error) {
           console.error('Error loading content from Supabase:', error);
+          loadLocalFallback();
           return;
         }
         if (data && data.length > 0) {
@@ -237,12 +282,47 @@ document.addEventListener('DOMContentLoaded', () => {
               const subKey = row.section_key.replace('hero_', '');
               
               // FORCE OVERRIDE for the requested title change since the database holds the old one
-              if (subKey === 'parent' && row.data && row.data.title) {
-                row.data.title = 'Building innovation driven <br><span style="color:#F5C200;">talent ecosystems</span>';
+              if (subKey === 'parent' && row.data) {
+                if (row.data.title) {
+                  row.data.title = 'Building innovation driven <br><span style="color:#F5C200;">talent ecosystems</span>';
+                }
+                // Override slides to use the 7 local homepage hero images
+                row.data.carousel_slides = [
+                  { image: 'assets/images/homepage_hero_bg_1.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_2.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_3.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_4.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_5.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_6.jpg' },
+                  { image: 'assets/images/homepage_hero_bg_7.jpg' }
+                ];
               }
               
               homepageData.hero[subKey] = row.data;
             } else {
+              if (row.section_key === 'marquee') {
+                row.data = [
+                  { logo: 'assets/images/homepage_logo_1.png', name: 'Partner 1', url: '#' },
+                  { logo: 'assets/images/homepage_logo_2.png', name: 'Partner 2', url: '#' },
+                  { logo: 'assets/images/homepage_logo_3.png', name: 'Partner 3', url: '#' },
+                  { logo: 'assets/images/homepage_logo_4.png', name: 'Partner 4', url: '#' },
+                  { logo: 'assets/images/homepage_logo_5.png', name: 'Partner 5', url: '#' },
+                  { logo: 'assets/images/homepage_logo_6.png', name: 'Partner 6', url: '#' },
+                  { logo: 'assets/images/homepage_logo_7.png', name: 'Partner 7', url: '#' },
+                  { logo: 'assets/images/homepage_logo_8.png', name: 'Partner 8', url: '#' },
+                  { logo: 'assets/images/homepage_logo_9.jpg', name: 'MongoDB', url: '#' },
+                  { logo: 'assets/images/homepage_logo_10.png', name: 'Partner 10', url: '#' },
+                  { logo: 'assets/images/homepage_logo_11.png', name: 'Partner 11', url: '#' },
+                  { logo: 'assets/images/homepage_logo_12.png', name: 'Partner 12', url: '#' },
+                  { logo: 'assets/images/homepage_logo_13.png', name: 'Partner 13', url: '#' },
+                  { logo: 'assets/images/homepage_logo_14.png', name: 'Partner 14', url: '#' },
+                  { logo: 'assets/images/homepage_logo_15.png', name: 'Partner 15', url: '#' },
+                  { logo: 'assets/images/homepage_logo_16.png', name: 'Partner 16', url: '#' },
+                  { logo: 'assets/images/homepage_logo_17.png', name: 'Partner 17', url: '#' },
+                  { logo: 'assets/images/homepage_logo_18.png', name: 'Partner 18', url: '#' },
+                  { logo: 'assets/images/homepage_logo_19.png', name: 'Partner 19', url: '#' }
+                ];
+              }
               homepageData[row.section_key] = row.data;
             }
           });
@@ -251,9 +331,15 @@ document.addEventListener('DOMContentLoaded', () => {
             window.initPageSwitcher(homepageData);
           }
         } else {
-          console.warn('No homepage content found in Supabase. Using defaults from HTML.');
+          console.warn('No homepage content found in Supabase. Loading fallbacks.');
+          loadLocalFallback();
         }
+      }).catch(err => {
+        console.error('Supabase fetch failed, loading local fallback:', err);
+        loadLocalFallback();
       });
+  } else {
+    loadLocalFallback();
   }
 
   function hydrateCMSData(data) {
@@ -486,8 +572,8 @@ document.addEventListener('DOMContentLoaded', () => {
               logos: logos,
               speed: 120,
               direction: 'left',
-              logoHeight: 64,
-              gap: 32,
+              logoHeight: 72,
+              gap: 64,
               hoverSpeed: 20,
               fadeOut: true,
               fadeOutColor: '#F2F5FF',

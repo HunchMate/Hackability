@@ -380,13 +380,37 @@
   <main class="flex-grow">
   <!-- ===================== HERO SECTION ===================== -->
   <section id="hero" class="bg-black min-h-screen flex flex-col justify-end relative overflow-hidden z-20">
-    <!-- Background -->
-    <div class="absolute inset-0 z-[0] pointer-events-none">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/hackability_hero_bg.png');"></div>
+    <!-- Background Carousel -->
+    <div id="hackability-hero-carousel" class="absolute inset-0 z-[0] pointer-events-none">
+      <div class="slide active absolute inset-0 opacity-100 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_1.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_2.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_3.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_4.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_5.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_6.jpg');"></div>
+      <div class="slide absolute inset-0 opacity-0 bg-cover bg-center transition-opacity duration-[2000ms]" style="background-image: url('assets/images/hackability_hero_bg_7.jpg');"></div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const carousel = document.getElementById('hackability-hero-carousel');
+        if (carousel) {
+          const slides = carousel.querySelectorAll('.slide');
+          let current = 0;
+          if (slides.length > 1) {
+            setInterval(() => {
+              slides[current].classList.remove('opacity-100');
+              slides[current].classList.add('opacity-0');
+              current = (current + 1) % slides.length;
+              slides[current].classList.remove('opacity-0');
+              slides[current].classList.add('opacity-100');
+            }, 5000);
+          }
+        }
+      });
+    </script>
     
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-[1] pointer-events-none"></div>
+    <!-- Dark Overlay (No Blur) -->
+    <div class="absolute inset-0 bg-black/40 z-[1] pointer-events-none"></div>
 
     <div class="w-full px-4 lg:px-6 pt-32 md:pt-48 pb-20 md:pb-32 flex flex-col items-start relative z-[10]">
       <!-- Text column -->
@@ -438,9 +462,46 @@
           </p>
         </div>
         <div class="relative">
-          <div class="absolute inset-0 bg-navy-tint rounded-3xl transform rotate-3 scale-105 -z-10"></div>
-          <img src="assets/images/hackability_illustration.png" alt="University students collaborating on tech" class="w-full h-auto rounded-3xl shadow-xl object-cover" style="aspect-ratio: 4/3;" />
+          <div class="relative rounded-3xl overflow-hidden shadow-xl bg-black" style="aspect-ratio: 4/3;">
+            <video 
+              id="hackability-promo-video"
+              class="w-full h-full object-cover" 
+              autoplay
+              loop
+              muted
+              playsinline
+              poster="assets/images/hackability_illustration.png">
+              <source src="assets/videos/hackability_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            
+            <!-- Custom Mute/Unmute Button -->
+            <button 
+              id="video-mute-btn" 
+              class="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all duration-300 pointer-events-auto border border-white/10"
+              title="Mute/Unmute">
+              <i id="mute-icon" class="ph-bold ph-speaker-slash text-lg"></i>
+            </button>
+          </div>
         </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('hackability-promo-video');
+            const muteBtn = document.getElementById('video-mute-btn');
+            const muteIcon = document.getElementById('mute-icon');
+            
+            if (video && muteBtn && muteIcon) {
+              muteBtn.addEventListener('click', () => {
+                video.muted = !video.muted;
+                if (video.muted) {
+                  muteIcon.className = 'ph-bold ph-speaker-slash text-lg';
+                } else {
+                  muteIcon.className = 'ph-bold ph-speaker-high text-lg';
+                }
+              });
+            }
+          });
+        </script>
       </div>
     </div>
   </section>
@@ -684,8 +745,7 @@
     <div class="w-full relative z-10 px-4 md:px-0 mb-8 md:mb-12">
       <!-- Desktop Heading -->
       <h2 class="hidden md:block mb-10 text-center font-display">
-        <span class="block font-medium text-xl md:text-2xl text-grey-dark/70 mb-2">Already used by</span>
-        <span class="font-bold text-3xl md:text-4xl text-navy tracking-tight">Best in the Game</span>
+        <span class="font-bold text-3xl md:text-4xl text-navy tracking-tight">Supportive Program Partners</span>
       </h2>
 
       <!-- Mobile Heading -->
@@ -704,89 +764,115 @@
           .animate-slide-logos {
             animation: slide-logos 30s linear infinite;
           }
-          .animate-slide-logos:hover {
-            animation-play-state: paused;
-          }
         </style>
-
         <!-- Slider -->
         <div class="overflow-hidden flex w-full relative" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
           
           <!-- Group 1 -->
           <div class="flex animate-slide-logos w-max shrink-0 items-center">
             <div class="flex gap-16 px-8 items-center justify-center">
-              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="assets/images/hatch_logo_1.png" alt="Hatch Logo 1" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_2.png" alt="Hatch Logo 2" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_3.png" alt="Hatch Logo 3" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_4.png" alt="Hatch Logo 4" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_5.png" alt="Hatch Logo 5" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_6.png" alt="Hatch Logo 6" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_7.png" alt="Hatch Logo 7" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_8.png" alt="Hatch Logo 8" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_9.png" alt="Hatch Logo 9" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_10.png" alt="Hatch Logo 10" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_11.png" alt="Hatch Logo 11" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_12.png" alt="Hatch Logo 12" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
             </div>
           </div>
-
+ 
           <!-- Group 2 (Duplicate for seamless loop) -->
           <div class="flex animate-slide-logos w-max shrink-0 items-center" aria-hidden="true">
             <div class="flex gap-16 px-8 items-center justify-center">
-              <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-5 md:h-6 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
-              <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-6 md:h-7 opacity-70 hover:opacity-100 brightness-0 transition-opacity select-none pointer-events-auto">
+              <img src="assets/images/hatch_logo_1.png" alt="Hatch Logo 1" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_2.png" alt="Hatch Logo 2" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_3.png" alt="Hatch Logo 3" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_4.png" alt="Hatch Logo 4" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_5.png" alt="Hatch Logo 5" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_6.png" alt="Hatch Logo 6" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_7.png" alt="Hatch Logo 7" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_8.png" alt="Hatch Logo 8" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_9.png" alt="Hatch Logo 9" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_10.png" alt="Hatch Logo 10" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_11.png" alt="Hatch Logo 11" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
+              <img src="assets/images/hatch_logo_12.png" alt="Hatch Logo 12" class="h-10 md:h-12 opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none pointer-events-auto object-contain">
             </div>
           </div>
-
+ 
         </div>
       </div>
 
       <!-- Mobile Grid Container -->
-      <div class="grid md:hidden grid-cols-2 border-y border-hk-border w-full max-w-sm mx-auto relative mt-4">
+      <div class="grid md:hidden grid-cols-2 border-y border-hk-border w-full max-w-md mx-auto relative mt-4">
         
-        <!-- Cell 1 (Nvidia) -->
-        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia Logo" class="h-4 opacity-70 brightness-0">
+        <!-- Cell 1 -->
+        <div class="border-r border-b border-hk-border py-8 flex justify-center items-center relative px-4">
+          <img src="assets/images/hatch_logo_1.png" alt="Hatch Logo 1" class="h-16 opacity-95 object-contain">
           <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
         
-        <!-- Cell 2 (Supabase) -->
-        <div class="border-b border-hk-border py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase Logo" class="h-4 opacity-70 brightness-0">
+        <!-- Cell 2 -->
+        <div class="border-b border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_2.png" alt="Hatch Logo 2" class="h-16 opacity-95 object-contain">
         </div>
 
-        <!-- Cell 3 (GitHub) -->
-        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub Logo" class="h-5 opacity-70 brightness-0">
+        <!-- Cell 3 -->
+        <div class="border-r border-b border-hk-border py-8 flex justify-center items-center relative px-4">
+          <img src="assets/images/hatch_logo_3.png" alt="Hatch Logo 3" class="h-16 opacity-95 object-contain">
           <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
 
-        <!-- Cell 4 (OpenAI) -->
-        <div class="border-b border-hk-border py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI Logo" class="h-5 opacity-70 brightness-0">
+        <!-- Cell 4 -->
+        <div class="border-b border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_4.png" alt="Hatch Logo 4" class="h-16 opacity-95 object-contain">
         </div>
 
-        <!-- Cell 5 (Turso) -->
-        <div class="border-r border-b border-hk-border py-10 flex justify-center items-center relative">
-          <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso Logo" class="h-4 opacity-70 brightness-0">
+        <!-- Cell 5 -->
+        <div class="border-r border-b border-hk-border py-8 flex justify-center items-center relative px-4">
+          <img src="assets/images/hatch_logo_5.png" alt="Hatch Logo 5" class="h-16 opacity-95 object-contain">
           <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
 
-        <!-- Cell 6 (Clerk) -->
-        <div class="border-b border-hk-border py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk Logo" class="h-5 opacity-70 brightness-0">
+        <!-- Cell 6 -->
+        <div class="border-b border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_6.png" alt="Hatch Logo 6" class="h-16 opacity-95 object-contain">
         </div>
 
-        <!-- Cell 7 (Claude) -->
-        <div class="border-r border-hk-border py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI Logo" class="h-4 opacity-70 brightness-0">
+        <!-- Cell 7 -->
+        <div class="border-r border-b border-hk-border py-8 flex justify-center items-center relative px-4">
+          <img src="assets/images/hatch_logo_7.png" alt="Hatch Logo 7" class="h-16 opacity-95 object-contain">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
         </div>
 
-        <!-- Cell 8 (Vercel) -->
-        <div class="py-10 flex justify-center items-center">
-          <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel Logo" class="h-4 opacity-70 brightness-0">
+        <!-- Cell 8 -->
+        <div class="border-b border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_8.png" alt="Hatch Logo 8" class="h-16 opacity-95 object-contain">
+        </div>
+
+        <!-- Cell 9 -->
+        <div class="border-r border-b border-hk-border py-8 flex justify-center items-center relative px-4">
+          <img src="assets/images/hatch_logo_9.png" alt="Hatch Logo 9" class="h-16 opacity-95 object-contain">
+          <svg class="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] text-grey-mid z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg>
+        </div>
+
+        <!-- Cell 10 -->
+        <div class="border-b border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_10.png" alt="Hatch Logo 10" class="h-16 opacity-95 object-contain">
+        </div>
+
+        <!-- Cell 11 -->
+        <div class="border-r border-hk-border py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_11.png" alt="Hatch Logo 11" class="h-16 opacity-95 object-contain">
+        </div>
+
+        <!-- Cell 12 -->
+        <div class="py-8 flex justify-center items-center px-4">
+          <img src="assets/images/hatch_logo_12.png" alt="Hatch Logo 12" class="h-16 opacity-95 object-contain">
         </div>
       </div>
     </div>

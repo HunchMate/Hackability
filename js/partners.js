@@ -214,15 +214,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         
         <!-- Text Content -->
-        <div class="relative z-10 flex flex-col flex-grow items-center w-full">
-          <h3 class="font-display font-bold text-navy text-xl mb-1.5 group-hover:text-blue-600 transition-colors">${partner.title}</h3>
-          ${partner.description ? `<p class="text-grey-dark text-sm leading-relaxed mb-4 flex-grow">${partner.description}</p>` : '<div class="flex-grow"></div>'}
-          
-          ${partner.url ? `
-            <a href="${partner.url}" target="_blank" rel="noopener noreferrer" class="mt-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-grey-light text-navy font-semibold text-sm transition-all duration-300 hover:bg-navy hover:text-white group-hover:shadow-md">
-              Visit Website <i class="ph-bold ph-arrow-up-right"></i>
-            </a>
-          ` : ''}
+        <div class="relative z-10 flex flex-col items-center w-full justify-center mt-2">
+          <h3 class="font-display font-bold text-navy text-xl group-hover:text-blue-600 transition-colors leading-tight px-2">${partner.title}</h3>
         </div>
       </div>
       `;

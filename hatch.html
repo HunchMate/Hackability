@@ -1069,65 +1069,85 @@
   <section id="highlights" class="pt-0 pb-16 md:pb-24 bg-white scroll-mt-24 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
       
-      <!-- Logos Section (Scrolling Marquee) -->
+      <!-- Logos Section (Sparkles Carousel) -->
       <div class="mb-12 w-screen relative left-[50%] right-[50%] ml-[-50vw] mr-[-50vw] bg-slate-50 py-12 overflow-hidden flex flex-col items-center">
-        <div class="w-full relative z-20">
+        <div class="max-w-4xl mx-auto px-6 relative z-20 w-full">
           <h2 class="mb-12 text-center font-display font-medium text-xl text-grey-dark tracking-tight md:text-3xl">
             Companies we <span class="font-semibold text-purple-600">collaborate</span> with.
           </h2>
 
-          <style>
-            @keyframes slide-logos-hatch {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-100%); }
-            }
-            .animate-slide-logos-hatch {
-              animation: slide-logos-hatch 30s linear infinite;
-            }
-            .animate-slide-logos-hatch:hover {
-              animation-play-state: paused;
-            }
-          </style>
+          <div class="relative grid grid-cols-3 border-x border-gray-200 md:grid-cols-6">
+            <div class="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t border-gray-200"></div>
 
-          <!-- Slider -->
-          <div class="overflow-hidden flex w-full relative" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
-            
-            <!-- Group 1 -->
-            <div class="flex animate-slide-logos-hatch w-max shrink-0 items-center">
-              <div class="flex gap-16 px-8 items-center justify-center">
-                <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-              </div>
+            <!-- Logo 1 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
-            <!-- Group 2 (Duplicate for seamless loop) -->
-            <div class="flex animate-slide-logos-hatch w-max shrink-0 items-center" aria-hidden="true">
-              <div class="flex gap-16 px-8 items-center justify-center">
-                <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-                <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="h-10 md:h-12 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 select-none object-contain" />
-              </div>
+            <!-- Logo 2 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
 
+            <!-- Logo 3 -->
+            <div class="relative border-b md:border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 4 -->
+            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 5 -->
+            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 6 -->
+            <div class="relative border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <!-- Logo 7 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 8 -->
+            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 9 -->
+            <div class="relative border-b md:border-b-0 md:border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+
+            <!-- Logo 10 -->
+            <div class="relative border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <!-- Logo 11 -->
+            <div class="relative border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <!-- Logo 12 -->
+            <div class="relative bg-slate-50 flex items-center justify-center p-4 md:p-6">
+              <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="pointer-events-none h-24 md:h-32 max-w-[95%] select-none object-contain" />
+            </div>
+
+            <div class="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b border-gray-200"></div>
           </div>
         </div>
 

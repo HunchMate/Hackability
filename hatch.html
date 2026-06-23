@@ -361,18 +361,16 @@
             <div class="mega-menu-content w-[500px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
               <div class="grid grid-cols-2 gap-4">
                 <a href="/hatch" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors bg-grey-light mega-menu-grid-bg">
-                  <i class="ph-fill ph-egg text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hatch</span>
-                    <span class="text-xs text-grey-dark block">Entrepreneurship program<br>for school students</span>
+                  <div class="w-full text-center">
+                    <img src="assets/images/hatch-logo.svg" alt="Hatch Logo" class="h-[120px] w-auto max-w-full mx-auto mb-3 object-contain object-center block transform scale-[1.8] translate-y-3 origin-center" />
+                    <span class="text-xs text-grey-dark block pr-6 text-left">Entrepreneurship program<br>for school students</span>
                   </div>
                   <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </a>
                 <a href="/hackability" class="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
-                  <i class="ph-fill ph-graduation-cap text-2xl text-yellow mb-4"></i>
-                  <div class="pr-6">
-                    <span class="text-sm font-bold text-navy block mb-1">Hackability</span>
-                    <span class="text-xs text-grey-dark block">Talent development program<br>for higher education</span>
+                  <div class="w-full text-center">
+                    <img src="assets/images/hackability-logo.svg" alt="Hackability Logo" class="h-[120px] w-auto max-w-full mx-auto mb-3 object-contain object-center block transform scale-[1.8] -translate-y-3 origin-center" />
+                    <span class="text-xs text-grey-dark block pr-6 text-left">Talent development program<br>for higher education</span>
                   </div>
                   <i class="ph-bold ph-arrow-up-right absolute top-4 right-4 text-grey-dark opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </a>
@@ -386,7 +384,7 @@
               Products <i class="ph-bold ph-caret-down text-sm"></i>
             </button>
             <div id="products-dropdown-desktop" class="mega-menu-content w-[300px] bg-white rounded-xl shadow-xl border border-hk-border p-4">
-              <a href="/#products" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
+              <a href="https://www.incamp.in" target="_blank" rel="noopener noreferrer" class="group relative flex items-center gap-4 overflow-hidden rounded-lg border border-hk-border px-5 py-4 transition-colors hover:bg-grey-light mega-menu-grid-bg">
                 <i class="ph-fill ph-desktop-tower text-2xl text-yellow"></i>
                 <div class="flex-1 pr-4">
                   <span class="text-sm font-bold text-navy block">inCamp</span>
@@ -469,7 +467,7 @@
       <div class="nav-card" style="background-color: #6D28D9; color: white;">
         <div class="nav-card-label font-display">Products</div>
         <div id="products-dropdown-mobile" class="nav-card-links mt-4">
-          <a class="nav-card-link" href="/#products">
+          <a class="nav-card-link" href="https://www.incamp.in" target="_blank" rel="noopener noreferrer">
             <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             inCamp Platform
           </a>
@@ -779,11 +777,11 @@
         <div class="flex justify-center border-none mt-6 mb-4 relative z-20">
           <div class="track-tabs-container flex-col md:flex-row w-full md:w-auto mx-4 md:mx-0">
             <button class="track-tab active" data-target="track-spark">
-              <div class="grade-text">Grade 3–6</div>
+              <div class="grade-text">Grade 3–5</div>
               Exploration Track
             </button>
             <button class="track-tab" data-target="track-solve">
-              <div class="grade-text">Grade 7–9</div>
+              <div class="grade-text">Grade 6–9</div>
               Experimentation Track
             </button>
             <button class="track-tab" data-target="track-elevate">
@@ -1105,78 +1103,51 @@
       <div class="mb-12 w-screen relative left-[50%] right-[50%] ml-[-50vw] mr-[-50vw] bg-slate-50 py-12 overflow-hidden flex flex-col items-center">
         <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
           <h2 class="mb-12 text-center font-display font-medium text-xl text-grey-dark tracking-tight md:text-3xl">
-            Companies we <span class="font-semibold text-purple-600">collaborate</span> with.
+            Trusted by Leading <span class="font-semibold text-purple-600">Institutions</span>
           </h2>
 
-          <div class="relative grid grid-cols-3 border-x border-gray-200 md:grid-cols-6">
+          <div class="relative flex flex-col border-x border-gray-200">
             <div class="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t border-gray-200"></div>
 
-            <!-- Logo 1 -->
-            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_1.png" alt="Hatch Partner Logo 1" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            <!-- Top Row (3 items) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-gray-200 bg-slate-50">
+              <!-- Logo 1 (Celeste Placeholder) -->
+              <div class="relative border-b md:border-b-0 md:border-r border-gray-200 flex items-center justify-center p-4 md:p-6">
+                <img src="assets/images/hatch_skls_logo_1.png" alt="Celeste Logo" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+                <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <!-- Logo 2 (Kiran Placeholder) -->
+              <div class="relative border-b md:border-b-0 md:border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
+                <img src="assets/images/hatch_skls_logo_2.png" alt="Kiran Logo" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+                <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <!-- Logo 3 (Sanskrit Placeholder) -->
+              <div class="relative flex items-center justify-center p-4 md:p-6">
+                <img src="assets/images/hatch_skls_logo_3.png" alt="Sanskrit Logo" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              </div>
             </div>
 
-            <!-- Logo 2 -->
-            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_2.png" alt="Hatch Partner Logo 2" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 3 -->
-            <div class="relative border-b md:border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_3.png" alt="Hatch Partner Logo 3" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 4 -->
-            <div class="relative border-r border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_4.png" alt="Hatch Partner Logo 4" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 5 -->
-            <div class="relative border-r border-b border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_5.png" alt="Hatch Partner Logo 5" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 6 -->
-            <div class="relative border-b border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_6.png" alt="Hatch Partner Logo 6" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-            </div>
-
-            <!-- Logo 7 -->
-            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_7.png" alt="Hatch Partner Logo 7" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 8 -->
-            <div class="relative border-r border-b md:border-b-0 border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_8.png" alt="Hatch Partner Logo 8" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 9 -->
-            <div class="relative border-b md:border-b-0 md:border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_9.png" alt="Hatch Partner Logo 9" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-              <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </div>
-
-            <!-- Logo 10 -->
-            <div class="relative border-r border-gray-200 bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_10.png" alt="Hatch Partner Logo 10" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-            </div>
-
-            <!-- Logo 11 -->
-            <div class="relative border-r border-gray-200 bg-white flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_11.png" alt="Hatch Partner Logo 11" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
-            </div>
-
-            <!-- Logo 12 -->
-            <div class="relative bg-slate-50 flex items-center justify-center p-4 md:p-6">
-              <img src="assets/images/hatch_logo_12.png" alt="Hatch Partner Logo 12" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+            <!-- Bottom Row (4 items) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 bg-white">
+              <!-- Logo 4 -->
+              <div class="relative border-r border-b md:border-b-0 border-gray-200 flex items-center justify-center p-4 md:p-6 bg-white">
+                <img src="assets/images/hatch_skls_logo_4.png" alt="Partner Logo 4" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+                <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <!-- Logo 5 -->
+              <div class="relative border-b md:border-b-0 md:border-r border-gray-200 flex items-center justify-center p-4 md:p-6 bg-slate-50">
+                <img src="assets/images/hatch_skls_logo_5.png" alt="Partner Logo 5" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+                <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <!-- Logo 6 -->
+              <div class="relative border-r border-gray-200 flex items-center justify-center p-4 md:p-6 bg-white">
+                <img src="assets/images/hatch_skls_logo_6.png" alt="Partner Logo 6" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+                <svg class="-right-[12.5px] -bottom-[12.5px] absolute z-10 hidden md:block size-6 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <!-- Logo 7 -->
+              <div class="relative flex items-center justify-center p-4 md:p-6 bg-slate-50">
+                <img src="assets/images/hatch_skls_logo_7.png" alt="Partner Logo 7" class="pointer-events-none w-[90%] h-auto max-h-28 md:max-h-40 select-none object-contain" />
+              </div>
             </div>
 
             <div class="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b border-gray-200"></div>
@@ -1428,7 +1399,7 @@
             <li><a href="/about" class="text-sm text-white/60 hover:text-white no-underline transition-colors">About</a></li>
             <li><a href="/#ecosystem" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hackability</a></li>
             <li><a href="/hatch" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Hatch</a></li>
-            <li><a href="/#products" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
+            <li><a href="https://www.incamp.in" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white no-underline transition-colors">inCamp</a></li>
             <li><a href="/#media" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Media</a></li>
             <li><a href="/#contact" class="text-sm text-white/60 hover:text-white no-underline transition-colors">Contact</a></li>
           </ul>
@@ -1487,3 +1458,4 @@
   <script src="js/card-nav.js" defer></script>
 </body>
 </html>
+

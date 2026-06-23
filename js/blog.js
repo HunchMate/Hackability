@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       excerpt: 'How we are bridging the gap between student talent and global ecosystem needs through intensive training.',
       category: 'Program Updates',
       image_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
-      author: 'Vishva',
+      author: 'Vishva-TBI',
       date: 'June 22, 2026',
       read_time: '5 min read'
     },
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       excerpt: 'In an age of AI coding assistants, human communication, empathy, and leadership are your biggest competitive advantages.',
       category: 'Career Advice',
       image_url: 'https://images.unsplash.com/photo-1515169067868-5387ec356754?w=800&auto=format&fit=crop',
-      author: 'Vishva',
+      author: 'Vishva-TBI',
       date: 'May 15, 2026',
       read_time: '4 min read'
     }

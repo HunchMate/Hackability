@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         filtered = [
           {
             title: "Mr. Govil Alok",
-            description: "CEO, Geenovate Foundation",
+            description: "CEO, Gennovate-TBI Foundation",
             logo: "assets/images/mentors/alok.jpeg",
             url: "#",
             category: "Mentors"
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             category: "Organizations"
           },
           {
-            title: "AICTE",
+            title: "AICTE Idea Labs",
             description: "All India Council for Technical Education, ensuring quality in technical education across the country.",
             logo: "assets/images/organizations/aicte.png",
             url: "#",
@@ -180,14 +180,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             category: "Organizations"
           },
           {
-            title: "Draper",
+            title: "DraperU",
             description: "Draper University, a leading program for entrepreneurs and innovators globally.",
             logo: "assets/images/organizations/draper.png",
             url: "#",
             category: "Organizations"
           },
           {
-            title: "Geenovate",
+            title: "Gennovate-TBI",
             description: "Fostering the next generation of deep-tech and innovative enterprises.",
             logo: "assets/images/organizations/geenovate.png",
             url: "#",
@@ -201,14 +201,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             category: "Organizations"
           },
           {
-            title: "Viakasa",
+            title: "Bala vikasa",
             description: "Empowering businesses through cutting-edge strategies and ecosystem partnerships.",
             logo: "assets/images/organizations/viakasa.png",
             url: "#",
             category: "Organizations"
           },
           {
-            title: "Vishva",
+            title: "Vishva-TBI",
             description: "Building resilient networks and driving value across global innovation communities.",
             logo: "assets/images/organizations/vishva.png",
             url: "#",

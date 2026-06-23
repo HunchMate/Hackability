@@ -430,13 +430,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.navbar && data.navbar.products_dropdown) {
           const dropdownHtml = data.navbar.products_dropdown.map(product => {
             let productUrl = product.url;
-            if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
+            if (product.name && product.name.toLowerCase() === 'incamp') {
+              productUrl = 'https://www.incamp.in';
+            } else if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
               const currentPath = window.location.pathname;
               const isHomepage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '';
               productUrl = isHomepage ? '#products' : 'index.html#products';
             }
+            const isExternal = productUrl.startsWith('http');
+            const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
             return `
-              <a href="${productUrl}" class="relative flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
+              <a href="${productUrl}" ${targetAttr} class="relative flex items-start gap-4 p-4 rounded-lg hover:bg-navy-tint transition-colors group/item no-underline">
                 <!-- Optional Logo (fallback to text if empty) -->
                 ${product.logo ? `
                   <img src="${product.logo}" alt="${product.name}" class="w-10 h-10 object-contain flex-shrink-0" />
@@ -465,13 +469,17 @@ document.addEventListener('DOMContentLoaded', () => {
           if (mobileDropdown && data.navbar.products_dropdown.length > 0) {
             mobileDropdown.innerHTML = data.navbar.products_dropdown.map(product => {
               let productUrl = product.url;
-              if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
+              if (product.name && product.name.toLowerCase() === 'incamp') {
+                productUrl = 'https://www.incamp.in';
+              } else if (productUrl === '#' || productUrl === '#products' || productUrl === 'index.html#products' || !productUrl) {
                 const currentPath = window.location.pathname;
                 const isHomepage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '';
                 productUrl = isHomepage ? '#products' : 'index.html#products';
               }
-              return `
-                <a class="nav-card-link" href="${productUrl}">
+                const isExternal = productUrl.startsWith('http');
+                const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                return `
+                  <a class="nav-card-link" href="${productUrl}" ${targetAttr}>
                   <svg class="nav-card-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                   ${product.name}
                 </a>
